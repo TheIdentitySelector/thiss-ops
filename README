@@ -12,8 +12,10 @@ Initial setup:
 
     git remote add origin git@//yourhost/myproj-cosmos.git
     git remote add ro git://yourhost/myproj-cosmos.git
+
+  - add at least one PGP key in a file matching the glob "global/overlay/etc/cosmos/keys/*.pub"
  
-  - add stuff...
+  - add hosts/puppet-modules etc etc ...
 
     make bump
 
