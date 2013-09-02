@@ -1,0 +1,24 @@
+
+Initial setup:
+ 
+  git clone git://github.com/leifj/multiverse.git myproj-cosmos
+  cd myproj-cosmos
+
+  - rename the github upstream
+  
+    git remote rename origin github
+
+  - add a new upstream & ro branch
+
+    git remote add origin git@//yourhost/myproj-cosmos.git
+    git remote add ro git://yourhost/myproj-cosmos.git
+ 
+  - add stuff...
+
+    make bump
+
+To add a new host:
+
+  - Make sure you have root access using an SSH key
+  - ./addhost <fqdn>
+

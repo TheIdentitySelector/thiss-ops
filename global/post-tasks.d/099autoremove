@@ -1,0 +1,4 @@
+#!/bin/sh
+
+apt-get -qq update
+apt-get -qq -y autoremove

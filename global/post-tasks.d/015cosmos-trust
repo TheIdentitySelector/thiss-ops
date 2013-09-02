@@ -1,0 +1,16 @@
+#!/bin/sh
+
+for k in /etc/cosmos/keys/*.pub; do
+   fp=`cosmos gpg --with-colons --with-fingerprint < $k| awk -F: '$1 == "pub" {print $5}'`
+   cosmos gpg --with-colons --fingerprint | grep -q ":$fp:" || cosmos gpg --import < $k
+done
+
+for fp in `cosmos gpg --with-colons --fingerprint | awk -F: '$1 == "pub" {print $5}'`; do
+   seen="no"
+   for k in /etc/cosmos/keys/*.pub; do
+      cosmos gpg --with-colons --with-fingerprint < $k | grep -q ":$fp:" && seen="yes"
+   done
+   if [ "x$seen" = "xno" ]; then
+      cosmos gpg --yes --batch --delete-key $fp || true
+   fi
+done

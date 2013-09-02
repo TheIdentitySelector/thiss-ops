@@ -1,0 +1,4 @@
+#!/bin/sh
+
+rm -f /var/run/facts.json
+facter -p -y > /var/run/facts.yaml

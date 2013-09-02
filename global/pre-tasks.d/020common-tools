@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Re-used example from SJD
+#
+
+set -e
+
+stamp="$COSMOS_BASE/stamps/common-tools-v01.stamp"
+
+if ! test -f $stamp; then
+    apt-get -y install vim traceroute tcpdump molly-guard less rsync git-core unattended-upgrades ntp
+    update-alternatives --set editor /usr/bin/vim.basic
+
+    mkdir -p `dirname $stamp`
+    touch $stamp
+fi
