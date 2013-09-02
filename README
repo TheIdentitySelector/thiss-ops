@@ -6,9 +6,9 @@ Initial setup:
 
   - rename the github upstream
   
-    git remote rename origin github
+    git remote rename origin multiverse
 
-  - add a new upstream & ro branch
+  - add a new upstream & ro branch. The ro branch is used by the cosmos setup later. It needs to be called 'ro'
 
     git remote add origin git@//yourhost/myproj-cosmos.git
     git remote add ro git://yourhost/myproj-cosmos.git
@@ -17,7 +17,7 @@ Initial setup:
  
   - add hosts/puppet-modules etc etc ...
 
-    make bump
+  - make bump
 
 To add a new host:
 
