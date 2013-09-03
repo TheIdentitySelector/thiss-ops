@@ -1,0 +1,16 @@
+#!/bin/sh
+
+python -c "import yaml" 2>/dev/null || apt-get -y install python-yaml
+
+if [ -f /etc/puppet/cosmos-modules.conf ]; then
+   grep -E -v "^#" /etc/puppet/cosmos-modules.conf | (
+   cd /etc/puppet/modules && while read module src update; do
+       if [ ! -d /etc/puppet/modules/$module ]; then
+          echo $src | grep -q "://" && git clone $src $module || puppet module install $src
+       else
+          if [ "x$update" = "xyes" ]; then
+             echo $src | grep -q "://" && (cd /etc/puppet/modules/$module && git pull -q) || puppet module upgrade $src
+          fi
+       fi
+   done)
+fi
