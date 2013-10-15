@@ -24,7 +24,7 @@ are easier to achieve using puppet than with cosmos alone.
 Consistency
 -----------
 
-Changes should be applied atomically across multiple system components on multiple 
+Changes should be applied atomically (locally on each host) across multiple system components on multiple 
 physical and logical hosts (aka system state). The change mechanism should permit verification of state
 consistency and all modifications should be idempotents, i.e the same operation 
 performend twice on the same system state should not in itself cause a problem. 
@@ -91,7 +91,7 @@ in multiverse. Instead 'fabric' is used to provide a simple way to loop over sub
 the hosts in a managed domain.
 
 Private data (eg system credentials, application passwords, or private keys) are encrypted 
-to a master host PGP key before stored in the cosmos repo.
+to a master host-specific PGP key before stored in the cosmos repo.
 
 System state can be tied to classes used to classify systems into roles (eg "database server"
 or "webserver"). System classes can be assigned by regular expressions on the fqdn (eg all 
