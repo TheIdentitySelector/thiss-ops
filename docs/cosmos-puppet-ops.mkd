@@ -142,7 +142,7 @@ Implementation
 ==============
 
 Implementation is based on two major components: cosmos and puppet. The cosmos system was
-created by Simon Josefsson and Fredrik Tulin as a simple and secure way to distribute files
+created by Simon Josefsson and Fredrik Thulin as a simple and secure way to distribute files
 and run pre- and post-processors (using run-parts). This allows for a simple, yet complete 
 mechanism for updating system state.
 
@@ -154,6 +154,14 @@ abstraction which greatly increases readability.
 
 The combination of puppet and cosmos is maintained on github in the 'leifj/multiverse'
 project.
+
+The Cosmos Puppet Module
+========================
+
+Although not necessary, a few nice-to-have utilities in the form of puppet modules have
+been collected as the cosmos puppet module (for want of a better name). The source for
+this module is at http://github.com/leifj/puppet-cosmos and it is included (but commented
+out) in the cosmos-modules.conf file (cf below) for easy inclusion.
 
 
 Operations
@@ -364,10 +372,26 @@ Identitfy the public key file in `global/overlay/etc/cosmos/keys`
 # ./bump-tag
 ```
 
+Merging new features from multiverse
+------------------------------------
+
+The multiverse template will continue to evolve and sometimes it may be desirable to fetch a new feature from the upstream multiverse repository. If you followed the setup guide and kept the 'multiverse' remote this how you go about synchronizing with that version:
+
+```
+# git checkout multiverse
+# git pull
+# git checkout master
+# git merge multiverse
+```
+
+Now resolve any conflicts (hopefully few and far between) and you should end up with a _combination_ of the features in your domain and those in multiverse. Note that you can optionally add more remotes referencing other development branches of multiverse and merge changes from more than one upstream. The sky is the limit.
+
 Changing administrative domain for a host
 -----------------------------------------
 
-In the `$new` repository:
+Below `$old` and `$new` refers to local copies (git clone) of the old and new repository.
+
+In the `$new` repository add the host and use fabric to change the repository of the host to the git URL of the new repository.
 
 ```
 # ./addhost -b $hostname
@@ -395,9 +419,6 @@ In the `$old` repository:
 # git commit -m "remove $hostname"
 # ./bump-tag
 ```
-
-Reviewing all changes
----------------------
 
 Running a command on multiple hosts
 -----------------------------------
