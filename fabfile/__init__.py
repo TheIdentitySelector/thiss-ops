@@ -32,7 +32,7 @@ env.warn_only = True
 env.skip_bad_hosts = True
 env.roledefs = _roledefs()
 
-print repr(env.roledefs)
+#print repr(env.roledefs)
 
 def all():
     env.hosts = _all_hosts()
