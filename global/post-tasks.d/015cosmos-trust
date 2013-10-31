@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if -z "$COSMOS_KEYS"; then
+if [ -z "$COSMOS_KEYS" ]; then
    COSMOS_KEYS=/etc/cosmos/keys
 fi
 
