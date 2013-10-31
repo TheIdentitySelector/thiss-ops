@@ -29,6 +29,7 @@ perl -pi -e "s,#COSMOS_REPO_MODELS=.*,COSMOS_REPO_MODELS=\"\\\$COSMOS_REPO/globa
 perl -pi -e 's,#COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN=.*,COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN="eduid-cosmos*",' /etc/cosmos/cosmos.conf
 
 COSMOS_BASE=/var/cache/cosmos /var/cache/cosmos/repo/global/post-tasks.d/015cosmos-trust
+COSMOS_KEYS=/var/cache/cosmos/repo/global/overlay/etc/cosmos/keys
 
 (date; nohup cosmos -v update && nohup cosmos -v apply; date) > /var/log/cosmos.log 2>&1
 

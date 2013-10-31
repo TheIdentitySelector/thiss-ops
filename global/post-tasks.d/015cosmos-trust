@@ -1,6 +1,10 @@
 #!/bin/sh
 
-for k in /etc/cosmos/keys/*.pub; do
+if -z "$COSMOS_KEYS"; then
+   COSMOS_KEYS=/etc/cosmos/keys
+fi
+
+for k in $COSMOS_KEYS/*.pub; do
    fp=`cosmos gpg --with-colons --with-fingerprint < $k| awk -F: '$1 == "pub" {print $5}'`
    cosmos gpg --with-colons --fingerprint | grep -q ":$fp:" || cosmos gpg --import < $k
 done
