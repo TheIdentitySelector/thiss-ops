@@ -4,14 +4,20 @@ set -e
 
 cmd_hostname="$1"
 if test -z "$cmd_hostname"; then
-    echo "Usage: $0 HOSTNAME REPO"
+    echo "Usage: $0 HOSTNAME REPO TAGPATTERN"
     exit 1
 fi
 
 cmd_repo="$2"
 if test -z "$cmd_repo"; then
-   echo "Usage $0 HOSTNAME REPO"
+   echo "Usage $0 HOSTNAME REPO TAGPATTERN"
    exit 2
+fi
+
+cmd_tags="$3"
+if test -z "$cmd_tags"; then
+   echo "Usage $0 HOSTNAME REPO TAGPATTERN"
+   exit 3
 fi
 
 set -x
@@ -26,7 +32,7 @@ fi
 hostname $cmd_hostname
 
 perl -pi -e "s,#COSMOS_REPO_MODELS=.*,COSMOS_REPO_MODELS=\"\\\$COSMOS_REPO/global/:\\\$COSMOS_REPO/$cmd_hostname/\"," /etc/cosmos/cosmos.conf
-perl -pi -e 's,#COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN=.*,COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN="eduid-cosmos*",' /etc/cosmos/cosmos.conf
+perl -pi -e 's,#COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN=.*,COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN="${cmd_tags}*",' /etc/cosmos/cosmos.conf
 
 env COSMOS_BASE=/var/cache/cosmos COSMOS_KEYS=/var/cache/cosmos/repo/global/overlay/etc/cosmos/keys /var/cache/cosmos/repo/global/post-tasks.d/015cosmos-trust
 

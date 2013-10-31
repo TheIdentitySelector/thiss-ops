@@ -11,7 +11,7 @@ done
 
 for fp in `cosmos gpg --with-colons --fingerprint | awk -F: '$1 == "pub" {print $5}'`; do
    seen="no"
-   for k in /etc/cosmos/keys/*.pub; do
+   for k in $COSMOS_KEYS/*.pub; do
       cosmos gpg --with-colons --with-fingerprint < $k | grep -q ":$fp:" && seen="yes"
    done
    if [ "x$seen" = "xno" ]; then
