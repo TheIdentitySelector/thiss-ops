@@ -1,0 +1,18 @@
+---
+:backends: - yaml
+           - gpg
+
+:logger: console
+
+:hierarchy: - %{env}/%{location}/%{calling_module}
+            - %{env}/%{calling_module}
+            - secrets.yaml
+            - common
+
+
+:yaml:
+   :datadir: /etc/hiera/data
+
+:gpg:
+   :datadir: /etc/hiera/data
+   :key_dir: /etc/hiera/gpg

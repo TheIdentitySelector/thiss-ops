@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# Set up a keyring for Hiera GPG
+#   https://github.com/crayfishx/hiera-gpg
+#
+
+set -e
+
+GNUPGHOME=/etc/hiera/gpg
+export GNUPGHOME
+
+if [ ! -f /usr/lib/ruby/vendor_ruby/gpgme.rb ]; then
+    apt-get update
+    apt-get -y install ruby-gpgme
+fi
+
+
+if [ ! -s $GNUPGHOME/secring.gpg ]; then
+
+    if [ "x$1" != "x--force" ]; then
+	echo ""
+	echo "Automatic Hiera-GPG key generation DISABLED (to not block on missing entropy)"
+	echo ""
+	echo "  Run \`$0 --force' manually"
+	echo ""
+	exit 0
+    fi
+
+    if [ ! -f /usr/bin/gpg2 ]; then
+	apt-get update
+	apt-get -y install gnupg2
+    fi
+
+    mkdir -p $GNUPGHOME
+    chmod 700 $GNUPGHOME
+
+    TMPFILE=$(mktemp /tmp/hiera-gpg.XXXXXX)
+    cat > $TMPFILE <<EOF
+%echo Generating a default key
+Key-Type: default
+Subkey-Type: default
+Name-Real: Cosmos Puppet
+Name-Comment: Hiera GPG key
+Name-Email: root@`hostname --fqdn`
+Expire-Date: 0
+# Do a commit here, so that we can later print "done" :-)
+%commit
+%echo done
+EOF
+    gpg2 --batch --gen-key $TMPFILE
+    rm -f $TMPFILE
+fi
