@@ -210,6 +210,14 @@ as 'ro'. The read-only remote is used by multiverse scripts during host bootstra
 # git remote add ro git://yourhost/myproj-cosmos.git
 ```
 
+Now edit .git/config and rename the 'master' branch to use the new 'origin' remote or
+you'll try to push to the multiverse remote! Finally create a branch for the 'multiverse'
+upstream so you can merge changes to multiverse:
+
+```
+# git checkout -b multiverse --track multiverse/master
+```
+
 Note that you can maintain your repo on just about any git hosting platform, including
 github, gitorius or your own local setup as long as it supports read-only "git://" access
 to your repository. It is important that the remotes called 'origin' and 'ro' refer to 

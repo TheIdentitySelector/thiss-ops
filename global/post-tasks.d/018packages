@@ -3,7 +3,6 @@
 CONFIG=${CONFIG:=/etc/puppet/cosmos-modules.conf}
 CACHE_DIR=/var/cache/puppet-modules
 MODULES_DIR=${MODULES_DIR:=/etc/puppet/cosmos-modules}
-GIT_TAG_PATTERN=${COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN:-multiverse*}
 export GNUPGHOME=/etc/cosmos/gnupg
 
 python -c "import yaml" 2>/dev/null || apt-get -y install python-yaml
@@ -24,7 +23,7 @@ if [ -f $CONFIG ]; then
 
   # First pass to clone any new modules, and update those marked for updating.
   grep -E -v "^#" $CONFIG | (
-    while read module src update; do
+    while read module src update pattern; do
       # We only support git:// urls atm
       if [ "${src:0:6}" = "git://" ]; then
         if [ ! -d $CACHE_DIR/scm/$module ]; then
@@ -47,23 +46,22 @@ if [ -f $CONFIG ]; then
   # Second pass to verify the signatures on all modules and stage those that
   # have good signatures.
   grep -E -v "^#" $CONFIG | (
-    while read module src update; do
+    while read module src update pattern; do
       # We only support git:// urls atm
       if [ "${src:0:6}" = "git://" ]; then
         # Verify git tag
         cd $CACHE_DIR/scm/$module
-        TAG=$(git tag -l $GIT_TAG_PATTERN | sort | tail -1)
+        TAG=$(git tag -l "${pattern:-*}" | sort | tail -1)
         if [ "$COSMOS_VERBOSE" = "y" ]; then
           echo ""
           echo "Checking signature on tag ${TAG} for puppet-module $module"
         fi
         if [ -z "$TAG" ]; then
-          echo "ERROR: No git tag found for pattern '$GIT_TAG_PATTERN' on puppet-module $module"
+          echo "ERROR: No git tag found for pattern '${pattern:-*}' on puppet-module $module"
           continue
         fi
-        fail=1
-        git tag -v $TAG > /dev/null 2>&1 && fail=0
-        if [ $fail == 0 ]; then
+        git tag -v $TAG &> /dev/null
+        if [ $? == 0 ]; then
           if [ "$COSMOS_VERBOSE" = "y" ]; then
             # short output on good signature
             git tag -v $TAG 2>&1 | grep "gpg: Good signature"
@@ -82,9 +80,9 @@ if [ -f $CONFIG ]; then
 
   # Cleanup removed puppet modules from CACHE_DIR
   for MODULE in $(ls -1 $CACHE_DIR/staging/); do
-    if ! grep -E -q "^$MODULE\s+" $CONFIG; then
-      rm -rf $CACHE_DIR/{scm,staging}/$MODULE
-    fi
+      if ! grep -E -q "^$MODULE\s+" $CONFIG; then
+          rm -rf $CACHE_DIR/{scm,staging}/$MODULE
+      fi
   done
 
   # Installing verified puppet modules
