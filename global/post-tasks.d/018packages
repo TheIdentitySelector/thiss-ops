@@ -43,6 +43,9 @@ if [ -f $CONFIG ]; then
         echo "ERROR: Don't know how to install '$src'"
         continue
       else
+        echo "WARNING"
+        echo "WARNING - attempting UNSAFE installation/upgrade of puppet-module $module from $src"
+        echo "WARNING"
         if [ ! -d /etc/puppet/modules/$module ]; then
           puppet module install $src
         elif [ "$update" = "yes" ]; then
