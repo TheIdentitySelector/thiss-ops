@@ -1,3 +1,5 @@
 #!/bin/sh
 
-test -f /var/run/reboot-required -a ! -f /etc/cosmos-manual-reboot && reboot
+if [ -f /var/run/reboot-required -a -f /etc/cosmos-automatic-reboot ]; then
+  reboot
+fi
