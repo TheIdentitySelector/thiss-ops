@@ -31,6 +31,9 @@ if [ -f $CONFIG ]; then
         elif [ -d $CACHE_DIR/scm/$module/.git ]; then
           if [ "$update" = "yes" ]; then
             cd $CACHE_DIR/scm/$module
+            if [ "$src" != "$(git config remote.origin.url)" ]; then
+              git config remote.origin.url $src
+            fi
             git pull -q
           else
             continue
