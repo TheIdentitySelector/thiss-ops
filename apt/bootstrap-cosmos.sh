@@ -22,7 +22,7 @@ fi
 
 set -x
 
-apt-get -y install rsync git-core
+apt-get -y install rsync git-core wget
 dpkg -i cosmos_1.2-2_all.deb
 
 if ! test -d /var/cache/cosmos/repo; then
@@ -36,6 +36,7 @@ perl -pi -e "s,#COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN=.*,COSMOS_UPDATE_VERIFY_GIT
 
 env COSMOS_BASE=/var/cache/cosmos COSMOS_KEYS=/var/cache/cosmos/repo/global/overlay/etc/cosmos/keys /var/cache/cosmos/repo/global/post-tasks.d/015cosmos-trust
 
-(date; nohup cosmos -v update && nohup cosmos -v apply; date) > /var/log/cosmos.log 2>&1
+(date; nohup cosmos -v update && nohup cosmos -v apply; date) 2>&1 | tee /var/log/cosmos.log
+
 
 exit 0
