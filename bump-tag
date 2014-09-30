@@ -4,6 +4,8 @@ set -e
 
 test -f cosmos.conf && . ./cosmos.conf
 
+git pull
+
 deftag=`basename $PWD`
 tagpfx=${tag:="$deftag"}
 
