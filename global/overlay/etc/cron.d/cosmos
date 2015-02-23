@@ -1,4 +1,4 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-*/15 * * * *   root   test -f /etc/no-automatic-cosmos || (cosmos update ; cosmos apply)
+*/15 * * * *   root   test -f /etc/no-automatic-cosmos || /usr/local/bin/run-cosmos
