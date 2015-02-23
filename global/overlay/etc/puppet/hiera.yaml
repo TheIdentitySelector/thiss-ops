@@ -1,13 +1,16 @@
 ---
-:backends: - yaml
-           - gpg
+:backends:
+  - yaml
+  - gpg
 
 :logger: console
 
-:hierarchy: - %{env}/%{location}/%{calling_module}
-            - %{env}/%{calling_module}
-            - secrets.yaml
-            - common
+:hierarchy:
+  - "%{env}/%{location}/%{calling_module}"
+  - "%{env}/%{calling_module}"
+  - local
+  - secrets.yaml
+  - common
 
 
 :yaml:
