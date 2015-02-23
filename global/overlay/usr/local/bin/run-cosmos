@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Simplify running cosmos, with serialization if flock is available.
+#
+
+set -e
+
+FLOCK=`which flock`
+
+if [ -x "$FLOCK" ]; then
+    ($FLOCK --exclusive --wait 60 9 || exit 1
+	cosmos $* update
+	cosmos $* apply
+    )9>/var/lock/run-cosmos
+else
+    cosmos $* update
+    cosmos $* apply
+fi
+
+touch /var/run/last-cosmos-ok.stamp
+
+find /var/lib/puppet/reports/ -type f -mtime +10 | xargs rm -f
