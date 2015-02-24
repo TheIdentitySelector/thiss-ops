@@ -17,7 +17,7 @@ def all():
     env.hosts = cosmos_db()['members']['all']
 
 def cosmos():
-    run("cosmos update ; cosmos -v apply");
+    run("/usr/local/bin/run-cosmos");
 
 def upgrade():
     run("apt-get -qq update && apt-get -y -q dist-upgrade");
