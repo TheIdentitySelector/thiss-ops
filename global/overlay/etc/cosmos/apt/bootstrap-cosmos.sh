@@ -33,6 +33,8 @@ if ! test -d /var/cache/cosmos/repo; then
 fi
 
 hostname $cmd_hostname
+short=`echo ${cmd_hostname} | awk -F. '{print $1}'`
+echo "127.0.1.1 ${cmd_hostname} ${short}" >> /etc/hosts
 
 perl -pi -e "s,#COSMOS_REPO_MODELS=.*,COSMOS_REPO_MODELS=\"\\\$COSMOS_REPO/global/:\\\$COSMOS_REPO/$cmd_hostname/\"," /etc/cosmos/cosmos.conf
 perl -pi -e "s,#COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN=.*,COSMOS_UPDATE_VERIFY_GIT_TAG_PATTERN=\"${cmd_tags}*\"," /etc/cosmos/cosmos.conf
