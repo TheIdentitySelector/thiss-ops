@@ -1,6 +1,7 @@
 #!/bin/sh
 
-set -e
+#set -e 
+# not all breakage is un-recoverable...
 
 cmd_hostname="$1"
 if test -z "$cmd_hostname"; then
@@ -20,9 +21,8 @@ if test -z "$cmd_tags"; then
    exit 3
 fi
 
-set -x
-
-apt-get -y update && apt-get -y upgrade
+apt-get -y update
+apt-get -y upgrade
 for pkg in rsync git git-core wget; do
    apt-get -y install $pkg
 done
