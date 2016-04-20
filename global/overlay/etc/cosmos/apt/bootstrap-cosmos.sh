@@ -22,7 +22,7 @@ fi
 
 set -x
 
-apt-get -y install rsync git-core wget
+apt-get -y update && apt-get -y upgrade && apt-get -y install rsync git git-core wget
 dpkg -i cosmos_1.5-1_all.deb
 
 if ! test -d /var/cache/cosmos/repo; then
