@@ -4,11 +4,19 @@ if [ -z "$COSMOS_KEYS" ]; then
    COSMOS_KEYS=/etc/cosmos/keys
 fi
 
+# Install new keys discovered in the $COSMOS_KEYS directory
 for k in $COSMOS_KEYS/*.pub; do
-   fp=`cosmos gpg --with-colons --with-fingerprint < $k| awk -F: '$1 == "pub" {print $5}'`
-   cosmos gpg --with-colons --fingerprint | grep -q ":$fp:" || cosmos gpg --import < $k
+   fp=`cosmos gpg --with-colons --with-fingerprint < $k | awk -F: '$1 == "pub" {print $5}'`
+   fp_in_db=`cosmos gpg --with-colons --fingerprint | grep ":$fp:"`
+   if [ "x`echo $fp_in_db | grep '^pub:e:'`" != "x" ]; then
+       echo "$0: Key expired, will re-import it from $k"
+       cosmos gpg --fingerprint $fp
+   fi
+   # The removal of any ^pub:e: entrys means to ignore expired keys - thereby importing them again.
+   echo $fp_in_db | grep -v "^pub:e:" | grep -q ":$fp:" || cosmos gpg --import < $k
 done
 
+# Delete keys no longer present in $COSMOS_KEYS directory
 for fp in `cosmos gpg --with-colons --fingerprint | awk -F: '$1 == "pub" {print $5}'`; do
    seen="no"
    for k in $COSMOS_KEYS/*.pub; do
