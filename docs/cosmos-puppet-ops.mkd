@@ -226,9 +226,9 @@ Finally create a branch for the 'multiverse' upstream so you can merge changes t
 ```
 
 Note that you can maintain your repo on just about any git hosting platform, including
-github, gitorius or your own local setup as long as it supports read-only "git://" access
-to your repository. It is important that the remotes called 'origin' and 'ro' refer to 
-your repository and not to anything else (like a private version of multiverse).
+github, gitorius or your own local setup as long as it supports read-only access to your
+repository. It is important that the remotes called 'origin' and 'ro' refer to  your
+repository and not to anything else (like a private version of multiverse).
 
 Now add at least one key to 'global/overlay/etc/cosmos/keys/' in a file with a .pub extension
 (eg 'operator.pub') - the name of the file doesn't matter other than the extension.
@@ -341,14 +341,14 @@ with 3 columns:
 #
 concat puppetlabs/concat no
 stdlib puppetlabs/stdlib no
-cosmos git@github.com:SUNET/puppet-cosmos.git yes
-ufw git://github.com/SUNET/puppet-module-ufw.git yes
+cosmos https://github.com/SUNET/puppet-cosmos.git yes
+ufw https://github.com/SUNET/puppet-module-ufw.git yes
 apt puppetlabs/apt no
 vcsrepo puppetlabs/vcsrepo no
 xinetd puppetlabs/xinetd no
 #golang elithrar/golang yes
-python git://github.com/SUNET/puppet-python.git yes
-hiera-gpg git://github.com/SUNET/hiera-gpg.git no
+python https://github.com/SUNET/puppet-python.git yes
+hiera-gpg https://github.com/SUNET/hiera-gpg.git no
 ```
 
 This is an example file - the first field is the name of the module, the second is 
