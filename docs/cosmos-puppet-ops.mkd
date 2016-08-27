@@ -1,5 +1,5 @@
 % System Operations using Cosmos & Puppet
-% Leif Johansson / SUNET / 2013 / v0.0.3
+% Leif Johansson / SUNET / 2013 / v0.0.4
 
 
 Introduction
@@ -152,7 +152,7 @@ system state using a set of idempotent operations. In theory, anything that can 
 using puppet can be done using cosmos post-processors but puppet allows for greater 
 abstraction which greatly increases readability.
 
-The combination of puppet and cosmos is maintained on github in the 'leifj/multiverse'
+The combination of puppet and cosmos is maintained on github in the 'SUNET/multiverse'
 project.
 
 The Cosmos Puppet Module
@@ -160,7 +160,7 @@ The Cosmos Puppet Module
 
 Although not necessary, a few nice-to-have utilities in the form of puppet modules have
 been collected as the cosmos puppet module (for want of a better name). The source for
-this module is at http://github.com/leifj/puppet-cosmos and it is included (but commented
+this module is at https://github.com/SUNET/puppet-cosmos and it is included (but commented
 out) in the cosmos-modules.conf file (cf below) for easy inclusion.
 
 
@@ -186,11 +186,11 @@ multiverse. Fabric provides the 'fab' command which will be introduced later on.
 
 These two tools (git & fabric) are only needed on mashines where system operators work.
 
-Next clone git://github.com/leifj/multiverse.git - this will form the basis of your cosmos+puppet
+Next clone git@github.com:SUNET/multiverse.git - this will form the basis of your cosmos+puppet
 repository:
 
 ```
-# git clone git://github.com/leifj/multiverse.git myproj-cosmos
+# git clone git@github.com:SUNET/multiverse.git myproj-cosmos
 # cd myproj-cosmos
 ```
 
@@ -207,12 +207,19 @@ as 'ro'. The read-only remote is used by multiverse scripts during host bootstra
 
 ```
 # git remote add origin git@yourhost:myproj-cosmos.git
-# git remote add ro git://yourhost/myproj-cosmos.git
+# git remote add ro https://yourhost/myproj-cosmos.git
 ```
 
 Now edit .git/config and rename the 'master' branch to use the new 'origin' remote or
-you'll try to push to the multiverse remote! Finally create a branch for the 'multiverse'
-upstream so you can merge changes to multiverse:
+you'll try to push to the multiverse remote!
+
+```
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+```
+
+Finally create a branch for the 'multiverse' upstream so you can merge changes to multiverse:
 
 ```
 # git checkout -b multiverse --track multiverse/master
@@ -237,6 +244,10 @@ At this point you should create and sign your first tag:
 ```
 # ./bump-tag
 ```
+
+If Git complains during the first run of bump-tag that "Your configuration specifies to
+merge with the ref 'master' from the remote, but no such ref was fetched." then you
+have run 'git push' to initialize the connection with the remote repository.
 
 Make sure that you are using the key whose public key you just added to the repository! You
 can now start adding hosts.
@@ -330,14 +341,14 @@ with 3 columns:
 #
 concat puppetlabs/concat no
 stdlib puppetlabs/stdlib no
-cosmos git://github.com/leifj/puppet-cosmos.git yes
-ufw git://github.com/fredrikt/puppet-module-ufw.git yes
+cosmos git@github.com:SUNET/puppet-cosmos.git yes
+ufw git://github.com/SUNET/puppet-module-ufw.git yes
 apt puppetlabs/apt no
 vcsrepo puppetlabs/vcsrepo no
 xinetd puppetlabs/xinetd no
 #golang elithrar/golang yes
-python git://github.com/fredrikt/puppet-python.git yes
-hiera-gpg git://github.com/fredrikt/hiera-gpg.git no
+python git://github.com/SUNET/puppet-python.git yes
+hiera-gpg git://github.com/SUNET/hiera-gpg.git no
 ```
 
 This is an example file - the first field is the name of the module, the second is 
@@ -448,3 +459,4 @@ On all hosts:
 ```
 # fab -- reboot # danger Will Robinsson!
 ```
+
