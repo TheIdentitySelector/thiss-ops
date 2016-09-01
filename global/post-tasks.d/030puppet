@@ -1,13 +1,13 @@
 #!/bin/sh
 
 if [ "x$COSMOS_VERBOSE" = "xy" ]; then
-   args="--verbose"
+   args="--verbose --show_diff"
 else
    args="--logdest=syslog"
 fi
 
 if [ -f /usr/bin/puppet -a -d /etc/puppet/manifests ]; then
    for m in `find /etc/puppet/manifests -name \*.pp`; do
-      puppet apply $args < $m
+      puppet apply $args $m
    done
 fi
