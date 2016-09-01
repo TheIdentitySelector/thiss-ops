@@ -1,19 +1,30 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
 test -f cosmos.conf && . ./cosmos.conf
 
+echo "Fetching any updates from server:"
 git pull
+echo ""
 
-deftag=`basename $PWD`
+if [ "x$1" = "x" ]; then
+    deftag=`basename $PWD`
+else
+    deftag="$1"
+fi
 tagpfx=${tag:="$deftag"}
 
 last_tag=`git tag -l "${tagpfx}-*"|sort|tail -1`
 
-git tag -v $last_tag
+echo "Verifying last tag $last_tag:"
+(git tag -v $last_tag | grep ^gpg:) || true
+# again to not mask exit status of git with grep
+git tag -v $last_tag > /dev/null 2>&1
+echo ""
 
-PAGER=cat git diff $last_tag..master
+echo "Differences between tag $last_tag and what you are about to sign:"
+PAGER=cat git diff --color $last_tag..master
 
 iter=1
 ok=
@@ -29,8 +40,13 @@ while test -z "$ok"; do
     esac
 done
 
-echo using new tag $this_tag
-echo ONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE
+if [ "$deftag" != "$tagpfx" ]; then
+    echo -e "Using new tag \e[94m$this_tag\e[0m according to pattern in cosmos.conf"
+else
+    echo -e "Using new tag \e[94m$this_tag\e[0m"
+fi
+
+echo -e "\e[1mONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE\e[0m"
 
 # GITTAGEXTRA is for putting things like "-u 2117364A"
 
