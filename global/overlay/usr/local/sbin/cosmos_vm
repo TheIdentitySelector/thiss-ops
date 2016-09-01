@@ -63,7 +63,7 @@ ssh_authorized_keys:
 runcmd:
    - ["mkdir","/tmp/seed"]
    - ["mount","/dev/vdb","/tmp/seed"]
-   - ["cp","/tmp/seed/bootstrap-cosmos.sh","/tmp/seed/cosmos_1.2-2_all.deb","/root"]
+   - ["cp","/tmp/seed/bootstrap-cosmos.sh","/tmp/seed/cosmos_1.5-1_all.deb","/root"]
    - ["cd","/root"]
    - "cd /root && /root/bootstrap-cosmos.sh ${hostname} ${repo} ${tag}"
 
@@ -112,7 +112,7 @@ fi
 
 mcopy -i ${seed} ${user_data} ::user-data 2>/dev/null
 mcopy -i ${seed} ${meta_data} ::meta-data 2>/dev/null
-mcopy -i ${seed} /etc/cosmos/apt/bootstrap-cosmos.sh /etc/cosmos/apt/cosmos_1.2-2_all.deb ::
+mcopy -i ${seed} /etc/cosmos/apt/bootstrap-cosmos.sh /etc/cosmos/apt/cosmos_1.5-1_all.deb ::
 mv ${seed} /var/lib/libvirt/images/
 virsh pool-refresh default
 
