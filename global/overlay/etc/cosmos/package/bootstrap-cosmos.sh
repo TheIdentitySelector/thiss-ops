@@ -22,8 +22,18 @@ fi
 
 set -x
 
-apt-get -y install rsync git-core wget
-dpkg -i cosmos_1.5-1_all.deb
+. /etc/os-release
+
+if test "$NAME" = "Ubuntu" -o "$NAME" = "Debian GNU/Linux"; then
+    apt-get -y install rsync git-core wget
+    dpkg -i cosmos_1.5-1_all.deb
+elif test "$NAME" = "Fedora" -o -f /etc/redhat-release; then
+    yum -y install rsync git-core wget
+    rpm --install cosmos_1.5-1_all.rpm
+else
+    echo "Unsupported system!"
+    exit 4
+fi
 
 if ! test -d /var/cache/cosmos/repo; then
     cosmos clone "$cmd_repo"
