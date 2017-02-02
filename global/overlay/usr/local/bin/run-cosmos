@@ -1,22 +1,46 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Simplify running cosmos, with serialization if flock is available.
 #
 
-set -e
+readonly PROGNAME=$(basename "$0")
+readonly LOCKFILE_DIR=/tmp
+readonly LOCK_FD=200
 
-FLOCK=`which flock`
+lock() {
+    local prefix=$1
+    local fd=${2:-$LOCK_FD}
+    local lock_file=$LOCKFILE_DIR/$prefix.lock
 
-if [ -x "$FLOCK" ]; then
-    ($FLOCK --exclusive --wait 60 9 || exit 1
-	cosmos $* update
-	cosmos $* apply
-    )9>/var/lock/run-cosmos
-else
-    cosmos $* update
-    cosmos $* apply
+    # create lock file
+    eval "exec $fd>$lock_file"
+
+    # acquier the lock
+    flock -n $fd \
+        && return 0 \
+        || return 1
+}
+
+eexit() {
+    local error_str="$@"
+
+    echo $error_str
+    exit 1
+}
+
+main () {
+   lock $PROGNAME || eexit "Only one instance of $PROGNAME can run at one time."
+   cosmos $* update
+   cosmos $* apply
+
+   touch /var/run/last-cosmos-ok.stamp
+
+   find /var/lib/puppet/reports/ -type f -mtime +10 | xargs rm -f
+}
+
+main $*
+
+if [ -f /cosmos-reboot ]; then
+   rm -f /cosmos-reboot
+   reboot
 fi
-
-touch /var/run/last-cosmos-ok.stamp
-
-find /var/lib/puppet/reports/ -type f -mtime +10 | xargs rm -f
