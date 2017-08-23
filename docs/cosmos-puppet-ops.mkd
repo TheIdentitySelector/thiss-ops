@@ -258,7 +258,7 @@ Adding a host
 Bootstrapping a host is done using the 'addhost' command:
 
 ```
-# ./addhost [-b] $fqdn
+# ./addhost -b $fqdn
 ```
 
 The -b flag causes addhost to attempt to bootstrap cosmos on the remote host using
@@ -274,6 +274,12 @@ The boostrap process will create a cron-job on $fqdn that runs
 
 every 15 minutes. This should be a good starting point for your domain. Now you may
 want to add some 'naming rules'.
+
+To bootstrap a machine that is not yet configured in DNS, use the following options:
+
+```
+# ./addhost -b -n $fqdn-to-add-later-in-dns -- IP-address
+```
 
 Defining naming rules
 ---------------------
