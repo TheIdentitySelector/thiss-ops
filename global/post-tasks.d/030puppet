@@ -8,6 +8,7 @@ fi
 
 if [ -f /usr/bin/puppet -a -d /etc/puppet/manifests ]; then
    for m in `find /etc/puppet/manifests -name \*.pp`; do
+      test "x$COSMOS_VERBOSE" = "xy" && echo "$0: Applying Puppet manifest $m"
       puppet apply $args $m
    done
 fi
