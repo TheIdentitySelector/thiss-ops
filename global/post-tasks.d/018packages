@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CONFIG=${CONFIG:=/etc/puppet/cosmos-modules.conf}
+LOCALCONFIG=${LOCALCONFIG:=/etc/puppet/cosmos-modules_local.conf}
 CACHE_DIR=/var/cache/puppet-modules
 MODULES_DIR=${MODULES_DIR:=/etc/puppet/cosmos-modules}
 export GNUPGHOME=/etc/cosmos/gnupg
@@ -13,7 +14,7 @@ stage_module() {
   git archive --format=tar --prefix=$1/ $2 | (cd $CACHE_DIR/staging/ && tar xf -)
 }
 
-if [ -f $CONFIG ]; then
+if [ -f $CONFIG -o $LOCALCONFIG ]; then
   if [ ! -d $MODULES_DIR ]; then
     mkdir -p $MODULES_DIR
   fi
@@ -21,8 +22,11 @@ if [ -f $CONFIG ]; then
     mkdir -p $CACHE_DIR/{scm,staging}
   fi
 
+  test -f $CONFIG || CONFIG=''
+  test -f $LOCALCONFIG || LOCALCONFIG=''
+
   # First pass to clone any new modules, and update those marked for updating.
-  grep -E -v "^#" $CONFIG | (
+  grep -h -E -v "^#" $CONFIG $LOCALCONFIG | sort | (
     while read module src update pattern; do
       # We only support git:// urls and https:// urls atm
       if [ "${src:0:6}" = "git://" -o "${src:0:8}" = "https://" ]; then
@@ -60,7 +64,7 @@ if [ -f $CONFIG ]; then
 
   # Second pass to verify the signatures on all modules and stage those that
   # have good signatures.
-  grep -E -v "^#" $CONFIG | (
+  grep -h -E -v "^#" $CONFIG $LOCALCONFIG | sort | (
     while read module src update pattern; do
       # We only support git:// urls atm
       if [ "${src:0:6}" = "git://" -o "${src:0:8}" = "https://" ]; then
@@ -95,9 +99,9 @@ if [ -f $CONFIG ]; then
 
   # Cleanup removed puppet modules from CACHE_DIR
   for MODULE in $(ls -1 $CACHE_DIR/staging/); do
-      if ! grep -E -q "^$MODULE\s+" $CONFIG; then
-          rm -rf $CACHE_DIR/{scm,staging}/$MODULE
-      fi
+    if ! grep -h -E -q "^$MODULE\s+" $CONFIG $LOCALCONFIG; then
+      rm -rf $CACHE_DIR/{scm,staging}/$MODULE
+    fi
   done
 
   # Installing verified puppet modules
