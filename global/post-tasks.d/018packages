@@ -31,8 +31,8 @@ if [ -f $CONFIG -o $LOCALCONFIG ]; then
   # First pass to clone any new modules, and update those marked for updating.
   grep -h -E -v "^#" $CONFIG $LOCALCONFIG | sort | (
     while read module src update pattern; do
-      # We only support git:// urls and https:// urls atm
-      if [ "${src:0:6}" = "git://" -o "${src:0:8}" = "https://" ]; then
+      # We only support git://, file:/// and https:// urls at the moment
+      if [ "${src:0:6}" = "git://" -o "${src:0:8}" = "file:///" -o "${src:0:8}" = "https://" ]; then
         if [ ! -d $CACHE_DIR/scm/$module ]; then
           git clone -q $src $CACHE_DIR/scm/$module
         elif [ -d $CACHE_DIR/scm/$module/.git ]; then
@@ -67,8 +67,8 @@ if [ -f $CONFIG -o $LOCALCONFIG ]; then
   # have good signatures.
   grep -h -E -v "^#" $CONFIG $LOCALCONFIG | sort | (
     while read module src update pattern; do
-      # We only support git:// urls atm
-      if [ "${src:0:6}" = "git://" -o "${src:0:8}" = "https://" ]; then
+      # We only support git://, file:/// and https:// urls at the moment
+      if [ "${src:0:6}" = "git://" -o "${src:0:8}" = "file:///" -o "${src:0:8}" = "https://" ]; then
         # Verify git tag
         cd $CACHE_DIR/scm/$module
         TAG=$(git tag -l "${pattern:-*}" | sort | tail -1)
