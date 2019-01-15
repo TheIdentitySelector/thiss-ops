@@ -1,5 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ -f /var/run/reboot-required -a -f /etc/cosmos-automatic-reboot ]; then
-  reboot
+if [[ -f /var/run/reboot-required && -f /etc/cosmos-automatic-reboot ]]; then
+
+    if [[ $HOSTNAME =~ -tug- ]]; then
+	# Reboot hosts in site TUG with 15 seconds delay (enough to manually
+	# cancel the reboot if logged in and seeing the 'emerg' message broadcasted to console)
+	sleep=15
+    elif [[ $HOSTNAME =~ -fre- ]]; then
+	# reboot hosts in site FRE with 15+180 to 15+180+180 seconds delay
+	sleep=$(( 180 + ($RANDOM % 180)))
+    elif [[ $HOSTNAME =~ -lla- ]]; then
+	# reboot hosts in site LLA with 15+180+180 to 15+180+180+180 seconds delay
+	sleep=$(( 375 + ($RANDOM % 180)))
+    else
+	# reboot hosts in any other site with 15 to 315 seconds delay
+	sleep=$(( 15 + ($RANDOM % 300)))
+    fi
+
+    logger -p local0.emerg -i -t cosmos-automatic-reboot "Rebooting automatically in $sleep seconds (if /var/run/reboot-required still exists)"
+    sleep $sleep
+    if [ -f /var/run/reboot-required ]; then
+	logger -p local0.crit -i -t cosmos-automatic-reboot "Rebooting automatically"
+	reboot
+    fi
 fi
