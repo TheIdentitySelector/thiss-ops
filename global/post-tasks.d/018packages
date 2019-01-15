@@ -8,6 +8,9 @@ export GNUPGHOME=/etc/cosmos/gnupg
 
 python -c "import yaml" 2>/dev/null || apt-get -y install python-yaml
 
+bold='\e[1m'
+reset='\e[0m'
+red='\033[01;31m'
 
 stage_module() {
   rm -rf $CACHE_DIR/staging/$1
@@ -43,16 +46,14 @@ if [ -f $CONFIG -o $LOCALCONFIG ]; then
             continue
           fi
         else
-          echo "ERROR: Ignoring non-git repository"
+          echo -e "${red}ERROR: Ignoring non-git repository${reset}"
           continue
         fi
       elif [[ "$src" =~ .*:// ]]; then
-        echo "ERROR: Don't know how to install '$src'"
+        echo -e "${red}ERROR: Don't know how to install '${src}'${reset}"
         continue
       else
-        echo "WARNING"
-        echo "WARNING - attempting UNSAFE installation/upgrade of puppet-module $module from $src"
-        echo "WARNING"
+        echo -e "${bold}WARNING - attempting UNSAFE installation/upgrade of puppet-module ${module} from ${src}${reset}"
         if [ ! -d /etc/puppet/modules/$module ]; then
           puppet module install $src
         elif [ "$update" = "yes" ]; then
@@ -72,26 +73,24 @@ if [ -f $CONFIG -o $LOCALCONFIG ]; then
         cd $CACHE_DIR/scm/$module
         TAG=$(git tag -l "${pattern:-*}" | sort | tail -1)
         if [ "$COSMOS_VERBOSE" = "y" ]; then
-          echo ""
-          echo "Checking signature on tag ${TAG} for puppet-module $module"
+          echo -e "Checking signature on puppet-module:tag ${bold}${module}:${TAG}${reset}"
         fi
         if [ -z "$TAG" ]; then
-          echo "ERROR: No git tag found for pattern '${pattern:-*}' on puppet-module $module"
+          echo -e "${red}ERROR: No git tag found for pattern '${pattern:-*}' on puppet-module ${module}${reset}"
           continue
         fi
         git tag -v $TAG &> /dev/null
         if [ $? == 0 ]; then
-          if [ "$COSMOS_VERBOSE" = "y" ]; then
-            # short output on good signature
-            git tag -v $TAG 2>&1 | grep "gpg: Good signature"
-          fi
+          #if [ "$COSMOS_VERBOSE" = "y" ]; then
+          #  # short output on good signature
+          #  git tag -v $TAG 2>&1 | grep "gpg: Good signature"
+          #fi
           # Put archive in staging since tag verified OK
           stage_module $module $TAG
         else
-          echo "################################################################"
-          echo "FAILED signature check on puppet-module $module"
-          echo "################################################################"
+          echo -e "${red}FAILED signature check on puppet-module ${module}${reset}"
           git tag -v $TAG
+	  echo ''
         fi
       fi
     done
