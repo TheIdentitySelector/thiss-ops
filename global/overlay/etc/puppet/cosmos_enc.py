@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import yaml
@@ -14,5 +14,5 @@ if os.path.exists(db_file):
    with open(db_file) as fd:
       db.update(yaml.load(fd))
 
-print yaml.dump(dict(classes=db['classes'].get(node_name,dict()),parameters=dict(roles=db.get('members',[]))))
+print(yaml.dump(dict(classes=db['classes'].get(node_name,dict()),parameters=dict(roles=db.get('members',[])))))
 

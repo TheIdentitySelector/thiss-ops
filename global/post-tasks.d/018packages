@@ -6,7 +6,8 @@ CACHE_DIR=/var/cache/puppet-modules
 MODULES_DIR=${MODULES_DIR:=/etc/puppet/cosmos-modules}
 export GNUPGHOME=/etc/cosmos/gnupg
 
-python -c "import yaml" 2>/dev/null || apt-get -y install python-yaml
+# /etc/puppet/cosmos_enc.py needs the YAML module
+python3 -c "import yaml" 2>/dev/null || apt-get -y install python3-yaml
 
 bold='\e[1m'
 reset='\e[0m'
