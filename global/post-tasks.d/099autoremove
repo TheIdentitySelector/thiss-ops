@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+export DEBIAN_FRONTEND='noninteractive'
 
 if (( $RANDOM % 20 == 0)); then
     apt-get -qq update

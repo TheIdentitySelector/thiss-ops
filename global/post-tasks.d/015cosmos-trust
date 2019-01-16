@@ -1,28 +1,78 @@
-#!/bin/sh
+#!/bin/bash
+
+gnupg_show_options='--import --import-options show-only,import-minimal'
+if [[ $(lsb_release -sr | awk -F . '{ print $1 }') -le 16 ]]; then
+    # gpg on Ubuntu 16 and less is gnupg < 2, which doesn't have --import-options show-only
+    # but on the other hand defaults to this mode (https://dev.gnupg.org/T2943)
+    gnupg_show_options='--dry-run'
+fi
 
 if [ -z "$COSMOS_KEYS" ]; then
    COSMOS_KEYS=/etc/cosmos/keys
 fi
 
-# Install new keys discovered in the $COSMOS_KEYS directory
-for k in $COSMOS_KEYS/*.pub; do
-   fp=`cosmos gpg --with-colons --with-fingerprint < $k | awk -F: '$1 == "pub" {print $5}'`
-   fp_in_db=`cosmos gpg --with-colons --fingerprint | grep ":$fp:"`
-   if [ "x`echo $fp_in_db | grep '^pub:e:'`" != "x" ]; then
-       echo "$0: Key expired, will re-import it from $k"
-       cosmos gpg --fingerprint $fp
-   fi
-   # The removal of any ^pub:e: entrys means to ignore expired keys - thereby importing them again.
-   echo $fp_in_db | grep -v "^pub:e:" | grep -q ":$fp:" || cosmos gpg --import < $k
+bold='\e[1m'
+reset='\e[0m'
+red='\033[01;31m'
+
+# Associative array of fingerprints in the GPG keyring
+declare -A KEYRING
+
+# Associative array with expired keys in the GPG keyring
+declare -A EXPIRED
+
+# associative array with non-expired keys found in $COSMOS_KEYS directory
+declare -A SEEN
+
+# Load information about all keys present in the GPG keyring
+for line in $(cosmos gpg --with-colons --fingerprint | awk -F: '$1 == "pub" { print $2 ":" $5 }'); do
+    IFS=':' read -r expired fp <<< $line
+    KEYRING[$fp]='1'
+    if [[ $expired == 'e' ]]; then
+	EXPIRED[$fp]=1
+    fi
 done
 
-# Delete keys no longer present in $COSMOS_KEYS directory
-for fp in `cosmos gpg --with-colons --fingerprint | awk -F: '$1 == "pub" {print $5}'`; do
-   seen="no"
-   for k in $COSMOS_KEYS/*.pub; do
-      cosmos gpg --with-colons --with-fingerprint < $k | grep -q ":$fp:" && seen="yes"
-   done
-   if [ "x$seen" = "xno" ]; then
-      cosmos gpg --yes --batch --delete-key $fp || true
-   fi
+# Install new keys discovered in the $COSMOS_KEYS directory
+for k in $COSMOS_KEYS/*.pub; do
+    if [[ ! -s $k ]]; then
+	# Silently ignore empty files
+	continue
+    fi
+    pubkeys_in_file=$(cosmos gpg ${gnupg_show_options} \
+			     --with-colons --with-fingerprint --quiet < $k \
+			  | grep "^pub:")
+    non_expired_pubkeys_in_file=$(echo ${pubkeys_in_file} | awk -F: '$2 != "e" { print $0 }')
+    if [[ ! $non_expired_pubkeys_in_file ]]; then
+	echo -e "$0: ${red}Ignoring file with expired pubkey: ${k}${reset}"
+	continue
+    fi
+
+    fp=$(echo ${pubkeys_in_file} | awk -F: '{print $5}')
+
+    # Remember that we saw fingerprint $fp in file $k
+    SEEN[$fp]=$k
+
+    if [[ ! ${KEYRING[$fp]} ]]; then
+	echo -e "$0: ${bold}Importing new key ${fp}${reset} from ${k}"
+	cosmos gpg --import < $k
+    elif [[ ${EXPIRED[$fp]} ]]; then
+	echo -e "$0: ${bold}Re-importing expired key ${fp}${reset} from ${k}"
+	cosmos gpg --import < $k
+    fi
+done
+
+if [[ ! ${#SEEN[@]} ]]; then
+    echo "$0: ${red}NO trusted keys found in directory ${COSMOS_KEYS} - aborting${reset}"
+    echo "(this is probably a syntax problem with the gpg commands in this script)"
+    exit 1
+fi
+
+# Delete keys no longer present (or expired) in $COSMOS_KEYS directory
+for fp in ${!KEYRING[@]}; do
+    if [[ ! ${SEEN[$fp]} ]]; then
+	echo -e "$0: ${bold}Deleting key${reset} ${fp} not present (or expired) in ${COSMOS_KEYS}"
+	cosmos gpg --fingerprint $fp
+	cosmos gpg --yes --batch --delete-key $fp || true
+    fi
 done
