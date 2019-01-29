@@ -1,0 +1,24 @@
+#!/bin/bash
+ip="${1}"
+
+if [[ -z "${ip}" ]]; then
+    echo "Please specify a cloud image host that the script should do the following on:"
+    echo "  #1 enable root-login"
+    echo "  #2 remove the default user"
+    echo "  #3 run apt-get update and dist-upgrade without interaction"
+    echo "  #4 reboot to start using the new kernel, updated packages etc."
+    exit 1
+fi
+
+set -x
+
+ssh "ubuntu@${ip}" sudo cp -r /home/ubuntu/.ssh /root/
+ssh "ubuntu@${ip}" sudo chown -R root:root /root/.ssh
+ssh "ubuntu@${ip}" sudo chmod 700 /root/.ssh
+ssh "ubuntu@${ip}" sudo chmod 600 /root/.ssh/authorized_keys
+ssh "root@${ip}" deluser ubuntu
+ssh "root@${ip}" rm /home/ubuntu -rf
+ssh "root@${ip}" rm /etc/sudoers.d/*
+ssh "root@${ip}" DEBIAN_FRONTEND="noninteractive" apt-get -y update
+ssh "root@${ip}" DEBIAN_FRONTEND="noninteractive" apt-get -o Dpkg::Options::="--force-confnew" --fix-broken --assume-yes dist-upgrade
+ssh "root@${ip}" reboot
