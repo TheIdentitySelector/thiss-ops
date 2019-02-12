@@ -1,2 +1,3 @@
-'ns[0-9]?.mnt.se$':
+# Note that the matching is done with re.match()
+'^ns[0-9]?.mnt.se$':
    nameserver:
