@@ -17,7 +17,7 @@ def _load_db():
    members = dict()
    for node_name in all_hosts:
       for reg,cls in rules.iteritems():
-         if re.search(reg,node_name):
+         if re.match(reg,node_name):
             for cls_name in cls.keys():
                h = members.get(cls_name,[])
                h.append(node_name)
@@ -28,9 +28,13 @@ def _load_db():
    for node_name in all_hosts:
       node_classes = dict()
       for reg,cls in rules.iteritems():
-         if re.search(reg,node_name):
+         if re.match(reg,node_name):
             node_classes.update(cls)
       classes[node_name] = node_classes
+
+   # Sort member lists for a more easy to read diff
+   for cls in members.keys():
+       members[cls].sort()
 
    return dict(classes=classes,members=members)
 
