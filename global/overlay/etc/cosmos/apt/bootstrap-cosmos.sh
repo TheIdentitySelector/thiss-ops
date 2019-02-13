@@ -51,6 +51,12 @@ mv -f /etc/rc.local.new /etc/rc.local
 
 touch /etc/run-cosmos-at-boot
 
+# If this cloud-config is set, it will interfere with our changes to /etc/hosts
+grep -q 'manage_etc_hosts: true' /etc/cloud/cloud.cfg
+if [ ${?} -eq 0 ]; then
+    sed -i 's/manage_etc_hosts: true/manage_etc_hosts: false/g' /etc/cloud/cloud.cfg
+fi
+
 hostname $cmd_hostname
 short=`echo ${cmd_hostname} | awk -F. '{print $1}'`
 echo "127.0.1.1 ${cmd_hostname} ${short}" >> /etc/hosts
