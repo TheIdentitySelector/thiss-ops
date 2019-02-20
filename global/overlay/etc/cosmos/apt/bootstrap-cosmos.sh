@@ -57,6 +57,9 @@ if [ ${?} -eq 0 ]; then
     sed -i 's/manage_etc_hosts: true/manage_etc_hosts: false/g' /etc/cloud/cloud.cfg
 fi
 
+# Remove potential $hostname.novalocal line from /etc/hosts, added by cloud-init
+sed -i.bak -e "s/^127\.0\.1\.1 $(hostname)\..*novalocal.*//1" /etc/hosts
+
 hostname $cmd_hostname
 short=`echo ${cmd_hostname} | awk -F. '{print $1}'`
 echo "127.0.1.1 ${cmd_hostname} ${short}" >> /etc/hosts
