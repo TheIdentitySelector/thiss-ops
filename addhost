@@ -37,6 +37,11 @@ defrepo=`git remote -v | grep ${remote:="ro"} | grep fetch | awk '{print $2}'`
 rrepo=${repo:="$defrepo"}
 rtag=${tag:="changeme"}
 
+if [ "x$rrepo" = "x" ]; then
+    echo "$0: repo not set in cosmos.conf and no git remote named 'ro' found"
+    exit 1
+fi
+
 if [ ! -d $cmd_hostname ]; then
    cp -pr default $cmd_fqdn
    git add $cmd_fqdn
@@ -46,7 +51,7 @@ fi
 
 if [ "$cmd_do_bootstrap" = "yes" ]; then
    scp apt/cosmos_1.5-1_all.deb apt/bootstrap-cosmos.sh root@$cmd_hostname:
-   ssh root@$cmd_hostname ./bootstrap-cosmos.sh $cmd_fqdn $rrepo $rtag
-   ssh root@$cmd_hostname cosmos update 
-   ssh root@$cmd_hostname cosmos apply
+   ssh -t root@$cmd_hostname ./bootstrap-cosmos.sh $cmd_fqdn $rrepo $rtag
+   ssh -t root@$cmd_hostname cosmos update
+   ssh -t root@$cmd_hostname cosmos apply
 fi
