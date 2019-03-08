@@ -1,6 +1,6 @@
 '.+':
    common:
-   sunetops:
+   ops:
    nrpe:
    entropyclient:
    infra_ca_rp:
@@ -10,4 +10,4 @@
 
 md-1.thiss.io:
    autoupdate:
-   eid::dockerhost:
+   thiss::dockerhost:
