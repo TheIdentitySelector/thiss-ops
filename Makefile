@@ -9,4 +9,4 @@ db:
 	@git add global/overlay/etc/puppet/cosmos-db.yaml && git commit -m "update db" global/overlay/etc/puppet/cosmos-db.yaml
 
 tag: db
-        ./bump-tag
+	./bump-tag

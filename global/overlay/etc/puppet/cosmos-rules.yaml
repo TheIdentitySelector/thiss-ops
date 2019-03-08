@@ -1,3 +1,13 @@
-# Note that the matching is done with re.match()
-'^ns[0-9]?.mnt.se$':
-   nameserver:
+'.+':
+   common:
+   sunetops:
+   nrpe:
+   entropyclient:
+   infra_ca_rp:
+   mailclient:
+      domain: sunet.se
+   sunet::rsyslog:
+
+md-1.thiss.io:
+   autoupdate:
+   eid::dockerhost:
