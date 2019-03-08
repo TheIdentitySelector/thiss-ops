@@ -2,22 +2,22 @@ classes:
   md-1.thiss.io:
     autoupdate: null
     common: null
-    eid::dockerhost: null
     entropyclient: null
     infra_ca_rp: null
     mailclient: {domain: sunet.se}
     nrpe: null
+    ops: null
     sunet::rsyslog: null
-    sunetops: null
+    thiss::dockerhost: null
 members:
   all: [md-1.thiss.io]
   autoupdate: [md-1.thiss.io]
   common: [md-1.thiss.io]
-  eid::dockerhost: [md-1.thiss.io]
   entropyclient: [md-1.thiss.io]
   infra_ca_rp: [md-1.thiss.io]
   mailclient: [md-1.thiss.io]
   nrpe: [md-1.thiss.io]
+  ops: [md-1.thiss.io]
   sunet::rsyslog: [md-1.thiss.io]
-  sunetops: [md-1.thiss.io]
+  thiss::dockerhost: [md-1.thiss.io]
 
