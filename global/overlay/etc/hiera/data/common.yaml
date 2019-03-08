@@ -1,0 +1,68 @@
+---
+eid_docker_version: '18.05.0~ce~2.1.rc1-0~ubuntu'
+eid_docker_compose_version: '1.15.0'
+eid_docker_repo: 'test'
+
+prid_qa_clients: 89.45.233.83
+prid_prod_clients:
+   - 94.176.224.133
+   - 94.176.224.5
+   - 94.176.224.134
+   - 94.176.224.6
+
+eid_proxy_server: ""
+eid_no_proxy: true
+syslog_servers:
+   - syslog.sunet.se
+nagios_ip_v4:
+   - 89.45.233.197
+   - 94.176.224.229
+   - 94.176.224.101
+nrpe_clients:
+   - 127.0.0.1
+   - 127.0.1.1
+   - 109.105.111.111
+   - 2001:948:4:6::111
+   - 89.45.233.197
+   - 94.176.224.229
+   - 94.176.224.101
+
+ssh_authorized_keys:
+
+  'mariah+CA747E57':
+    ensure: 'present'
+    name:   'mariah+CA747E57@nordu.net'
+    key:    "AAAAB3NzaC1yc2EAAAADAQABAAABAQDLQfL3uYsqjzkKOxn9nhjDHeWdWQ5SRwcPz\
+      q7gINcwJ7omA5c7wJ4RKDqBPihJ9tp2rgM6DKKGxtSyjO6LFhkGNa86uub2PLS0ar+aRobPZ\
+      6sOeASqHbO3S1mmvZZWTQ30AFjtY98jjlvfKEI5Xu1+UKyQJqK+/UBVKlPaW6GMSYLr9Z5Uu\
+      4XS/sBPdL/ZtR95zDO9OKY8OtTufQi8Zy3pl4Q3xcOsSLZrKiEKMYDCLPlxytHD8FDDYLsgi\
+      uPlbF8/uVYYrt/LHHMkD552xC+EjA7Qde1jDU6iHTpttn7j/3FKoxvM8BXUG+QpbqGUESjAl\
+      Az/PMNCUZ0kVYh9eeXr"
+    type:   'ssh-rsa'
+    user:   'root'
+
+  'berra+96E0A9D4':
+    ensure: 'present'
+    name:   'berra+96E0A9D4@nordu.net'
+    key:    "AAAAB3NzaC1yc2EAAAADAQABAAACAQDS4cqKA+U/K3jfcqmpEjgZxqHuTalmw8Ljm\
+      26xRSP44qvElfDMwzDguDEYESknkf4LpY+NK/ny+bPG7PUBWt1myt4GpR3q30PRfkzwiWlVn\
+      NBpB9jNj98h+wDU7oKp6fiRDczxd8m8qYbdnPEbnjPECJHAlBtR03+BtiWJMuh6aZHAoFoKU\
+      I6F1SdX6Mj38Tw6sEyE1j0fZoKWLvPfngldnnj2UvhexHFxmT44tyhkiEk4QzqbtLQQU4i7U\
+      uXwZnKztLtYOxjcvSlUsIsb6R4gj7MXqHYyB+aOAYOP+TgZc6C7C34HSkMkPBxwj/1bZhsGS\
+      IVawFU9PJTd3SPXBaLH2Lacy5RPAtrLhIV9MhiRz533pfKgtS8uaceTAyAJFhMbLBzzf4PVR\
+      DLBNLWmcIXT5pHB5vK4c9XMQQPZm9idpQT+qTqfpdnLCyyK+YNntoFfSnTauKIJzVg/pIVlk\
+      rSladcdQstgoieuKWBs5BcRTxbvPS/VxvBo7dF8KGDNNYJ9tCt6m98q0r4xYd3scqnxOdQ7q\
+      lJ7QF8b9ypoCE47Ovzgh3fql4ySn1oe2xJzZssLUGR7H6gt6fDm+47j/UdB7sZVd6u9gVV7H\
+      xgT7Vj5zXjBwrMwEC6GqHqMs510w3XQ8nvAaASb4XMiNX2si7TsQ+Z5F6Fv3XZNMpviZTQZz\
+      Q=="
+    type:   'ssh-rsa'
+    user:   'root'
+
+redis_client_ips:
+    - 94.176.224.137
+    - 94.176.224.7
+redis_sentinel_ips:
+    - 94.176.224.135
+    - 94.176.224.138
+    - 94.176.224.9
+    - 94.176.224.10
