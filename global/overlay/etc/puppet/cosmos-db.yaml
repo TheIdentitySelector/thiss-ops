@@ -4,20 +4,28 @@ classes:
     common: null
     entropyclient: null
     infra_ca_rp: null
-    mailclient: {domain: sunet.se}
+    mailclient: &id001 {domain: sunet.se}
     nrpe: null
     ops: null
     sunet::rsyslog: null
     thiss::dockerhost: null
+  md-2.thiss.io:
+    common: null
+    entropyclient: null
+    infra_ca_rp: null
+    mailclient: *id001
+    nrpe: null
+    ops: null
+    sunet::rsyslog: null
 members:
-  all: [md-1.thiss.io]
+  all: [md-1.thiss.io, md-2.thiss.io]
   autoupdate: [md-1.thiss.io]
-  common: [md-1.thiss.io]
-  entropyclient: [md-1.thiss.io]
-  infra_ca_rp: [md-1.thiss.io]
-  mailclient: [md-1.thiss.io]
-  nrpe: [md-1.thiss.io]
-  ops: [md-1.thiss.io]
-  sunet::rsyslog: [md-1.thiss.io]
+  common: [md-1.thiss.io, md-2.thiss.io]
+  entropyclient: [md-1.thiss.io, md-2.thiss.io]
+  infra_ca_rp: [md-1.thiss.io, md-2.thiss.io]
+  mailclient: [md-1.thiss.io, md-2.thiss.io]
+  nrpe: [md-1.thiss.io, md-2.thiss.io]
+  ops: [md-1.thiss.io, md-2.thiss.io]
+  sunet::rsyslog: [md-1.thiss.io, md-2.thiss.io]
   thiss::dockerhost: [md-1.thiss.io]
 
