@@ -9,7 +9,10 @@ classes:
     ops: null
     sunet::rsyslog: null
     thiss::dockerhost: null
+    thiss::mdq: null
+    thiss::pyff: null
   md-2.thiss.io:
+    autoupdate: null
     common: null
     entropyclient: null
     infra_ca_rp: null
@@ -17,9 +20,12 @@ classes:
     nrpe: null
     ops: null
     sunet::rsyslog: null
+    thiss::dockerhost: null
+    thiss::mdq: null
+    thiss::pyff: null
 members:
   all: [md-1.thiss.io, md-2.thiss.io]
-  autoupdate: [md-1.thiss.io]
+  autoupdate: [md-1.thiss.io, md-2.thiss.io]
   common: [md-1.thiss.io, md-2.thiss.io]
   entropyclient: [md-1.thiss.io, md-2.thiss.io]
   infra_ca_rp: [md-1.thiss.io, md-2.thiss.io]
@@ -27,5 +33,7 @@ members:
   nrpe: [md-1.thiss.io, md-2.thiss.io]
   ops: [md-1.thiss.io, md-2.thiss.io]
   sunet::rsyslog: [md-1.thiss.io, md-2.thiss.io]
-  thiss::dockerhost: [md-1.thiss.io]
+  thiss::dockerhost: [md-1.thiss.io, md-2.thiss.io]
+  thiss::mdq: [md-1.thiss.io, md-2.thiss.io]
+  thiss::pyff: [md-1.thiss.io, md-2.thiss.io]
 
