@@ -1,0 +1,10 @@
+#!/bin/bash
+
+TMPF=`mktemp`
+pipeline=$1
+output=$2
+docker run -v ${pipeline}:${pipeline}:ro -ti <%= @image_tag %> pyff --loglevel=DEBUG ${pipeline} > $TMPF
+err=$?
+test -s $TMPF && mv $TMPF $output
+unlink $TMPF
+exit $err

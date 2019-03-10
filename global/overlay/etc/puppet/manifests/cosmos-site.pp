@@ -24,13 +24,6 @@ class infra_ca_rp {
 node default {
 }
 
-class site_alias($alias_name=undef) {
-   file { "/var/www/$alias_name":
-      ensure => link,
-      target => $name
-   }
-}
-
 class common {
   include sunet::tools
   include sunet::motd
@@ -111,97 +104,6 @@ class servicemonitor {
 
 class https_server {
 
-}
-
-class saml_metadata($filename=undef, $cert=undef, $url=undef) {
-  sunet::metadata { "$filename": url => $url, cert => $cert }
-}
-
-class md_repo_client {
-   sunet::snippets::reinstall::keep {['/etc/metadata','/root/.ssh']: } ->
-   sunet::ssh_git_repo {'/var/cache/metadata_r1':
-      username    => 'root',
-      group       => 'root',
-      hostname    => 'r1.komreg.net',
-      url         => 'git@r1.komreg.net:komreg-metadata.git',
-      id          => 'komreg',
-      manage_user => false
-   } ->
-   package { ['make']: ensure => latest } ->
-   sunet::scriptherder::cronjob { 'verify_and_update':
-      cmd           => '/var/cache/metadata_r1/scripts/do-update.sh',
-      minute        => '*/5',
-      ok_criteria   => ['exit_status=0', 'max_age=15m'],
-      warn_criteria => ['exit_status=0', 'max_age=1h'],
-   }
-}
-
-class md_signer($dest_host=undef,$dest_dir="",$version="eidas") {
-   package { ['xsltproc','libxml2-utils','attr']: ensure => latest } ->
-   sunet::pyff {$name:
-      version           => $version,
-      pound_and_varnish => false,
-      pipeline          => "${name}.fd",
-      volumes           => ["/etc/credentials:/etc/credentials"],
-      docker_run_extra_parameters => ["--log-driver=syslog"]
-   }
-   if ($dest_host) {
-      sunet::ssh_host_credential { "${name}-publish-credential":
-         hostname          => $dest_host,
-         username          => 'root',
-         group             => 'root',
-         manage_user       => false,
-         ssh_privkey       => safe_hiera("publisher_ssh_privkey")
-      } ->
-      sunet::scriptherder::cronjob { "${name}-publish":
-         cmd               => "env RSYNC_ARGS='--chown=www-data:www-data --chmod=D0755,F0664 --xattrs' /usr/local/bin/mirror-mdq.sh http://localhost root@${dest_host}:${dest_dir}",
-         minute            => '*/5',
-         ok_criteria       => ['exit_status=0'],
-         warn_criteria     => ['max_age=30m']
-      }
-   }
-}
-
-class md_publisher(Array $allow_clients=['any'], $keyname=undef, String $dir="/var/www/html") {
-   $_keyname = $keyname ? { 
-      undef   => $::fqdn,
-      default => $keyname
-   }
-   # this allows fileage check to work wo sudo
-   file { '/var/www': ensure => directory, mode => '0755' } ->
-   file { '/var/www/html': ensure => directory, mode => '0755', owner => 'www-data', group =>'www-data' } ->
-   sunet::rrsync {$dir:
-      ro                => false,
-      ssh_key           => safe_hiera('publisher_ssh_key'),
-      ssh_key_type      => safe_hiera('publisher_ssh_key_type')
-   } ->
-   package {['lighttpd','attr']: ensure => latest } ->
-   exec {'enable-ssl': 
-      command => "/usr/sbin/lighttpd-enable-mod ssl",
-      onlyif  => "test ! -h /etc/lighttpd/conf-enabled/*ssl*"
-   } ->
-   file {'/etc/lighttpd/server.pem':
-      ensure => 'link',
-      target => "/etc/ssl/private/${_keyname}.pem"
-   } ->
-   apparmor::profile { 'usr.sbin.lighttpd': source => '/etc/apparmor-cosmos/usr.sbin.lighttpd' } ->
-   file {'/etc/lighttpd/conf-enabled/99-mime-xattr.conf':
-      ensure  => file,
-      mode    => '0640',
-      owner   => 'root',
-      group   => 'root',
-      content => inline_template("mimetype.use-xattr = \"enable\"\n")
-   } ->
-   service {'lighttpd': ensure => running } ->
-   sunet::misc::ufw_allow {'allow-lighttpd':
-      from   => $allow_clients,
-      port   => 443
-   } ->
-   sunet::nagios::nrpe_check_fileage {"metadata_aggregate":
-      filename => "/var/www/html/entities/index.html", # yes this is correct
-      warning_age => '600',
-      critical_age => '86400'
-   }
 }
 
 class github_client_credential {
@@ -285,9 +187,6 @@ class nrpe {
    }
    sunet::nagios::nrpe_command {'check_apt':
       command_line => '/usr/lib/nagios/plugins/check_apt'
-   }
-   sunet::nagios::nrpe_command {'check_eidas_health':
-      command_line => '/usr/lib/nagios/plugins/check_eidas_health.sh localhost'
    }
    sunet::sudoer {'nagios_run_needrestart_command':
        user_name    => 'nagios',
@@ -436,27 +335,9 @@ class nagios_monitor {
       contact_groups => ['alerts']
    }
    nagioscfg::service {'metadata_aggregate_age':
-      hostgroup_name => ['md_publisher'],
+      hostgroup_name => ['md_aggregator'],
       check_command  => 'check_nrpe_1arg!check_fileage_metadata_aggregate',
       description    => 'metadata aggregate age',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'mdsl_aggregate_age':
-      hostgroup_name => ['mdsl_publisher'],
-      check_command  => 'check_nrpe_1arg!check_fileage_mdsl_aggregate',
-      description    => 'mdsl aggregate age',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'mdsl_se_age':
-      hostgroup_name => ['mdsl_publisher'],
-      check_command  => 'check_nrpe_1arg!check_fileage_mdsl_se',
-      description    => 'mdsl se age',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_eidas_health':
-      hostgroup_name => ['servicemonitor'],
-      check_command  => 'check_nrpe_1arg!check_eidas_health',
-      description    => 'eidas component healthcheck',
       contact_groups => ['alerts']
    }
    nagioscfg::service {'check_needrestart':
@@ -468,7 +349,7 @@ class nagios_monitor {
    nagioscfg::command {'check_ssl_cert_3':
       command_line   => "/usr/lib/nagios/plugins/check_ssl_cert -A -H '\$HOSTADDRESS\$' -c '\$ARG2\$' -w '\$ARG1\$' -p '\$ARG3\$'"
    }
-   $public_hosts = ['swedenconnect.se','qa.test.swedenconnect.se','qa.md.swedenconnect.se','md.swedenconnect.se','md.eidas.swedenconnect.se','qa.md.eidas.swedenconnect.se','qa.connector.eidas.swedenconnect.se','qa.proxy.eidas.swedenconnect.se','connector.eidas.swedenconnect.se']
+   $public_hosts = ['thiss.io','use.thiss.io']
    nagioscfg::host {$public_hosts: }
    nagioscfg::service {'check_public_ssl_cert':
       host_name      => $public_hosts,
@@ -478,24 +359,6 @@ class nagios_monitor {
    }
    nagioscfg::command {'check_website':
       command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
-   }
-   nagioscfg::service {'check_metadata_eIDAS':
-      host_name      => ['md.eidas.swedenconnect.se'],
-      check_command  => 'check_website!https://md.eidas.swedenconnect.se/',
-      description    => 'check metadata for eIDAS',
-      contact_groups => ['alerts'],
-   }
-   nagioscfg::service {'check_metadata_swedenconnect':
-      host_name      => ['md.swedenconnect.se'],
-      check_command  => 'check_website!https://md.swedenconnect.se/',
-      description    => 'check metadata for Sweden Connect',
-      contact_groups => ['alerts'],
-  }
-  nagioscfg::service {'check_connector':
-      host_name      => ['connector.eidas.swedenconnect.se'],
-      check_command  => 'check_website!https://connector.eidas.swedenconnect.se/idp/metadata/sp',
-      description    => 'check metadata for Sweden Connect',
-      contact_groups => ['alerts'],
    }
 }
 

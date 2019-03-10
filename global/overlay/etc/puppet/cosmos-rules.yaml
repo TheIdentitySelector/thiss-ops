@@ -8,6 +8,8 @@
       domain: sunet.se
    sunet::rsyslog:
 
-md-1.thiss.io:
+'^md-[0-9]+\.':
    autoupdate:
    thiss::dockerhost:
+   thiss::pyff:
+   thiss::mdq:

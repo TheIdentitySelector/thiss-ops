@@ -66,3 +66,9 @@ redis_sentinel_ips:
     - 94.176.224.138
     - 94.176.224.9
     - 94.176.224.10
+pyff_pipeline:
+    - load:
+        - http://mds.edugain.org
+    - select:
+    - discojson:
+    - print:
