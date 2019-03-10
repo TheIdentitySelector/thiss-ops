@@ -82,14 +82,17 @@ class sunet_iaas_cloud {
    }
 }
 
-class webserver {
-   ufw::allow { "allow-http":
-      ip   => 'any',
-      port => '80'
-   }
+class https {
    ufw::allow { "allow-https":
       ip   => 'any',
       port => '443'
+   }
+}
+
+class http {
+   ufw::allow { "allow-http":
+      ip   => 'any',
+      port => '80'
    }
 }
 
@@ -100,10 +103,6 @@ class servicemonitor {
       port => '444',
       ensure => absent
    }
-}
-
-class https_server {
-
 }
 
 class github_client_credential {
@@ -204,7 +203,8 @@ class nagios_monitor {
    $web_admin_pw   = safe_hiera('nagios_nagiosadmin_password');
    $web_admin_user = 'nagiosadmin';
    
-   class { 'webserver': }
+   class { 'https': }
+   class { 'http': }
    class { 'nagioscfg':
       hostgroups      => $::roles,
       config          => 'eid'
