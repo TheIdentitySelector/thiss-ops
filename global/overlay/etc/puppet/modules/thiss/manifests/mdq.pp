@@ -9,7 +9,7 @@ class thiss::mdq($version="latest") {
       hostname => "${::fqdn}",
       image    => "docker.sunet.se/thiss-mdq",
       imagetag => $version,
-      volumes  => ['/etc/metadata.json:/etc/metadata.json:ro'],
+      volumes  => ['/etc/thiss:/etc/thiss'],
       ports    => ['80:3000'],
       extra_parameters => ["--log-driver=syslog"]
    }
