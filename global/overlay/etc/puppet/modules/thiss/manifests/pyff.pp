@@ -14,7 +14,7 @@ class thiss::pyff($pyff_version="thiss",$output="/etc/metadata.json") {
   }
   sunet::scriptherder::cronjob { "${pyff}-publish":
     cmd               => "/usr/local/sbin/run-pyff /etc/pyff.fd $output",
-    minute            => '*/5',
+    hour              => '*',
     ok_criteria       => ['exit_status=0'],
     warn_criteria     => ['max_age=30m']
   }
