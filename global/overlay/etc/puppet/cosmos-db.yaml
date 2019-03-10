@@ -3,6 +3,7 @@ classes:
     autoupdate: null
     common: null
     entropyclient: null
+    https: null
     infra_ca_rp: null
     mailclient: &id001 {domain: sunet.se}
     nrpe: null
@@ -15,6 +16,7 @@ classes:
     autoupdate: null
     common: null
     entropyclient: null
+    https: null
     infra_ca_rp: null
     mailclient: *id001
     nrpe: null
@@ -28,6 +30,7 @@ members:
   autoupdate: [md-1.thiss.io, md-2.thiss.io]
   common: [md-1.thiss.io, md-2.thiss.io]
   entropyclient: [md-1.thiss.io, md-2.thiss.io]
+  https: [md-1.thiss.io, md-2.thiss.io]
   infra_ca_rp: [md-1.thiss.io, md-2.thiss.io]
   mailclient: [md-1.thiss.io, md-2.thiss.io]
   nrpe: [md-1.thiss.io, md-2.thiss.io]
