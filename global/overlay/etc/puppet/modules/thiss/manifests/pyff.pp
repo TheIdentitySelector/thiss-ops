@@ -1,4 +1,4 @@
-class thiss::pyff($pyff_version="eidas",$output="/etc/metadata.json") {
+class thiss::pyff($pyff_version="thiss",$output="/etc/metadata.json") {
   $image_tag = "docker.sunet.se/pyff:${pyff_version}"
   $pipeline = hiera("pyff_pipeline")
   docker::image { "${image_tag}" :
