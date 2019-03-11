@@ -2,4 +2,4 @@
 
 pipeline=$1
 output=$2
-exec docker run -v "${pipeline}:${pipeline}:ro" -v "${output}:${output}" -ti <%= @image_tag %> pyff --loglevel=DEBUG ${pipeline}
+docker run -v "${pipeline}:${pipeline}:ro" -v "${output}:${output}" -ti <%= @image_tag %> pyff --loglevel=DEBUG ${pipeline} && service docker-thiss_mdq restart
