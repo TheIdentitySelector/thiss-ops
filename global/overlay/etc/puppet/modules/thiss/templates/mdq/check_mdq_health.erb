@@ -1,0 +1,30 @@
+#!/bin/bash
+declare -rx PROGNAME=${0##*/}
+declare -rx PROGPATH=${0%/*}/
+
+HOSTNAME=$1
+
+if [ -r "${PROGPATH}utils.sh" ] ; then
+        source "${PROGPATH}utils.sh"
+else
+        echo "Can't find utils.sh."
+        printf "Currently being run from %s\n" "$PROGPATH"
+        exit $STATE_UNKNOWN
+fi
+
+STATE=$STATE_UNKNOWN
+
+size=$(wget -qO- $HOSTNAME | jq -r '.size')
+
+if [ $? -ne 0 ]; then
+   echo "MDQ Health: CRITICAL - Failed to obtain size of DB"
+   exit $STATE_CRITICAL
+fi
+
+if [ $size -le 0 ]; then
+   echo "MDQ Health: WARNING - size is 0"
+   exit $STATE_WARNING
+fi 
+
+echo "MDQ Health: OK - size is $size"
+exit $STATE_OK

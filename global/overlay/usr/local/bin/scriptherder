@@ -1,0 +1,938 @@
+#!/usr/bin/env python
+#
+# Copyright 2014 SUNET. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modification, are
+# permitted provided that the following conditions are met:
+#
+#    1. Redistributions of source code must retain the above copyright notice, this list of
+#       conditions and the following disclaimer.
+#
+#    2. Redistributions in binary form must reproduce the above copyright notice, this list
+#       of conditions and the following disclaimer in the documentation and/or other materials
+#       provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY SUNET ``AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+# FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL SUNET OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# The views and conclusions contained in the software and documentation are those of the
+# authors and should not be interpreted as representing official policies, either expressed
+# or implied, of SUNET.
+#
+# Author : Fredrik Thulin <fredrik@thulin.net>
+#
+
+"""
+Scriptherder can be run in one othe following modes:
+
+   wrap      -- Stores output, exit status etc. about a script invocation
+   ls        -- Lists the logged script invocations
+   check     -- Check if script execution results match given criterias,
+                output Nagios compatible result
+
+"""
+
+import os
+import re
+import sys
+import shutil
+import time
+import json
+import logging
+import logging.handlers
+import argparse
+import subprocess
+import ConfigParser
+
+_defaults = {'debug': False,
+             'syslog': False,
+             'mode': 'ls',
+             'datadir': '/var/cache/scriptherder',
+             'checkdir': '/etc/scriptherder/check',
+             }
+
+_check_defaults = {'ok': 'exit_status=0,max_age=8h',
+                   'warning': 'exit_status=0,max_age=24h',
+                   }
+
+exit_status = {'OK': 0,
+               'WARNING': 1,
+               'CRITICAL': 2,
+               'UNKNOWN': 3,
+               }
+
+
+class ScriptHerderError(Exception):
+    """
+    Base exception class for scriptherder.
+    """
+
+    def __init__(self, reason, filename):
+        self.reason = reason
+        self.filename = filename
+
+
+class JobLoadError(ScriptHerderError):
+    """
+    Raised when loading a job file fails.
+    """
+
+
+class CheckLoadError(ScriptHerderError):
+    """
+    Raised when loading a check file fails.
+    """
+
+
+class Job(object):
+    """
+    Representation of an execution of a job.
+    """
+
+    def __init__(self, name, cmd=None):
+        if cmd is None:
+            cmd = []
+        for x in cmd:
+            assert(isinstance(x, basestring))
+        self._name = name
+        self._cmd = cmd
+        self._start_time = None
+        self._end_time = None
+        self._exit_status = None
+        self._pid = None
+        self._output = None
+        self._filename = None
+        self._output_filename = None
+        if self._name is None:
+            self._name = os.path.basename(self.cmd)
+
+    def __repr__(self):
+        start = time.strftime('%Y-%m-%d %X', time.localtime(self.start_time))
+        return '<{} instance at {:#x}: \'{name}\' start={start}, exit={exit}>'.format(
+            self.__class__.__name__,
+            id(self),
+            name=self.name,
+            start = start,
+            exit = self.exit_status,
+        )
+
+    def __str__(self):
+        start = time.strftime('%Y-%m-%d %X', time.localtime(self.start_time))
+        return '\'{name}\' start={start}, duration={duration:>6}, exit={exit}'.format(
+            name = self.name,
+            start = start,
+            duration = self.duration_str,
+            exit = self.exit_status,
+        )
+
+    def status_summary(self):
+        """
+        Return short string with status of job.
+
+        E.g. 'name[exit=0,age=19h]'
+        """
+        if self._end_time is None or self._start_time is None:
+            return '{name}[not_running]'.format(name = self.name)
+        age = _time_to_str(time.time() - self._start_time)
+        return '{name}[exit={exit_status},age={age}]'.format(
+            name = self.name,
+            exit_status = self._exit_status,
+            age = age,
+            )
+
+    @property
+    def name(self):
+        """
+        The name of the job.
+
+        @rtype: string
+        """
+        if self._name is None:
+            return self.cmd
+        return self._name
+
+    @property
+    def cmd(self):
+        """
+        The wrapped scripts name.
+
+        @rtype: string
+        """
+        return self._cmd[0]
+
+    @property
+    def args(self):
+        """
+        The wrapped scripts arguments.
+
+        @rtype: [string]
+        """
+        return self._cmd[1:]
+
+    @property
+    def start_time(self):
+        """
+        The start time of the script invocation.
+
+        @rtype: int() or None
+        """
+        if self._start_time is None:
+            return None
+        return int(self._start_time)
+
+    @property
+    def end_time(self):
+        """
+        The end time of the script invocation.
+
+        @rtype: int() or None
+        """
+        if self._end_time is None:
+            return None
+        return int(self._end_time)
+
+    @property
+    def duration_str(self):
+        """
+        Time spent executing job, as a human readable string.
+
+        @rtype: string
+        """
+        if self._end_time is None or self._start_time is None:
+            return 'NaN'
+        duration = self._end_time - self._start_time
+        return _time_to_str(duration)
+
+    @property
+    def exit_status(self):
+        """
+        The exit status of the script invocation.
+
+        @rtype: int() or None
+        """
+        return self._exit_status
+
+    @property
+    def pid(self):
+        """
+        The process ID of the script invocation.
+
+        @rtype: int() or None
+        """
+        return self._pid
+
+    @property
+    def filename(self):
+        """
+        The filename this job is stored in.
+
+        @rtype: string or None
+        """
+        return self._filename
+
+    @property
+    def output(self):
+        """
+        The output (STDOUT and STDERR) of the script invocation.
+
+        @rtype: [string]
+        """
+        if not self._output and self.output_filename:
+            f = open(self.output_filename, 'r')
+            self._output = f.read()
+            f.close()
+        return self._output
+
+    @property
+    def output_filename(self):
+        """
+        The name of the file holding the output (STDOUT and STDERR) of the script invocation.
+
+        @rtype: [string]
+        """
+        return self._output_filename
+
+    def run(self):
+        """
+        Run script, storing various aspects of the results.
+        """
+        self._start_time = time.time()
+        proc = subprocess.Popen(self._cmd,
+                                cwd='/',
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT,
+                                close_fds=True,
+                                )
+        (stdout, _stderr) = proc.communicate()
+        self._end_time = time.time()
+        self._output = stdout
+        self._exit_status = proc.returncode
+        self._pid = proc.pid
+
+    def save_to_file(self, datadir, logger, filename=None):
+        """
+        Create a record with the details of a script invocation.
+
+        @param datadir: Directory to keep records in
+        @param logger: logging logger
+        @param filename: Filename to use - default is reasonably constructed
+
+        @type datadir: string
+        @type logger: logging.logger
+        @type filename: string or None
+        """
+        if filename is None:
+            fn = ''
+            for x in self.name:
+                if x.isalnum():
+                    fn += x
+                else:
+                    fn += '_'
+            filename = '{!s}_{!s}_{!s}'.format(fn, self.start_time, self.pid)
+        fn = os.path.join(datadir, filename)
+        logger.debug("Saving job metadata to file {!r}.tmp".format(fn))
+        output_fn = fn + '_output'
+        f = open(fn + '.tmp', 'w')
+        data = {'name': self.name,
+                'cmd': self._cmd,
+                'start_time': self._start_time,
+                'end_time': self._end_time,
+                'pid': self.pid,
+                'exit_status': self.exit_status,
+                'version': 2,
+                }
+        if self._output:
+            data['output_filename'] = output_fn + '.data'
+            data['output_size'] = len(self._output)
+        f.write(json.dumps(data, indent = 4, sort_keys = True))
+        f.write('\n')
+        f.close()
+        os.rename(fn + '.tmp', fn + '.json')
+        self._filename = fn
+
+        if self._output:
+            logger.debug("Saving job output to file {!r}".format(output_fn))
+            f = open(output_fn + '.tmp', 'w')
+            f.write(self._output)
+            f.close()
+            os.rename(output_fn + '.tmp', output_fn + '.data')
+            self._output_filename = output_fn
+
+    def from_file(self, filename):
+        """
+        Initialize this Job instance with data loaded from a file (previously created with
+        `save_to_file()'.
+
+        @param filename: Filename to load data from
+        @type filename: string
+
+        @rtype: Job
+        """
+        f = open(filename, 'r')
+        try:
+            data = json.loads(f.read(100 * 1024 * 1024))
+        except ValueError:
+            raise JobLoadError('JSON parsing failed', filename=filename)
+        f.close()
+        if data.get('version') == 1:
+            self._name = data.get('name')
+            for x in data['cmd']:
+                assert(isinstance(x, basestring))
+            self._cmd = data['cmd']
+            self._start_time = data['start_time']
+            self._end_time = data['end_time']
+            self._pid = data['pid']
+            self._exit_status = data['exit_status']
+            self._output = data['output']
+            self._output_filename = None
+            self._filename = filename
+        elif data.get('version') == 2:
+            self._name = data.get('name')
+            for x in data['cmd']:
+                assert(isinstance(x, basestring))
+            self._cmd = data['cmd']
+            self._start_time = data['start_time']
+            self._end_time = data['end_time']
+            self._pid = data['pid']
+            self._exit_status = data['exit_status']
+            self._output_filename = data.get('output_filename')
+            #self._output_size = data.get('output_size')  # currently not used in scriptherder
+            self._filename = filename
+        else:
+            raise JobLoadError('Unknown version: {!r}'.format(data.get('version')), filename=filename)
+        return self
+
+
+class Check(object):
+    """
+    Conditions for the 'check' command. Loaded from file (one file per job name),
+    and used to check if a Job instance is OK or WARNING or ...
+    """
+
+    def __init__(self, filename, logger):
+        """
+        Load check criteria from a file.
+
+        Example file contents:
+
+            [check]
+            ok = exit_status=0, max_age=8h
+            warning = exit_status=0, max_age=24h
+
+        @param filename: INI file with check criterias for a specific job
+        @param logger: logging logger
+
+        @type filename: string
+        @type logger: logging.logger
+        """
+        self.logger = logger
+        self.config = ConfigParser.ConfigParser(_check_defaults)
+        if not self.config.read([filename]):
+            raise ScriptHerderError('Failed loading config file', filename)
+        _section = 'check'
+        self._ok_criteria = [x.strip() for x in self.config.get(_section, 'ok').split(',')]
+        self._warning_criteria = [x.strip() for x in self.config.get(_section, 'warning').split(',')]
+
+    def job_is_ok(self, job):
+        """
+        Evaluate a Job against the OK criterias for this check.
+
+        @type job: Job
+
+        @rtype: bool
+        """
+        res = True
+        for this in self._ok_criteria:
+            if not self._evaluate(this, job):
+                self.logger.debug("Job {!r} failed OK criteria {!r}".format(job, this))
+                res = False
+        self.logger.debug("{!r} is OK result: {!r}".format(job, res))
+        return res
+
+    def job_is_warning(self, job):
+        """
+        Evaluate a Job against the WARNING criterias for this check.
+
+        @type job: Job
+
+        @rtype: bool
+        """
+        res = True
+        for this in self._warning_criteria:
+            if not self._evaluate(this, job):
+                self.logger.debug("Job {!r} failed WARNING criteria {!r}".format(job, this))
+                res = False
+        self.logger.debug("{!r} is WARNING result: {!r}".format(job, res))
+        return res
+
+    def _evaluate(self, criteria, job):
+        """
+        The actual evaluation engine.
+
+        @param criteria: The criteria to test ('max_age=8h' for example)
+        @param job: The job
+
+        @type criteria: string
+        @type job: Job
+        """
+        (what, value) = criteria.split('=')
+        what.strip()
+        value.strip()
+        if what == 'exit_status':
+            value = int(value)
+            res = (job.exit_status == value)
+            self.logger.debug("Evaluate criteria {!r}: ({!r} == {!r}) {!r}".format(
+                criteria, job.exit_status, value, res))
+            return res
+        elif what == 'max_age':
+            value = _parse_time_value(value)
+            now = int(time.time())
+            res = (job.end_time > (now - value))
+            self.logger.debug("Evaluate criteria {!r}: ({!r} > ({!r} - {!r}) {!r}".format(
+                criteria, job.end_time, now, value, res))
+            return res
+        elif what == 'output_contains' or what == 'output_not_contains':
+            value = value.strip()
+            res = re.match(value, job.output) is not None
+            if what == 'output_not_contains':
+                res = not res  # invert result
+            self.logger.debug("Evaluate criteria {!r}: {!r} matching in {!s} bytes output: {!r}".format(
+                criteria, value, len(job.output), res))
+            return res
+        self.logger.debug("Evaluation of unknown criteria {!r}, defaulting to False".format(criteria))
+        return False
+
+
+class CheckStatus(object):
+    """
+    Aggregated status of job invocations for --mode check.
+
+    Attributes:
+
+      checks_ok: List of checks in OK state ([Job()]).
+      checks_warning: List of checks in WARNING state ([Job()]).
+      checks_critical: List of checks in CRITICAL state ([Job()]).
+    """
+
+    def __init__(self, args, logger):
+        """
+        @param args: Parsed command line arguments
+        @param logger: logging logger
+        """
+
+        self.checks_ok = []
+        self.checks_warning = []
+        self.checks_critical = []
+
+        self._jobs = _get_job_results(args, logger)
+        # group the jobs by their name
+        _by_name = {}
+        for this in self._jobs:
+            if this.name not in _by_name:
+                _by_name[this.name] = []
+            _by_name[this.name].append(this)
+        self._jobs_by_name = _by_name
+
+        self._job_count = len(_by_name)
+
+        self._check_running_jobs(args, logger)
+        if not args.cmd:
+            self._check_not_running(args, logger)
+
+    def _check_running_jobs(self, args, logger):
+        """
+        Look for job execution entrys (parsed into Job() instances), group them
+        per check name and determine the status. For each group, append status
+        to one of the three aggregate status lists of this object (checks_ok,
+        checks_warning or checks_critical).
+
+        @param args: Parsed command line arguments
+        @param logger: logging logger
+        """
+        # determine total check status based on all logged invocations of this job
+        for (name, jobs) in self._jobs_by_name.items():
+            # Load the evaluation criterias for this job
+            check_filename = os.path.join(args.checkdir, name + '.ini')
+            logger.debug("Loading check definition from {!r}".format(check_filename))
+            try:
+                check = Check(check_filename, logger)
+            except ScriptHerderError as exc:
+                logger.warning("Failed loading check: {!r}".format(exc), exc_info=True)
+                raise CheckLoadError('Failed loading check', filename = check_filename)
+
+            # Sort jobs, oldest first
+            jobs = sorted(jobs, key=lambda x: x.start_time)
+            logger.debug("Checking {!r}: {!r}".format(name, jobs))
+
+            jobs_ok = []
+            jobs_warning = []
+            jobs_critical = []
+            for job in jobs:
+                if check.job_is_ok(job):
+                    jobs_ok.append(job)
+                elif check.job_is_warning(job):
+                    jobs_warning.append(job)
+                else:
+                    jobs_critical.append(job)
+
+            logger.debug("Raw status OK      : {!r}".format(jobs_ok))
+            logger.debug("Raw status WARN    : {!r}".format(jobs_warning))
+            logger.debug("Raw status CRITICAL: {!r}".format(jobs_critical))
+
+            # add most recent job status to the totals
+            if jobs_ok:
+                self.checks_ok.append(jobs_ok[-1])
+            elif jobs_warning:
+                self.checks_warning.append(jobs_warning[-1])
+            else:
+                self.checks_critical.append(jobs_critical[-1])
+
+    def _check_not_running(self, args, logger):
+        """
+        Look for job execution entrys (parsed into Job() instances), group them
+        per check name and determine the status. For each group, append status
+        to one of the three aggregate status lists of this object (checks_ok,
+        checks_warning or checks_critical).
+
+        @param args: Parsed command line arguments
+        @param logger: logging logger
+        """
+        files = [f for f in os.listdir(args.checkdir) if os.path.isfile(os.path.join(args.checkdir, f))]
+        for this in files:
+            if not this.endswith('.ini'):
+                continue
+            filename = os.path.join(args.checkdir, this)
+            logger.debug("Loading check definition from {!r}".format(filename))
+            try:
+                # validate check loads
+                Check(filename, logger)
+            except ValueError as exc:
+                logger.warning("Failed loading check: {!r}".format(exc), exc_info=True)
+                raise CheckLoadError(filename = filename)
+            name = this[:-4]  # remove the '.ini' suffix
+            if name not in self._jobs_by_name:
+                logger.debug('Check {!r} (filename {!r}) not found in jobs'.format(name, filename))
+                job = Job(name=name)
+                self.checks_critical.append(job)
+                self._job_count += 1
+            else:
+                logger.debug('Check {!r} has {!r} logged results'.format(name, len(self._jobs_by_name[name])))
+
+    def num_jobs(self):
+        """
+        Return number of jobs processed. This is number of different jobs running + not running.
+
+        @rtype: int
+        """
+        return self._job_count
+
+
+def job_from_file(filename):
+    """
+    Recreate Job() instance from saved file.
+
+    @param filename: Filename to load script invocation details from
+
+    @type filename: string
+    @rtype: Job
+    """
+    job = Job('')
+    return job.from_file(filename)
+
+
+def parse_args(defaults):
+    """
+    Parse the command line arguments
+
+    @param defaults: Argument defaults
+
+    @type defaults: dict
+    """
+    parser = argparse.ArgumentParser(description = 'Script herder script',
+                                     add_help = True,
+                                     formatter_class = argparse.ArgumentDefaultsHelpFormatter,
+                                     )
+
+    parser.add_argument('--debug',
+                        dest = 'debug',
+                        action = 'store_true', default = defaults['debug'],
+                        help = 'Enable debug operation',
+                        )
+    parser.add_argument('--syslog',
+                        dest = 'syslog',
+                        action = 'store_true', default = defaults['syslog'],
+                        help = 'Enable syslog output',
+                        )
+    parser.add_argument('--mode',
+                        dest = 'mode',
+                        choices = ['wrap', 'ls', 'check', 'lastlog', 'lastfaillog'], default = defaults['mode'],
+                        help = 'What mode to run in',
+                        )
+    parser.add_argument('-d', '--datadir',
+                        dest = 'datadir',
+                        default = defaults['datadir'],
+                        help = 'Data directory',
+                        metavar = 'PATH',
+                        )
+    parser.add_argument('--checkdir',
+                        dest = 'checkdir',
+                        default = defaults['checkdir'],
+                        help = 'Check definitions directory',
+                        metavar = 'PATH',
+                        )
+    parser.add_argument('-N', '--name',
+                        dest = 'name',
+                        help = 'Job name',
+                        metavar = 'NAME',
+                        )
+
+    parser.add_argument('cmd',
+                        nargs = '*', default = [],
+                        help = 'Script command',
+                        metavar = 'CMD',
+                        )
+
+    args = parser.parse_args()
+
+    return args
+
+
+def mode_wrap(args, logger):
+    """
+    Execute a job and save result state in a file.
+
+    @param args: Parsed command line arguments
+    @param logger: logging logger
+    """
+    job = Job(args.name, cmd=args.cmd)
+    logger.debug("Invoking '{!s}'".format(''.join(args.cmd)))
+    job.run()
+    logger.debug("Finished, exit status {!r}".format(job.exit_status))
+    logger.debug("Job output:\n{!s}".format(job.output))
+    job.save_to_file(args.datadir, logger)
+    return True
+
+
+def mode_ls(args, logger):
+    """
+    List all the saved states for jobs.
+
+    @param args: Parsed command line arguments
+    @param logger: logging logger
+    """
+    jobs = _get_job_results(args, logger)
+    for this in sorted(jobs, key=lambda x: x.start_time):
+        start = time.strftime('%Y-%m-%d %X', time.localtime(this.start_time))
+        print('{start}  {duration:>6}  exit={exit}  name={name}   {filename}'.format(
+            start = start,
+            duration = this.duration_str,
+            exit = this.exit_status,
+            name = this.name,
+            filename = this.filename,
+        ))
+    return True
+
+
+def mode_check(args, logger):
+    """
+    Evaluate the stored states for either a specific job, or all jobs.
+
+    Return Nagios compatible output (scriptherder --mode check is intended to
+                                     run using Nagios NRPE or similar).
+
+    @param args: Parsed command line arguments
+    @param logger: logging logger
+    """
+
+    try:
+        status = CheckStatus(args, logger)
+    except CheckLoadError as exc:
+        print("UNKNOWN: Failed loading check from file '{!s}' ({!s})".format(exc.filename, exc.reason))
+        return exit_status['UNKNOWN']
+
+    if args.cmd:
+        # Single job check requested, output detailed information
+        if status.checks_ok:
+            print('OK: {!s}'.format(status.checks_ok[-1]))
+            return exit_status['OK']
+        if status.checks_warning:
+            print('WARNING: {!s}'.format(status.checks_warning[-1]))
+            return exit_status['WARNING']
+        if status.checks_critical:
+            print('CRITICAL: {!s}'.format(status.checks_critical[-1]))
+            return exit_status['CRITICAL']
+        print "UNKNOWN - no jobs found for {!r}?".format(args.cmd)
+        return exit_status['UNKNOWN']
+
+    # When looking at multiple jobs at once, logic gets a bit reversed - if ANY
+    # job invocation is CRITICAL/WARNING, the aggregate message given to
+    # Nagios will have to be a failure.
+    if status.checks_critical:
+        print('CRITICAL: {!s}'.format(
+            _status_summary(status.num_jobs(), status.checks_critical)))
+        return exit_status['CRITICAL']
+    if status.checks_warning:
+        print('WARNING: {!s}'.format(
+            _status_summary(status.num_jobs(), status.checks_warning)))
+        return exit_status['WARNING']
+    if status.checks_ok:
+        print('OK: {!s}'.format(
+            _status_summary(status.num_jobs(), status.checks_ok)))
+        return exit_status['OK']
+    print "UNKNOWN - no jobs found?"
+    return exit_status['UNKNOWN']
+
+
+def mode_lastlog(args, logger, fail_status=False):
+    """
+    View script output for the last execution for either a specific
+    job, or all jobs.
+
+    @param args: Parsed command line arguments
+    @param logger: logging logger
+    """
+    _jobs = sorted(_get_job_results(args, logger), key=lambda x: x.start_time)
+    jobs_by_name = {}
+    for job in _jobs:
+        if job.name not in jobs_by_name:
+            jobs_by_name[job.name] = []
+        jobs_by_name[job.name].append(job)
+
+    if len(jobs_by_name) > 0:
+        view_jobs = []
+        for (name, jobs) in jobs_by_name.items():
+            job = jobs[-1]  # last job (any status)
+            if job.output_filename:
+                if fail_status and job.exit_status != 0:
+                    view_jobs.append(job)
+                elif not fail_status:
+                    view_jobs.append(job)
+
+        if view_jobs:
+            for job in view_jobs:
+                if os.path.isfile(job.output_filename):
+                    with open(job.output_filename, 'r') as f:
+                        print '=== Script output of {!r}'.format(job)
+                        shutil.copyfileobj(f, sys.stdout)
+                        print '=== End of script output\n'
+        else:
+            print('No script output found for {!s} with fail_status={!s}'.format(', '.join(jobs_by_name.keys()), fail_status))
+    else:
+        print "No jobs found"
+
+
+def _status_summary(num_jobs, failed):
+    """
+    String format routine used in output of checks status.
+    """
+    fmt = '{jobs} job in this state: {summary}'
+    if len(failed) == 1:
+        fmt = '{jobs}/{num_jobs} job in this state: {summary}'
+
+    summary = ', '.join(sorted([str(x.status_summary()) for x in failed]))
+    return fmt.format(jobs = len(failed),
+                      num_jobs = num_jobs,
+                      summary = summary,
+                      )
+
+
+def _get_job_results(args, logger):
+    """
+    Load all jobs matching any specified name on the command line.
+
+    @param args: Parsed command line arguments
+    @param logger: logging logger
+
+    @rtype: [Job]
+    """
+    files = [f for f in os.listdir(args.datadir) if os.path.isfile(os.path.join(args.datadir, f))]
+    jobs = []
+    for this in files:
+        if not this.endswith('.json'):
+            continue
+        filename = os.path.join(args.datadir, this)
+        try:
+            job = job_from_file(filename)
+        except JobLoadError as exc:
+            logger.warning("Failed loading job file '{!s}' ({!s})".format(exc.filename, exc.reason))
+        if args.cmd:
+            if args.cmd[0] != job.name:
+                logger.debug("Skipping '{!s}' not matching '{!s}' (file {!s})".format(job.name, args.cmd[0], filename))
+                continue
+        jobs.append(job)
+    return jobs
+
+
+def _parse_time_value(value):
+    """
+    Parse time period strings such as 1d. A lone number is considered number of seconds.
+
+    Return parsed value as number of seconds.
+
+    @param value: Value to parse
+    @type value: string
+    @rtype: int
+    """
+    match = re.match(r'^(\d+)([hmsd]*)$', value)
+    if match:
+        num = int(match.group(1))
+        what = match.group(2)
+        if what == 'm':
+            return num * 60
+        if what == 'h':
+            return num * 3600
+        if what == 'd':
+            return num * 86400
+        return num
+
+
+def _time_to_str(value):
+    """
+    Format number of seconds to short readable string.
+
+    @type value: float or int
+
+    @rtype: string
+    """
+    if value < 1:
+        # milliseconds
+        return '{:0.3f}ms'.format(value * 1000)
+    if value < 60:
+        return '{!s}s'.format(int(value))
+    if value < 3600:
+        return '{!s}m'.format(int(value / 60))
+    if value < 86400:
+        return '{!s}h'.format(int(value / 3600))
+    days = int(value / 86400)
+    return '{!s}d{!s}h'.format(days, int((value % 86400) / 3600))
+
+
+def main(myname = 'scriptherder', args = None, logger = None, defaults=_defaults):
+    """
+    Main entry point for either wrapping a script, or checking the status of it.
+
+    @param myname: String, used for logging
+    @param args: Command line arguments
+    @param logger: logging logger
+    @param defaults: Default command line arguments
+
+    @type myname: string
+    @type args: None or [string]
+    @type logger: logging.logger
+    @type defaults: dict
+    """
+    if not args:
+        args = parse_args(defaults)
+
+    # initialize various components
+    if not logger:
+        logger = logging.getLogger(myname)
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
+        # log to stderr when debugging
+        formatter = logging.Formatter('%(asctime)s %(name)s %(threadName)s: %(levelname)s %(message)s')
+        stream_h = logging.StreamHandler(sys.stderr)
+        stream_h.setFormatter(formatter)
+        logger.addHandler(stream_h)
+    if args.syslog:
+        syslog_h = logging.handlers.SysLogHandler()
+        formatter = logging.Formatter('%(name)s: %(levelname)s %(message)s')
+        syslog_h.setFormatter(formatter)
+        logger.addHandler(syslog_h)
+
+    if args.name and args.mode != 'wrap':
+        logger.error('Argument --name only applicable for --mode wrap')
+        return False
+
+    if args.mode == 'wrap':
+        return mode_wrap(args, logger)
+    elif args.mode == 'ls':
+        return mode_ls(args, logger)
+    elif args.mode == 'check':
+        return mode_check(args, logger)
+    elif args.mode == 'lastlog':
+        return mode_lastlog(args, logger)
+    elif args.mode == 'lastfaillog':
+        return mode_lastlog(args, logger, fail_status=True)
+    else:
+        logger.error("Invalid mode {!r}".format(args.mode))
+        return False
+
+if __name__ == '__main__':
+    try:
+        progname = os.path.basename(sys.argv[0])
+        res = main(progname)
+        if isinstance(res, int):
+            sys.exit(res)
+        if res:
+            sys.exit(0)
+        sys.exit(1)
+    except KeyboardInterrupt:
+        sys.exit(0)
