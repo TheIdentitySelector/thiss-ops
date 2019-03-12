@@ -13,10 +13,9 @@ class thiss::pyff($pyff_version="thiss",$output="/etc/thiss/metadata.json") {
   file {"/opt/pyff/mdx.fd":
      content => inline_template("<%= @pipeline.to_yaml %>\n")
   }
-  sunet::scriptherder::cronjob { "${pyff}-publish":
+  sunet::scriptherder::cronjob { "publish":
     cmd               => "/usr/local/sbin/run-pyff /opt/pyff/mdx.fd $output",
-    minute            => '5',
-    hour              => '*',
+    minute            => '*/30',
     ok_criteria       => ['exit_status=0'],
     warn_criteria     => ['max_age=30m']
   }
