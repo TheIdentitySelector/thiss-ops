@@ -69,8 +69,8 @@ redis_sentinel_ips:
 pyff_pipeline:
     - load:
         - http://mds.edugain.org
-        - https://mds.swamid.se/md/swamid-registered.xml verify /etc/ssl/certs/inc-md-cert.pem
-        - http://md.incommon.org/InCommon/InCommon-metadata.xml verify /etc/ssl/certs/md-signer2.crt
+        - https://mds.swamid.se/md/swamid-registered.xml
+        - http://md.incommon.org/InCommon/InCommon-metadata.xml
     - select:
     - discojson:
     - print:
