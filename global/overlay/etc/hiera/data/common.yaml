@@ -72,4 +72,4 @@ pyff_pipeline:
     - select:
     - discojson:
     - print:
-        output: /etc/metadata.json 
+        output: /etc/thiss/metadata.json 
