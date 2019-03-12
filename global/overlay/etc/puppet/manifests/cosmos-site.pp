@@ -163,9 +163,9 @@ class nrpe {
       class {'apt::backports': }
    }
    package {'nagios-plugins-contrib': ensure => latest}
-   #if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease < '18.04') {
-   #   package {'nagios-plugins-extra': ensure => latest}
-   #}
+   if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease < '18.04') {
+      package {'nagios-plugins-extra': ensure => latest}
+   }
    sunet::nagios::nrpe_command {'check_memory':
       command_line => '/usr/lib/nagios/plugins/check_memory -w 10% -c 5%'
    }
