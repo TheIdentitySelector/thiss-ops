@@ -71,6 +71,7 @@ pyff_pipeline:
         - http://mds.edugain.org
         - https://mds.swamid.se/md/swamid-registered.xml
         - http://md.incommon.org/InCommon/InCommon-metadata.xml
+        - http://fed.openathens.net/oafed/metadata
     - select:
     - discojson:
     - print:
