@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# dpkg frequently breaks with automatic reboots.
+# Make an attempt to get it back into working order.
+dpkg --configure -a

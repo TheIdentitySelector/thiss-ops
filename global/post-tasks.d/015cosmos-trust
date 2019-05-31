@@ -55,10 +55,10 @@ for k in $COSMOS_KEYS/*.pub; do
 
     if [[ ! ${KEYRING[$fp]} ]]; then
 	echo -e "$0: ${bold}Importing new key ${fp}${reset} from ${k}"
-	cosmos gpg --import < $k
+	cosmos gpg --no-tty --import < $k
     elif [[ ${EXPIRED[$fp]} ]]; then
 	echo -e "$0: ${bold}Re-importing expired key ${fp}${reset} from ${k}"
-	cosmos gpg --import < $k
+	cosmos gpg --no-tty --import < $k
     fi
 done
 

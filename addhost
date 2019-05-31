@@ -51,7 +51,7 @@ fi
 
 if [ "$cmd_do_bootstrap" = "yes" ]; then
    scp apt/cosmos_1.5-1_all.deb apt/bootstrap-cosmos.sh root@$cmd_hostname:
-   ssh -t root@$cmd_hostname ./bootstrap-cosmos.sh $cmd_fqdn $rrepo $rtag
-   ssh -t root@$cmd_hostname cosmos update
-   ssh -t root@$cmd_hostname cosmos apply
+   ssh root@$cmd_hostname ./bootstrap-cosmos.sh $cmd_fqdn $rrepo $rtag
+   ssh root@$cmd_hostname cosmos update
+   ssh root@$cmd_hostname cosmos apply
 fi
