@@ -1,4 +1,4 @@
-class thiss::md_publisher(Array $allow_clients=['any'], $keyname=undef, String $dir="/var/www/html") {
+class thiss::md_publisher(Array $allow_clients=['any'], Stringg $keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
    $_keyname = $keyname ? { 
       undef   => $::fqdn,
       default => $keyname
@@ -34,7 +34,7 @@ class thiss::md_publisher(Array $allow_clients=['any'], $keyname=undef, String $
       port   => 443
    } ->
    sunet::nagios::nrpe_check_fileage {"metadata_aggregate":
-      filename => "/var/www/html/entities/index.html", # yes this is correct
+      filename => $watch,
       warning_age => '600',
       critical_age => '86400'
    }
