@@ -24,6 +24,7 @@
 '^a-[0-9]+\.':
    thiss::dockerhost:
    thiss::pyff:
+      version: 1.0.1
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
