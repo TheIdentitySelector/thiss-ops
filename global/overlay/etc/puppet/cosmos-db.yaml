@@ -1,48 +1,44 @@
 classes:
   a-1.thiss.io:
-    autoupdate: &id001 {cron: false}
     common: null
     entropyclient: null
     infra_ca_rp: null
-    mailclient: &id002 {domain: sunet.se}
+    mailclient: &id001 {domain: sunet.se}
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: &id003 {disable_all_local_users: true, disable_ipv6_privacy: true,
+    sunet::server: &id002 {disable_all_local_users: true, disable_ipv6_privacy: true,
       fail2ban: true, unattended_upgrades: true}
   md-1.thiss.io:
-    autoupdate: *id001
     common: null
     entropyclient: null
     http: null
     https: null
     infra_ca_rp: null
-    mailclient: *id002
+    mailclient: *id001
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: *id003
+    sunet::server: *id002
     thiss::dockerhost: null
-    thiss::mdq: &id004 {version: 1.1.0}
+    thiss::mdq: &id003 {version: 1.1.0}
     thiss::pyff: null
   md-2.thiss.io:
-    autoupdate: *id001
     common: null
     entropyclient: null
     http: null
     https: null
     infra_ca_rp: null
-    mailclient: *id002
+    mailclient: *id001
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: *id003
+    sunet::server: *id002
     thiss::dockerhost: null
-    thiss::mdq: *id004
+    thiss::mdq: *id003
     thiss::pyff: null
 members:
   all: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
-  autoupdate: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   common: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   entropyclient: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   http: [md-1.thiss.io, md-2.thiss.io]
