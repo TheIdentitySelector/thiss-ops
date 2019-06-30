@@ -11,7 +11,7 @@ classes:
       fail2ban: true, unattended_upgrades: true}
     thiss::dockerhost: null
     thiss::md_publisher: {watch: /var/www/html/metadata.json}
-    thiss::pyff: {output: /var/www/html/metadata.json, version: 1.0.1}
+    thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
   md-1.thiss.io:
     common: null
     entropyclient: null
