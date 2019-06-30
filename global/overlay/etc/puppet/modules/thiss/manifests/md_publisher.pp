@@ -1,4 +1,4 @@
-class thiss::md_publisher(Array $allow_clients=['any'], String $keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
+class thiss::md_publisher(Array $allow_clients=['any'], $keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
    $_keyname = $keyname ? { 
       undef   => $::fqdn,
       default => $keyname
