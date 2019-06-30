@@ -10,7 +10,8 @@ classes:
     sunet::server: &id002 {disable_all_local_users: true, disable_ipv6_privacy: true,
       fail2ban: true, unattended_upgrades: true}
     thiss::dockerhost: null
-    thiss::pyff: null
+    thiss::md_publisher: {watch: /var/www/html/metadata.json}
+    thiss::pyff: {output: /var/www/html/metadata.json}
   md-1.thiss.io:
     common: null
     entropyclient: null
@@ -52,6 +53,7 @@ members:
   sunet::rsyslog: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   sunet::server: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   thiss::dockerhost: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
+  thiss::md_publisher: [a-1.thiss.io]
   thiss::mdq: [md-1.thiss.io, md-2.thiss.io]
   thiss::pyff: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
 
