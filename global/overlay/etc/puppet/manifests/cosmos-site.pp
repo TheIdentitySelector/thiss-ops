@@ -114,15 +114,6 @@ class github_client_credential {
 }
 
 class ops {
-  # Allow hosts to configure sshd as needed
-  $sshd_config = $hostname ? {
-    'pypi'  => false,
-    default => true,
-  }
-  class { 'sunet::server':
-    sshd_config => $sshd_config,
-  }
-
   # SSH config, create SSH authorized keys from Hiera
   $ssh_authorized_keys = hiera_hash('ssh_authorized_keys', undef)
   if is_hash($ssh_authorized_keys) {

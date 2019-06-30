@@ -2,6 +2,13 @@
    common:
    ops:
    nrpe:
+   autoupdate:
+      cron: false
+   sunet::server:
+      fail2ban: true
+      unattended_upgrades: true
+      disable_ipv6_privacy: true
+      disable_all_local_users: true
    entropyclient:
    infra_ca_rp:
    mailclient:
@@ -9,9 +16,9 @@
    sunet::rsyslog:
 
 '^md-[0-9]+\.':
-   autoupdate:
    thiss::dockerhost:
    thiss::pyff:
    thiss::mdq:
+      version: 1.1.0
    https:
    http:
