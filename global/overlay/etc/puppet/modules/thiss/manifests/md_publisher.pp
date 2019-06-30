@@ -6,11 +6,6 @@ class thiss::md_publisher(Array $allow_clients=['any'], $keyname=undef, String $
    # this allows fileage check to work wo sudo
    file { '/var/www': ensure => directory, mode => '0755' } ->
    file { '/var/www/html': ensure => directory, mode => '0755', owner => 'www-data', group =>'www-data' } ->
-   sunet::rrsync {$dir:
-      ro                => false,
-      ssh_key           => safe_hiera('publisher_ssh_key'),
-      ssh_key_type      => safe_hiera('publisher_ssh_key_type')
-   } ->
    package {['lighttpd','attr']: ensure => latest } ->
    exec {'enable-ssl': 
       command => "/usr/sbin/lighttpd-enable-mod ssl",
