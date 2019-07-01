@@ -1,6 +1,6 @@
 class thiss::md_publisher(Array $allow_clients=['any'], $keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
    $_keyname = $keyname ? { 
-      undef   => $::fqdn,
+      undef   => "${::fqdn}_infra",
       default => $keyname
    }
    # this allows fileage check to work wo sudo
