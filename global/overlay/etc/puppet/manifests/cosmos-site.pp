@@ -73,6 +73,10 @@ class openstack_dockerhost {
    }
 }
 
+class update_ca_certificates {
+   exec { 'do_update_ca_certificates': command => '/usr/sbin/update-ca-certificates' }
+}
+
 class sunet_iaas_cloud {
    sunet::cloud_init::config { 'disable_datasources':
       config => { datasource_list => [ 'None' ] }

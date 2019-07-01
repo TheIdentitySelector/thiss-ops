@@ -15,6 +15,7 @@
    mailclient:
       domain: sunet.se
    sunet::rsyslog:
+   update_ca_certificates:
 
 '^md-[0-9]+\.':
    sunet_iaas_cloud:
