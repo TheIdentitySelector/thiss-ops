@@ -6,7 +6,7 @@ class thiss::mdq($version="latest", $src=undef, $dst="/etc/thiss/metadata.json")
       mode     => '0644'
    } ->
    file { '/usr/local/bin/get_metadata.sh': 
-      contents     => template('thiss/mdq/get_metadata.sh'),
+      contents     => template('thiss/mdq/get_metadata.erb'),
       owner        => root,
       group        => root,
       mode         => '0755'
