@@ -1,6 +1,5 @@
 classes:
   a-1.thiss.io:
-    autoupdate: null
     common: null
     entropyclient: null
     infra_ca_rp: null
@@ -10,12 +9,12 @@ classes:
     sunet::rsyslog: null
     sunet::server: &id002 {disable_all_local_users: true, disable_ipv6_privacy: true,
       fail2ban: true, unattended_upgrades: true}
+    sunet::updater: &id003 {cosmos_automatic_reboot: true, cron: true}
     sunet_iaas_cloud: null
     thiss::dockerhost: null
     thiss::md_publisher: {watch: /var/www/html/metadata.json}
     thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
   md-1.thiss.io:
-    autoupdate: null
     common: null
     entropyclient: null
     http: null
@@ -26,12 +25,12 @@ classes:
     ops: null
     sunet::rsyslog: null
     sunet::server: *id002
+    sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: null
-    thiss::mdq: &id003 {version: 1.1.0}
+    thiss::mdq: &id004 {version: 1.1.0}
     thiss::pyff: null
   md-2.thiss.io:
-    autoupdate: null
     common: null
     entropyclient: null
     http: null
@@ -42,13 +41,13 @@ classes:
     ops: null
     sunet::rsyslog: null
     sunet::server: *id002
+    sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: null
-    thiss::mdq: *id003
+    thiss::mdq: *id004
     thiss::pyff: null
 members:
   all: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
-  autoupdate: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   common: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   entropyclient: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   http: [md-1.thiss.io, md-2.thiss.io]
@@ -59,6 +58,7 @@ members:
   ops: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   sunet::rsyslog: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   sunet::server: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
+  sunet::updater: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   sunet_iaas_cloud: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   thiss::dockerhost: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   thiss::md_publisher: [a-1.thiss.io]
