@@ -6,7 +6,7 @@ class thiss::mdq($version="latest", $src=undef) {
       mode     => '0644'
    } ->
    sunet::scriptherder::cronjob { "${name}_fetch_metadata":
-     cmd           => "wget -qO/etc/thiss/metadata.json.new $src && test -s /etc/thiss/metadata.json.new && mv /etc/thiss/metadata.json.new /etc/thiss/metadata.json",
+     cmd           => "rm -f /etc/thiss/metadata.json.new && wget -qO/etc/thiss/metadata.json.new $src && test -s /etc/thiss/metadata.json.new && mv /etc/thiss/metadata.json.new /etc/thiss/metadata.json",
      minute        => '*/5',
      ok_criteria   => ['exit_status=0','max_age=48h'],
      warn_criteria => ['exit_status=1','max_age=50h'],
