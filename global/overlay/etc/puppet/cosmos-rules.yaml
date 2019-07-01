@@ -2,6 +2,7 @@
    common:
    ops:
    nrpe:
+   autoupdate:
    sunet::server:
       fail2ban: true
       unattended_upgrades: true
@@ -14,6 +15,7 @@
    sunet::rsyslog:
 
 '^md-[0-9]+\.':
+   sunet_iaas_cloud:
    thiss::dockerhost:
    thiss::pyff:
    thiss::mdq:
@@ -22,6 +24,7 @@
    http:
 
 '^a-[0-9]+\.':
+   sunet_iaas_cloud:
    thiss::dockerhost:
    thiss::pyff:
       pyff_version: 1.0.1
