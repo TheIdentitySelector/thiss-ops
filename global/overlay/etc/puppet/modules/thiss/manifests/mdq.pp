@@ -1,5 +1,5 @@
-class thiss::mdq($version="latest", $src=undef) {
-   file {"/etc/thiss/metadata.json":
+class thiss::mdq($version="latest", $src=undef, $dst="/etc/thiss/metadata.json") {
+   file {$dst:
       ensure   => 'present',
       replace  => 'no',
       content  => "[]",
