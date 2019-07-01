@@ -5,8 +5,14 @@ class thiss::mdq($version="latest", $src=undef) {
       content  => "[]",
       mode     => '0644'
    } ->
+   file { '/usr/local/bin/get_metadata.sh': 
+      contents     => template('mdq/get_metadata.sh'),
+      owner        => root,
+      group        => root,
+      mode         => '0755'
+   } ->
    sunet::scriptherder::cronjob { "${name}_fetch_metadata":
-     cmd           => "rm -f /etc/thiss/metadata.json.new \&\& wget -qO/etc/thiss/metadata.json.new $src \&\& test -s /etc/thiss/metadata.json.new \&\& mv /etc/thiss/metadata.json.new /etc/thiss/metadata.json",
+     cmd           => "/usr/local/bin/get_metadata.sh",
      minute        => '*/5',
      ok_criteria   => ['exit_status=0','max_age=48h'],
      warn_criteria => ['exit_status=1','max_age=50h'],
