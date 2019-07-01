@@ -14,6 +14,7 @@ classes:
     thiss::dockerhost: null
     thiss::md_publisher: {watch: /var/www/html/metadata.json}
     thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
+    update_ca_certificates: null
   md-1.thiss.io:
     common: null
     entropyclient: null
@@ -28,8 +29,8 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: null
-    thiss::mdq: &id004 {version: 1.1.0}
-    thiss::pyff: null
+    thiss::mdq: &id004 {src: 'https://a-1.thiss.io/metadata.json', version: 1.1.0}
+    update_ca_certificates: null
   md-2.thiss.io:
     common: null
     entropyclient: null
@@ -45,7 +46,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: null
     thiss::mdq: *id004
-    thiss::pyff: null
+    update_ca_certificates: null
 members:
   all: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   common: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
@@ -63,5 +64,6 @@ members:
   thiss::dockerhost: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   thiss::md_publisher: [a-1.thiss.io]
   thiss::mdq: [md-1.thiss.io, md-2.thiss.io]
-  thiss::pyff: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
+  thiss::pyff: [a-1.thiss.io]
+  update_ca_certificates: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
 
