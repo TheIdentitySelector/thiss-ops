@@ -2,7 +2,9 @@
    common:
    ops:
    nrpe:
-   autoupdate:
+   sunet::updater:
+      cron: true
+      cosmos_automatic_reboot: true
    sunet::server:
       fail2ban: true
       unattended_upgrades: true
