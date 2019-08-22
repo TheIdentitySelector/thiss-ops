@@ -1,9 +1,9 @@
 # Wrapper for sunet::dockerhost to do thiss specific things
 class thiss::dockerhost(
-  String $version              = safe_hiera('eid_docker_version'),
-  String $package_name         = hiera('eid_docker_package_name', 'docker-ce'),
-  Enum['stable', 'edge', 'test'] $docker_repo = hiera('eid_docker_repo', 'stable'),
-  String $compose_version      = safe_hiera('eid_docker_compose_version'),
+  String $version              = safe_hiera('docker_version'),
+  String $package_name         = hiera('docker_package_name', 'docker-ce'),
+  Enum['stable', 'edge', 'test'] $docker_repo = hiera('docker_repo', 'stable'),
+  String $compose_version      = safe_hiera('docker_compose_version'),
   String $docker_args          = '',
   Optional[String] $docker_dns = undef,
 ) {

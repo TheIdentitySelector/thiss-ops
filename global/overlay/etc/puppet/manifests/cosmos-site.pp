@@ -58,7 +58,7 @@ class dhcp6_client {
 
 class entropyclient {
    include sunet::simple_entropy
-   sunet::ucrandom {'random.nordu.net': }
+   sunet::ucrandom {'random.nordu.net': ensure => absent }
    sunet::nagios::nrpe_check_process { 'haveged': }
 }
 

@@ -1,17 +1,8 @@
 ---
-eid_docker_version: '18.05.0~ce~2.1.rc1-0~ubuntu'
-eid_docker_compose_version: '1.15.0'
-eid_docker_repo: 'test'
+docker_version: '18.05.0~ce~2.1.rc1-0~ubuntu'
+docker_compose_version: '1.15.0'
+docker_repo: 'test'
 
-prid_qa_clients: 89.45.233.83
-prid_prod_clients:
-   - 94.176.224.133
-   - 94.176.224.5
-   - 94.176.224.134
-   - 94.176.224.6
-
-eid_proxy_server: ""
-eid_no_proxy: true
 syslog_servers:
    - syslog.sunet.se
 nagios_ip_v4:
@@ -58,14 +49,6 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
-redis_client_ips:
-    - 94.176.224.137
-    - 94.176.224.7
-redis_sentinel_ips:
-    - 94.176.224.135
-    - 94.176.224.138
-    - 94.176.224.9
-    - 94.176.224.10
 pyff_pipeline:
     - load:
         - http://mds.edugain.org
