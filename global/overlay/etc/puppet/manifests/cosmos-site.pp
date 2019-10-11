@@ -33,15 +33,7 @@ class common {
   include apparmor
   package {'jq': ensure => 'latest'}
   package { 'needrestart': ensure => installed}
-
-  if $::is_virtual == true {
-    file { '/usr/local/bin/sunet-reinstall':
-      ensure  => file,
-      mode    => '0755',
-      content => template('sunet/cloudimage/sunet-reinstall.erb'),
-    }
   }
-}
 
 class dhcp6_client {
   ufw::allow { "allow-dhcp6-546":
