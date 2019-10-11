@@ -18,8 +18,6 @@ classes:
   md-1.ntx.sunet.eu.seamlessaccess.org:
     common: null
     entropyclient: null
-    http: null
-    https: null
     infra_ca_rp: null
     mailclient: *id001
     nrpe: null
@@ -27,9 +25,6 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
-    sunet_iaas_cloud: null
-    thiss::dockerhost: null
-    thiss::mdq: &id004 {src: 'https://a-1.thiss.io/metadata.json', version: 1.1.2}
     update_ca_certificates: null
   md-1.thiss.io:
     common: null
@@ -45,7 +40,7 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: null
-    thiss::mdq: *id004
+    thiss::mdq: &id004 {src: 'https://a-1.thiss.io/metadata.json', version: 1.1.2}
     update_ca_certificates: null
   md-2.thiss.io:
     common: null
@@ -68,8 +63,8 @@ members:
   common: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.thiss.io]
   entropyclient: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
     md-2.thiss.io]
-  http: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.thiss.io]
-  https: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.thiss.io]
+  http: [md-1.thiss.io, md-2.thiss.io]
+  https: [md-1.thiss.io, md-2.thiss.io]
   infra_ca_rp: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
     md-2.thiss.io]
   mailclient: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
@@ -82,12 +77,10 @@ members:
     md-2.thiss.io]
   sunet::updater: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
     md-2.thiss.io]
-  sunet_iaas_cloud: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
-    md-2.thiss.io]
-  thiss::dockerhost: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
-    md-2.thiss.io]
+  sunet_iaas_cloud: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
+  thiss::dockerhost: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   thiss::md_publisher: [a-1.thiss.io]
-  thiss::mdq: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.thiss.io]
+  thiss::mdq: [md-1.thiss.io, md-2.thiss.io]
   thiss::pyff: [a-1.thiss.io]
   update_ca_certificates: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
     md-2.thiss.io]
