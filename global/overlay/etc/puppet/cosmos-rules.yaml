@@ -17,7 +17,7 @@
    sunet::rsyslog:
    update_ca_certificates:
 
-'^md-[0-9]+\.':
+'^md-[0-9]+\.thiss\.io$':
    sunet_iaas_cloud:
    thiss::dockerhost:
    thiss::mdq:
@@ -26,7 +26,7 @@
    https:
    http:
 
-'^a-[0-9]+\.':
+'^a-[0-9]+\.thiss\.io$':
    sunet_iaas_cloud:
    thiss::dockerhost:
    thiss::pyff:
@@ -34,3 +34,6 @@
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
+
+'^md-[0-9]+\.seamlessaccess\.org$':
+   thiss::dockerhost:
