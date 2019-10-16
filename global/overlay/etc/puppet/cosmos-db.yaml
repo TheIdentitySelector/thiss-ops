@@ -10,6 +10,7 @@ classes:
     sunet::server: &id002 {disable_all_local_users: true, disable_ipv6_privacy: true,
       fail2ban: true, unattended_upgrades: true}
     sunet::updater: &id003 {cosmos_automatic_reboot: true, cron: true}
+    thiss::dockerhost: null
     update_ca_certificates: null
   a-1.thiss.io:
     common: null
@@ -106,8 +107,8 @@ members:
   sunet::updater: [a-1.ntx.sunet.eu.seamlessaccess.org, a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.thiss.io]
   sunet_iaas_cloud: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
-  thiss::dockerhost: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
-    md-2.ntx.sunet.eu.seamlessaccess.org, md-2.thiss.io]
+  thiss::dockerhost: [a-1.ntx.sunet.eu.seamlessaccess.org, a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org,
+    md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.thiss.io]
   thiss::md_publisher: [a-1.thiss.io]
   thiss::mdq: [md-1.thiss.io, md-2.thiss.io]
   thiss::pyff: [a-1.thiss.io]
