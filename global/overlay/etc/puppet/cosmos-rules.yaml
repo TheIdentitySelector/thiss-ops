@@ -35,5 +35,5 @@
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
 
-'^md-[0-9]+\.seamlessaccess\.org$':
+'^md-[0-9]+\S+\.seamlessaccess\.org$$':
    thiss::dockerhost:
