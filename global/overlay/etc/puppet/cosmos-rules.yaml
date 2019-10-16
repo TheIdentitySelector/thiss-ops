@@ -37,3 +37,6 @@
 
 '^md-[0-9]+\S+\.seamlessaccess\.org$$':
    thiss::dockerhost:
+
+'^a-[0-9]+\S+\.seamlessaccess\.org$$':
+   thiss::dockerhost:
