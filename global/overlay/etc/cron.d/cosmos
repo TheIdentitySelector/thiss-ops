@@ -2,4 +2,3 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 */15 * * * *   root   test -f /etc/no-automatic-cosmos || scriptherder --mode wrap --syslog --name cosmos -- /usr/local/bin/run-cosmos
-
