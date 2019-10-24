@@ -17,6 +17,15 @@ nrpe_clients:
    - 89.45.233.197
    - 94.176.224.229
    - 94.176.224.101
+mgmt_addresses:
+    - 130.242.125.68    # hoppjerka.sunet.se
+    - 2001:6b0:8:4::68  # hoppjerka.sunet.se
+
+md_ntx:
+   - 192.36.171.80
+   - 192.36.171.80
+haproxy_ntx:
+   - 192.36.171.79
 
 ssh_authorized_keys:
 

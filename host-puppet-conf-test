@@ -26,6 +26,7 @@ then
     rsync -av --exclude '*~' global/overlay/etc/puppet/manifests/cosmos-site.pp root@$HOSTNAME:/etc/puppet/manifests/cosmos-site.pp
     rsync -av --exclude '*~' global/overlay/etc/puppet/cosmos-db.yaml root@$HOSTNAME:/etc/puppet/cosmos-db.yaml
     rsync -av --exclude '*~' global/overlay/etc/hiera/data/common.yaml root@$HOSTNAME:/etc/hiera/data/common.yaml
+    rsync -av --exclude '*~' global/overlay/etc/puppet/modules/thiss/* root@$HOSTNAME:/etc/puppet/modules/thiss/.
 
     # Test if the user has symlinked puppet-sunet correctly
     # by first checking if the link exits and then whether
