@@ -8,7 +8,7 @@ classes:
     ops: null
     sunet::rsyslog: null
     sunet::server: &id002 {disable_all_local_users: true, disable_ipv6_privacy: true,
-      fail2ban: true, unattended_upgrades: true}
+      fail2ban: true, ssh_allow_from_anywhere: false, unattended_upgrades: true}
     sunet::updater: &id003 {cosmos_automatic_reboot: true, cron: true}
     thiss::dockerhost: null
     update_ca_certificates: null
