@@ -10,6 +10,7 @@
       unattended_upgrades: true
       disable_ipv6_privacy: true
       disable_all_local_users: true
+      ssh_allow_from_anywhere: false
    entropyclient:
    infra_ca_rp:
    mailclient:
