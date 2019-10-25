@@ -36,8 +36,14 @@
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
 
-'^md-[0-9]+\S+\.seamlessaccess\.org$$':
+'^md-[0-9]+\S+\.seamlessaccess\.org$':
    thiss::dockerhost:
+   thiss::firewall_rules_ntx:
 
-'^a-[0-9]+\S+\.seamlessaccess\.org$$':
+'^a-[0-9]+\S+\.seamlessaccess\.org$':
    thiss::dockerhost:
+   thiss::firewall_rules_ntx:
+
+md.ntx.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+   thiss::firewall_rules_ntx:
