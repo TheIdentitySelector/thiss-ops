@@ -40,7 +40,7 @@
    thiss::dockerhost:
    thiss::firewall_rules_ntx:
 
-'^a-[0-9]+\S+\.seamlessaccess\.org$':
+meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::firewall_rules_ntx:
 
