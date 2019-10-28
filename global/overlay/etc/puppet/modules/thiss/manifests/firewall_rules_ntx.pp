@@ -3,8 +3,8 @@ class thiss::firewall_rules_ntx{
   $md_ntx = hiera_array('md_ntx',[])
   $haproxy_ntx = hiera_array('haproxy_ntx',[])
 
-  #aggregator expose port 443 to md
-  if $::fqdn =~ /^a-[0-9]+\S+\.seamlessaccess\.org$/ {
+  #metadata aggregator expose port 443 to md
+  if $::fqdn == 'meta.ntx.sunet.eu.seamlessaccess.org' {
     sunet::misc::ufw_allow { 'allow_http_aggregator':
       from =>  $md_ntx,
       port => '443',
