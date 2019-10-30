@@ -24,6 +24,7 @@
    thiss::mdq:
       version: 1.1.2
       src: https://a-1.thiss.io/metadata.json
+      base_url: https://md.thiss.io
    https:
    http:
 
@@ -39,10 +40,19 @@
 '^md-[0-9]+\S+\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::firewall_rules_ntx:
+   thiss::mdq:
+      version: 1.1.2
+      src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
+      base_url: https://md.seamlessaccess.org
 
 meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::firewall_rules_ntx:
+   thiss::pyff:
+      pyff_version: 1.0.1
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
