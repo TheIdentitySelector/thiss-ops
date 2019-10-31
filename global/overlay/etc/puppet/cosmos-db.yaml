@@ -2,6 +2,7 @@ classes:
   a-1.thiss.io:
     common: null
     entropyclient: null
+    https: null
     infra_ca_rp: null
     mailclient: &id001 {domain: sunet.se}
     nrpe: null
@@ -102,7 +103,7 @@ classes:
     sunet::updater: *id003
     thiss::dockerhost: null
     thiss::firewall_rules_ntx: null
-    thiss::md_publisher: {allow_clients: '%{md_ntx('','')[]}', watch: /var/www/html/metadata.json}
+    thiss::md_publisher: {watch: /var/www/html/metadata.json}
     thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
     update_ca_certificates: null
 members:
@@ -114,7 +115,7 @@ members:
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org,
     meta.ntx.sunet.eu.seamlessaccess.org]
   http: [md-1.thiss.io, md-2.thiss.io]
-  https: [md-1.thiss.io, md-2.thiss.io]
+  https: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   infra_ca_rp: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org,
     meta.ntx.sunet.eu.seamlessaccess.org]
