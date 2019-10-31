@@ -1,4 +1,4 @@
-class thiss::md_publisher(Array $allow_clients=['any'], $keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
+class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
    $_keyname = $keyname ? { 
       undef   => "${::fqdn}_infra",
       default => $keyname
@@ -24,10 +24,6 @@ class thiss::md_publisher(Array $allow_clients=['any'], $keyname=undef, String $
       content => inline_template("mimetype.use-xattr = \"enable\"\n")
    } ->
    service {'lighttpd': ensure => running } ->
-   sunet::misc::ufw_allow {'allow-lighttpd':
-      from   => $allow_clients,
-      port   => 443
-   } ->
    sunet::nagios::nrpe_check_fileage {"metadata_aggregate":
       filename => $watch,
       warning_age => '600',
