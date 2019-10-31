@@ -102,7 +102,7 @@ classes:
     sunet::updater: *id003
     thiss::dockerhost: null
     thiss::firewall_rules_ntx: null
-    thiss::md_publisher: {watch: /var/www/html/metadata.json}
+    thiss::md_publisher: {allow_clients: '%{md_ntx}', watch: /var/www/html/metadata.json}
     thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
     update_ca_certificates: null
 members:
