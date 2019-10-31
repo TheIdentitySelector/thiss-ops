@@ -36,6 +36,7 @@
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
+   https:
 
 '^md-[0-9]+\S+\.seamlessaccess\.org$':
    thiss::dockerhost:
@@ -53,7 +54,6 @@ meta.ntx.sunet.eu.seamlessaccess.org:
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
-      allow_clients: %{md_ntx,[]}
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
