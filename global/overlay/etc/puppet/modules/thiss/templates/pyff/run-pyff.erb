@@ -7,4 +7,4 @@ odir=`dirname $output`
 container=thiss_mdq
 mkdir -p $pdir
 
-docker run -v "${pipeline}:${pipeline}:ro" -v "/opt/pyff:/opt/pyff" <%= @image_tag %> pyff --loglevel=INFO ${pipeline} && cat $pdir/metadata.json > $output && /usr/sbin/service docker-$container restart
+docker run -v "${pipeline}:${pipeline}:ro" -v "/opt/pyff:/opt/pyff" <%= @image_tag %> pyff --loglevel=INFO ${pipeline} && cat $pdir/metadata.json > $output

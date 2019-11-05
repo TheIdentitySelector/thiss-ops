@@ -1,0 +1,22 @@
+---
+version: '3'
+services:
+
+  haproxy:
+    image: 'docker.sunet.se/library/haproxy:stable'
+    restart: always
+    ports:
+     - 443:443
+    volumes:
+     - /opt/haproxy/:/etc/haproxy/:ro
+     - <%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>:<%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>:ro
+     - /dev/log:/dev/log
+     - 'haproxy_control:/var/run/haproxy-control'
+
+volumes:
+  haproxy_control:
+
+networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-sa
