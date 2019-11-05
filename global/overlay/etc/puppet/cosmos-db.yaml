@@ -90,6 +90,7 @@ classes:
     sunet::updater: *id003
     thiss::dockerhost: null
     thiss::firewall_rules_ntx: null
+    thiss::haproxy: null
     update_ca_certificates: null
   meta.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -141,6 +142,7 @@ members:
     meta.ntx.sunet.eu.seamlessaccess.org]
   thiss::firewall_rules_ntx: [md-1.ntx.sunet.eu.seamlessaccess.org, md-2.ntx.sunet.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org]
+  thiss::haproxy: [md.ntx.sunet.eu.seamlessaccess.org]
   thiss::md_publisher: [a-1.thiss.io, meta.ntx.sunet.eu.seamlessaccess.org]
   thiss::mdq: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org,
     md-2.thiss.io]
