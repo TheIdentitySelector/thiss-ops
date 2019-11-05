@@ -58,4 +58,4 @@ meta.ntx.sunet.eu.seamlessaccess.org:
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::firewall_rules_ntx:
-   thiss::haproxy
+   thiss::haproxy:
