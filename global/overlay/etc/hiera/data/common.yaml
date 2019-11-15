@@ -27,6 +27,12 @@ md_ntx:
 haproxy_ntx:
    - 192.36.171.79
 
+md_se_east:
+   - 89.45.235.152
+   - 89.45.235.214
+haproxy_se_east:
+   - 89.45.235.175
+
 ssh_authorized_keys:
 
   'mariah+CA747E57':
