@@ -60,5 +60,5 @@ md.ntx.sunet.eu.seamlessaccess.org:
    thiss::firewall_rules_ntx:
    thiss::haproxy:
 
-meta.se-east.sunet.eu.seamlessaccess.org
+meta.se-east.sunet.eu.seamlessaccess.org:
    sunet_iaas_cloud:
