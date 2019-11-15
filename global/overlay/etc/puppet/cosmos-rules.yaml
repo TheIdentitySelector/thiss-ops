@@ -38,17 +38,24 @@
       watch: /var/www/html/metadata.json
    https:
 
+'^\S+ntx\S+\.seamlessaccess\.org$':
+   thiss::firewall_rules:
+      location: ntx
+
+'^\S+se-east\S+\.seamlessaccess\.org$':
+   sunet_iaas_cloud:
+   thiss::firewall_rules:
+      location: se-east
+
 '^md-[0-9]+\S+\.seamlessaccess\.org$':
    thiss::dockerhost:
-   thiss::firewall_rules_ntx:
    thiss::mdq:
       version: 1.1.2
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
-meta.ntx.sunet.eu.seamlessaccess.org:
+'^meta\D+\.seamlessaccess\.org$':
    thiss::dockerhost:
-   thiss::firewall_rules_ntx:
    thiss::pyff:
       pyff_version: 1.0.1
       output: /var/www/html/metadata.json
@@ -57,8 +64,4 @@ meta.ntx.sunet.eu.seamlessaccess.org:
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
-   thiss::firewall_rules_ntx:
    thiss::haproxy:
-
-meta.se-east.sunet.eu.seamlessaccess.org:
-   sunet_iaas_cloud:

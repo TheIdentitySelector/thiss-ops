@@ -1,28 +1,27 @@
-class thiss::firewall_rules_ntx{
+class thiss::firewall_rules($location=undef){
 
-  $md_ntx = hiera_array('md_ntx',[])
-  $haproxy_ntx = hiera_array('haproxy_ntx',[])
+  $md_ip = hiera_array("md_${location}",[])
+  $haproxy_ip = hiera_array("haproxy_${location}",[])
 
   #metadata aggregator expose port 443 to mdq
-  if $::fqdn == 'meta.ntx.sunet.eu.seamlessaccess.org' {
+  if $::fqdn =~ /^meta\D+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_aggregator':
-      from =>  $md_ntx,
+      from =>  $md_ip,
       port => '443',
     }
   }
   #mdq exposes 80 to haproxy
   if $::fqdn =~ /^md-[0-9]+\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_https_mdq':
-      from => $haproxy_ntx,
+      from => $haproxy_ip,
       port => '80',
     }
   }
   #haproxy exposes 443 to Internet
-  if $::fqdn == 'md.ntx.sunet.eu.seamlessaccess.org' {
+  if $::fqdn =~ /^md\D+\.seamlessaccess\.org$/ {
     ufw::allow { "allow_https_haproxy":
       ip   => 'any',
       port => '443',
     }
   }
-
 }
