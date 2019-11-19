@@ -27,8 +27,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     thiss::dockerhost: null
-    thiss::firewall_rules: &id005 {location: ntx}
-    thiss::mdq: &id004 {base_url: 'https://md.seamlessaccess.org', src: 'https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json',
+    thiss::firewall_rules: &id004 {location: ntx}
+    thiss::mdq: &id005 {base_url: 'https://md.seamlessaccess.org', src: 'https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json',
       version: 1.1.2}
     update_ca_certificates: null
   md-1.se-east.sunet.eu.seamlessaccess.org:
@@ -44,7 +44,8 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: null
     thiss::firewall_rules: &id007 {location: se-east}
-    thiss::mdq: *id004
+    thiss::mdq: {base_url: 'https://md.seamlessaccess.org', src: 'https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json',
+      version: 1.1.2}
     update_ca_certificates: null
   md-1.thiss.io:
     common: null
@@ -74,8 +75,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     thiss::dockerhost: null
-    thiss::firewall_rules: *id005
-    thiss::mdq: *id004
+    thiss::firewall_rules: *id004
+    thiss::mdq: *id005
     update_ca_certificates: null
   md-2.thiss.io:
     common: null
@@ -104,8 +105,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     thiss::dockerhost: null
-    thiss::firewall_rules: *id005
-    thiss::haproxy: null
+    thiss::firewall_rules: *id004
+    thiss::haproxy: {location: se-east}
     update_ca_certificates: null
   meta.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -118,7 +119,7 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     thiss::dockerhost: null
-    thiss::firewall_rules: *id005
+    thiss::firewall_rules: *id004
     thiss::md_publisher: &id008 {watch: /var/www/html/metadata.json}
     thiss::pyff: &id009 {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
     update_ca_certificates: null
