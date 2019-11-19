@@ -69,7 +69,12 @@
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
 
-'^md\D+\.seamlessaccess\.org$':
+md.ntx.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+   thiss::haproxy:
+      location: ntx
+
+md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::haproxy:
       location: se-east
