@@ -69,7 +69,7 @@
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
 
-''^md\D+\.seamlessaccess\.org$':
+'^md\D+\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::haproxy:
       location: se-east
