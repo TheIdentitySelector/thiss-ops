@@ -1,4 +1,4 @@
-class thiss::haproxy{
+class thiss::haproxy($location=undef){
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
 
@@ -15,7 +15,7 @@ class thiss::haproxy{
 
     ensure_resource('file','/opt/haproxy', { ensure => directory } )
     ensure_resource('file','/opt/haproxy/compose', { ensure => directory } )
-    $servers = hiera_array('md_ntx',[])
+    $servers = hiera_array("md_${location}",[])
 
     file { '/opt/haproxy/haproxy.cfg':
       content      => template('thiss/haproxy/haproxy.cfg.erb'),

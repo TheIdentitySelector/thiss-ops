@@ -47,11 +47,18 @@
    thiss::firewall_rules:
       location: se-east
 
-'^md-[0-9]+\S+\.seamlessaccess\.org$':
+'^md-[0-9]\.ntx+\S+\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::mdq:
       version: 1.1.2
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
+      base_url: https://md.seamlessaccess.org
+
+'^md-[0-9]\.se-east+\S+\.seamlessaccess\.org$':
+   thiss::dockerhost:
+   thiss::mdq:
+      version: 1.1.2
+      src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
 '^meta\D+\.seamlessaccess\.org$':
@@ -62,6 +69,7 @@
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
 
-md.ntx.sunet.eu.seamlessaccess.org:
+''^md\D+\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::haproxy:
+      location: se-east
