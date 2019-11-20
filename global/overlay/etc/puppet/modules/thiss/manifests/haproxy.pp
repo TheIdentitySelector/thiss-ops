@@ -2,16 +2,15 @@ class thiss::haproxy($location=undef){
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
 
-  if has_key($::tls_certificates, $::fqdn) and has_key($::tls_certificates[$::fqdn], 'infra_cert') {
-    $infra_cert = $::tls_certificates[$::fqdn]['infra_cert']
-    $infra_key = $::tls_certificates[$::fqdn]['infra_key']
-    ensure_resource(sunet::misc::certbundle, "${::fqdn}_haproxy", {
-      group     => 'haproxy',
-      bundle    => ["cert=${infra_cert}",
-                    "key=${infra_key}",
-                    "out=private/${::fqdn}_haproxy.crt",
-                    ],
-      })
+  $infra_cert = $::tls_certificates[$::fqdn]['infra_cert']
+  $infra_key = $::tls_certificates[$::fqdn]['infra_key']
+  ensure_resource(sunet::misc::certbundle, "${::fqdn}_haproxy", {
+    group  => 'haproxy',
+    bundle => ["cert=${infra_cert}",
+               "key=${infra_key}",
+               "out=private/${::fqdn}_haproxy.crt",
+               ],
+  })
 
     ensure_resource('file','/opt/haproxy', { ensure => directory } )
     ensure_resource('file','/opt/haproxy/compose', { ensure => directory } )
@@ -23,10 +22,6 @@ class thiss::haproxy($location=undef){
       group        => 'haproxy',
       mode         => '0640'
     }
-
-  } else {
-    warning("No infra-certificate found for host ${::fqdn} - not configuring simple haproxy")
-  }
 
   sunet::docker_compose {'haproxy_docker_compose':
     service_name => 'haproxy_seamlessaccess',
