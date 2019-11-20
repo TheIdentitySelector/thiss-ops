@@ -74,7 +74,7 @@ md.ntx.sunet.eu.seamlessaccess.org:
    thiss::haproxy:
       location: ntx
 
-md.ntx.sunet.eu.seamlessaccess.org:
+md.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::haproxy:
       location: se-east
