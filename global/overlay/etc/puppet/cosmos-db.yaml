@@ -121,7 +121,7 @@ classes:
     sunet::updater: *id003
     thiss::dockerhost: null
     thiss::firewall_rules: *id004
-    thiss::haproxy: {location: se-east}
+    thiss::haproxy: {location: ntx}
     update_ca_certificates: null
   md.se-east.sunet.eu.seamlessaccess.org:
     common: null
@@ -134,7 +134,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
+    thiss::dockerhost: null
     thiss::firewall_rules: *id006
+    thiss::haproxy: {location: se-east}
     update_ca_certificates: null
   meta.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -215,13 +217,13 @@ members:
     meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::dockerhost: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org,
-    meta.se-east.sunet.eu.seamlessaccess.org]
+    md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
+    meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::firewall_rules: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org,
     meta.se-east.sunet.eu.seamlessaccess.org]
-  thiss::haproxy: [md.ntx.sunet.eu.seamlessaccess.org]
+  thiss::haproxy: [md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org]
   thiss::md_publisher: [a-1.thiss.io, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::mdq: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
