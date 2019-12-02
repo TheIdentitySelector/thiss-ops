@@ -13,8 +13,8 @@ classes:
     sunet::updater: &id003 {cosmos_automatic_reboot: true, cron: true}
     sunet_iaas_cloud: null
     thiss::dockerhost: null
-    thiss::md_publisher: {watch: /var/www/html/metadata.json}
-    thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
+    thiss::md_publisher: null
+    thiss::pyffd: {pyff_version: 1.1.1}
     update_ca_certificates: null
   auth-1.thiss.io:
     common: null
@@ -245,7 +245,8 @@ members:
   thiss::mdq: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md-2.thiss.io]
-  thiss::pyff: [a-1.thiss.io, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+  thiss::pyff: [meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+  thiss::pyffd: [a-1.thiss.io]
   update_ca_certificates: [a-1.thiss.io, auth-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org,
     md-1.se-east.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org,
     md-2.se-east.sunet.eu.seamlessaccess.org, md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org,
