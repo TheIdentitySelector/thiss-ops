@@ -89,14 +89,14 @@ pyffd_pipeline:
     - when request:
         - select:
         - pipe:
-        - when accept application/xml:
+           - when accept application/xml:
              - first
              - finalize:
                  cacheDuration: PT5H
                  validUntil: P10D
              - emit application/xml
              - break
-        - when accept application/json:
+           - when accept application/json:
              - discojson
              - emit application/json
              - break
