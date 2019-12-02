@@ -17,6 +17,7 @@ class thiss::pyffd($pyff_version="thiss") {
   } ->
   sunet::scriptherder::cronjob { "publish":
     ensure            => absent,
+    cmd               => "/bin/true"
   }
   sunet::pyff {'mdq':
      version          => $pyff_version,
