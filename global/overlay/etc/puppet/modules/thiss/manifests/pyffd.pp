@@ -21,7 +21,7 @@ class thiss::pyffd($pyff_version="thiss") {
   }
   sunet::pyff {'mdq':
      version          => $pyff_version,
-     ip_addr          => "127.0.0.1",
+     ip               => "127.0.0.1",
      dir              => "/opt/pyff"
   }
 }
