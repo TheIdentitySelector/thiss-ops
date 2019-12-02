@@ -75,7 +75,7 @@ pyff_pipeline:
     - print:
         output: /opt/pyff/metadata.json 
 pyffd_pipeline:
-   - when normalize:
+    - when normalize:
         - xslt:
              stylesheet: tidy.xsl
     - break
