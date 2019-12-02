@@ -3,7 +3,7 @@ class thiss::pyffd($pyff_version="latest") {
   $image_tag = "docker.sunet.se/pyff:${pyff_version}"
   file {"/opt/pyff": ensure => directory } ->
   file {"/opt/pyff/mdx.fd":
-     content => inline_template("<%= @pipeline.to_yaml %>\n")
+     content => inline_template("<%= @pipeline.to_yaml[0] %>\n")
   }
   sunet::scriptherder::cronjob { "mirror": 
     cmd               => "/usr/local/bin/mirror-mdq.sh http://localhost:8080/ /var/www/html/",
