@@ -28,14 +28,12 @@
    https:
    http:
 
-'^a-[0-9]+\.thiss\.io$':
+a-1.thiss.io$:
    sunet_iaas_cloud:
    thiss::dockerhost:
-   thiss::pyff:
-      pyff_version: 1.0.1
-      output: /var/www/html/metadata.json
+   thiss::pyffd:
+      pyff_version: 1.1.1
    thiss::md_publisher:
-      watch: /var/www/html/metadata.json
    https:
 
 '^\S+ntx\S+\.seamlessaccess\.org$':
