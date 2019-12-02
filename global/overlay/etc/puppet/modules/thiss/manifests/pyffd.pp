@@ -6,7 +6,7 @@ class thiss::pyffd($pyff_version="latest") {
      content => inline_template("<%= @pipeline.to_yaml %>\n")
   }
   sunet::scriptherder::cronjob { "mirror": 
-    cmd               => "/usr/local/bin/mirror-mdq.sh http://localhost/ /var/www/html/",
+    cmd               => "/usr/local/bin/mirror-mdq.sh http://localhost:8080/ /var/www/html/",
     minute            => '*/30',
     ok_criteria       => ['exit_status=0'],
     warn_criteria     => ['max_age=30m']
@@ -16,9 +16,10 @@ class thiss::pyffd($pyff_version="latest") {
     cmd               => "/bin/true"
   }
   sunet::pyff {'mdq':
-     version          => $pyff_version,
-     ip               => "127.0.0.1",
-     dir              => "/opt/pyff",
+     version           => $pyff_version,
+     ip                => "127.0.0.1",
+     port              => "8080",
+     dir               => "/opt/pyff",
      pound_and_varnish => false
   }
 }
