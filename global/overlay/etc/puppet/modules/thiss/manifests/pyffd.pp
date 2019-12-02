@@ -1,5 +1,4 @@
 class thiss::pyffd($pyff_version="latest") {
-  $pipeline = hiera("pyffd_pipeline")
   $image_tag = "docker.sunet.se/pyff:${pyff_version}"
   file {"/opt/pyff": ensure => directory } ->
   sunet::scriptherder::cronjob { "mirror": 
