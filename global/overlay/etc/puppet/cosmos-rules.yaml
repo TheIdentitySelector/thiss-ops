@@ -23,7 +23,7 @@
    thiss::dockerhost:
    thiss::mdq:
       version: 1.1.2
-      src: https://a-1.thiss.io/metadata.json
+      src: https://a-1.thiss.io/ds.json
       base_url: https://md.thiss.io
    https:
    http:
