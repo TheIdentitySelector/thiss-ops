@@ -10,6 +10,7 @@ class thiss::pyffd($pyff_version="latest") {
     cmd               => "/bin/true"
   }
   package { 'lighttpd': ensure => removed } -> service {'lighttpd': ensure => stopped }
+  sunet::docker_run {'pyff-mdq': image => 'docker.sunet.se/pyff', ensure => absent }
   sunet::pyffd {'mdq':
      version           => $pyff_version,
      dir               => "/opt/pyff",
