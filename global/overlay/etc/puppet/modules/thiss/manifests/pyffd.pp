@@ -9,7 +9,7 @@ class thiss::pyffd($pyff_version="latest") {
     ensure            => absent,
     cmd               => "/bin/true"
   }
-  package { 'lighttpd': ensure => removed } -> service {'lighttpd': ensure => stoped } ->
+  package { 'lighttpd': ensure => removed } -> service {'lighttpd': ensure => stopped } ->
   sunet::pyffd {'mdq':
      version           => $pyff_version,
      dir               => "/opt/pyff",
