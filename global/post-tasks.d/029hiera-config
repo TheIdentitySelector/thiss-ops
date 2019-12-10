@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Choose hiera config file based on available secrets backend
+#
+
+if [ -f /usr/bin/eyaml -a ! -f /usr/lib/ruby/vendor_ruby/gpgme.rb ]; then
+    # The package hiera-eyaml is installed, and there is no hiera-gpg. Use heira-eyaml.yaml if it exists.
+    fn='/etc/puppet/hiera-eyaml.yaml'
+    test -f "${fn}" && ln -sf "${fn}" /etc/puppet/hiera.yaml
+elif [ ! -f /etc/puppet/hiera.yaml ]; then
+    # If there is no /etc/puppet/hiera.yaml, try to symlink it to the default
+    fn='/etc/puppet/hiera-default.yaml'
+    test -f "${fn}" && ln -sf "${fn}" /etc/puppet/hiera.yaml
+fi
