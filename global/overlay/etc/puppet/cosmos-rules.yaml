@@ -78,3 +78,4 @@ md.se-east.sunet.eu.seamlessaccess.org:
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
+   thiss::dockerhost:
