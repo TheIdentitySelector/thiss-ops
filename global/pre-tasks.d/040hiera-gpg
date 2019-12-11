@@ -6,14 +6,39 @@
 
 set -e
 
+EYAMLDIR=/etc/hiera/eyaml
 GNUPGHOME=/etc/hiera/gpg
 export GNUPGHOME
+
+
+# There is no hiera-eyaml on Ubuntu < 16.04
+if [ "x`lsb_release -r | awk '{print $NF}'`" != "x12.04" -a "x`lsb_release -r | awk '{print $NF}'`" != "x14.04"  ]; then
+    if [ ! -f /usr/bin/eyaml ]; then
+        apt-get update
+        apt-get -y install hiera-eyaml
+    fi
+fi
+
+if [ -f /usr/bin/eyaml ]; then
+    # Create eyaml keypair if eyaml is installed but there are no keys
+    if [ ! -f ${EYAMLDIR}/public_certkey.pkcs7.pem -o ! -f ${EYAMLDIR}/private_key.pkcs7.pem ]; then
+	# hiera-eyaml wants a certificate and public key, not just a public key oddly enough
+	echo "$0: Generating eyaml key in ${EYAMLDIR} - this might take a while..."
+	mkdir -p ${EYAMLDIR}
+	openssl req -x509 -newkey rsa:4096 -keyout ${EYAMLDIR}/private_key.pkcs7.pem \
+		-out ${EYAMLDIR}/public_certkey.pkcs7.pem -days 3653 -nodes -sha256 \
+		-subj "/C=SE/O=SUNET/OU=EYAML/CN=`hostname`"
+	rm -f ${EYAMLDIR}/public_key.pkcs7.pem  # cleanup
+    fi
+fi
+
+
+# Old stuff below this point
 
 if [ ! -f /usr/lib/ruby/vendor_ruby/gpgme.rb ]; then
     apt-get update
     apt-get -y install ruby-gpgme
 fi
-
 
 if [ ! -s $GNUPGHOME/secring.gpg ]; then
 
@@ -44,6 +69,7 @@ Name-Comment: Hiera GPG key
 Name-Email: root@`hostname --fqdn`
 Expire-Date: 0
 # Do a commit here, so that we can later print "done" :-)
+%no-protection
 %commit
 %echo done
 EOF
