@@ -190,6 +190,7 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
+    thiss::dockerhost: null
     thiss::firewall_rules: *id004
     update_ca_certificates: null
 members:
@@ -252,7 +253,8 @@ members:
   thiss::dockerhost: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
-    meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+    meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
+    monitor.ntx.sunet.eu.seamlessaccess.org]
   thiss::firewall_rules: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org,
