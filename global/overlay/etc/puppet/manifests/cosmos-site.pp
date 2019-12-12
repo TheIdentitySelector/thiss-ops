@@ -192,11 +192,7 @@ class nagios_monitor {
    
    class { 'https': }
    class { 'http': }
-   sunet::docker_run { 'always-https':
-    image => 'docker.sunet.se/always-https',
-    ports => ['80:80'],
-    env   => ['ACME_URL=http://acme-c.sunet.se/'],
-   }
+
    class { 'sunet::dehydrated::client':
     domain     => 'monitor.seamlessaccess.org',
     ssl_links  => true,
