@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+        ServerName monitor.seamlessaccess.org 
+        ProxyPass /.well-known/acme-challenge http://acme-c.sunet.se/.well-known/acme-challenge/
+        ProxyPassReverse /.well-known/acme-challenge http://acme-c.sunet.se/.well-known/acme-challenge/
+        Redirect permanent / https://monitor.seamlessaccess.org/
+        <IfModule mod_headers.c>
+            Header always set Strict-Transport-Security "max-age=15768000; includeSubDomains; preload"
+            Header always set X-Frame-Options "DENY"
+            Header always set X-XSS-Protection "1; mode=block"
+            Header always set X-Content-Type-Options "nosniff"
+            Header always set Content-Security-Policy "default-src https://monitor.seamlessaccess.org"
+        </IfModule>
+</VirtualHost>
