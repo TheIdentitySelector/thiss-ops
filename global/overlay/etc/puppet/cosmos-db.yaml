@@ -5,6 +5,7 @@ classes:
     https: null
     infra_ca_rp: null
     mailclient: &id001 {domain: sunet.se}
+    md_aggregator: null
     nrpe: null
     ops: null
     sunet::rsyslog: null
@@ -220,6 +221,7 @@ members:
     md-2.se-east.sunet.eu.seamlessaccess.org, md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org,
     md.se-east.sunet.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org,
     meta.se-east.sunet.eu.seamlessaccess.org, monitor.ntx.sunet.eu.seamlessaccess.org]
+  md_aggregator: [a-1.thiss.io]
   nagios_monitor: [monitor.ntx.sunet.eu.seamlessaccess.org]
   nrpe: [a-1.thiss.io, auth-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
