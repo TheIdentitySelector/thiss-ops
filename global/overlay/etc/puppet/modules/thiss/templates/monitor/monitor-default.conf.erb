@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-        ServerName monitor.seamlessaccess.org 
+        ServerName monitor.seamlessaccess.org
         ProxyPass /.well-known/acme-challenge http://acme-c.sunet.se/.well-known/acme-challenge/
         ProxyPassReverse /.well-known/acme-challenge http://acme-c.sunet.se/.well-known/acme-challenge/
         Redirect permanent / https://monitor.seamlessaccess.org/

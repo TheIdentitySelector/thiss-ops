@@ -14,8 +14,6 @@ class autoupdate {
    class { 'sunet::updater': cron => true, cosmos_automatic_reboot => true }
 }
 
-class jumphosts {}
-
 class infra_ca_rp {
    sunet::ici_ca::rp { 'infra': }
 }
@@ -144,215 +142,237 @@ class ops {
 }
 
 class nrpe {
-   require apt
-   class {'sunet::nagios': }
-   if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '12.04') {
-      class {'apt::backports': }
-   }
-   package {'nagios-plugins-contrib': ensure => latest}
-   if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease < '18.04') {
-      package {'nagios-plugins-extra': ensure => latest}
-   }
-   sunet::nagios::nrpe_command {'check_memory':
-      command_line => '/usr/lib/nagios/plugins/check_memory -w 10% -c 5%'
-   }
-   sunet::nagios::nrpe_command {'check_mem':
-      command_line => '/usr/lib/nagios/plugins/check_memory -w 10% -c 5%'
-   }
-   sunet::nagios::nrpe_command {'check_boot_15_5':
-      command_line => '/usr/lib/nagios/plugins/check_disk -w 15% -c 5% -p /boot'
-   }
-   sunet::nagios::nrpe_command {'check_entropy':
-      command_line => '/usr/lib/nagios/plugins/check_entropy'
-   }
-   sunet::nagios::nrpe_command {'check_ntp_time':
-      command_line => '/usr/lib/nagios/plugins/check_ntp_time -H localhost'
-   }
-   sunet::nagios::nrpe_command {'check_scriptherder':
-      command_line => '/usr/local/bin/scriptherder --mode check'
-   }
-   sunet::nagios::nrpe_command {'check_apt':
-      command_line => '/usr/lib/nagios/plugins/check_apt'
-   }
-   sunet::sudoer {'nagios_run_needrestart_command':
-       user_name    => 'nagios',
-       collection   => 'nagios',
-       command_line => "/usr/sbin/needrestart -p -l"
-   }
-   sunet::nagios::nrpe_command {'check_needrestart':
-       command_line => "sudo /usr/sbin/needrestart -p -l"
-   }
+  require apt
+  class {'sunet::nagios': }
+  if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '12.04') {
+    class {'apt::backports': }
+  }
+  package {'nagios-plugins-contrib': ensure => latest}
+  if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease < '18.04') {
+    package {'nagios-plugins-extra': ensure => latest}
+  }
+  sunet::nagios::nrpe_command {'check_memory':
+    command_line => '/usr/lib/nagios/plugins/check_memory -w 10% -c 5%'
+  }
+  sunet::nagios::nrpe_command {'check_mem':
+    command_line => '/usr/lib/nagios/plugins/check_memory -w 10% -c 5%'
+  }
+  sunet::nagios::nrpe_command {'check_boot_15_5':
+    command_line => '/usr/lib/nagios/plugins/check_disk -w 15% -c 5% -p /boot'
+  }
+  sunet::nagios::nrpe_command {'check_entropy':
+    command_line => '/usr/lib/nagios/plugins/check_entropy'
+  }
+  sunet::nagios::nrpe_command {'check_ntp_time':
+    command_line => '/usr/lib/nagios/plugins/check_ntp_time -H localhost'
+  }
+  sunet::nagios::nrpe_command {'check_scriptherder':
+    command_line => '/usr/local/bin/scriptherder --mode check'
+  }
+  sunet::nagios::nrpe_command {'check_apt':
+    command_line => '/usr/lib/nagios/plugins/check_apt'
+  }
+  sunet::sudoer {'nagios_run_needrestart_command':
+    user_name    => 'nagios',
+    collection   => 'nagios',
+    command_line => "/usr/sbin/needrestart -p -l"
+  }
+  sunet::nagios::nrpe_command {'check_needrestart':
+    command_line => "sudo /usr/sbin/needrestart -p -l"
+  }
 }
 
 class nagios_monitor {
-   $nrpe_clients = hiera_array('nrpe_clients',[]);
-   $allowed_hosts = join($nrpe_clients," ");
-   $web_admin_pw   = safe_hiera('nagios_nagiosadmin_password');
-   $web_admin_user = 'nagiosadmin';
+  $nrpe_clients = hiera_array('nrpe_clients',[]);
+  $allowed_hosts = join($nrpe_clients," ");
+  $web_admin_pw   = safe_hiera('nagios_nagiosadmin_password');
+  $web_admin_user = 'nagiosadmin';
    
-   class { 'https': }
-   class { 'http': }
+  class { 'nagioscfg':
+    hostgroups      => $::roles,
+    config          => 'seamless'
+  }
 
-   class { 'sunet::dehydrated::client':
+  #web interface configs specifically for monitor.seamlessaccess.org
+  class { 'https': }
+  class { 'http': }
+  class { 'sunet::dehydrated::client':
     domain     => 'monitor.seamlessaccess.org',
     ssl_links  => true,
     check_cert => true,
-   }
-   class { 'nagioscfg':
-      hostgroups      => $::roles,
-      config          => 'eid'
-   }
-   class {'nagioscfg::slack': domain => 'sunet.slack.com', token => safe_hiera('slack_token','') } ->
-   class {'nagioscfg::passive': enable_notifications => '1', obsess_over_hosts => '0'}
+  }
+  service { 'apache2':
+    ensure  => running,
+    enable  => true,
+    require => Class['nagioscfg'],
+  }
+  file { '/etc/apache2/sites-available/monitor-default.conf':
+    ensure  => file,
+    mode    => '0644',
+    content => template('thiss/monitor/monitor-default.conf.erb'),
+    notify => Service['apache2'],
+  }
+  -> file { '/etc/apache2/sites-available/monitor-ssl.conf':
+      ensure  => file,
+      mode    => '0644',
+      content => template('thiss/monitor/monitor-ssl.conf.erb'),
+      notify => Service['apache2'],
+      }
+  -> exec { 'a2ensite monitor-default.conf && a2ensite monitor-ssl.conf':
+      creates     => ['/etc/apache2/sites-enabled/monitor-default.conf',
+                      '/etc/apache2/sites-enabled/monitor-ssl.conf'],
+      refreshonly => true,
+      notify      => Service['apache2']
+      }
+  exec { "enables_apache_modules":
+    command => "a2enmod ssl && a2enmod proxy && a2enmod proxy_http && a2enmod headers",
+    refreshonly => true,
+    notify  => Service['apache2']
+  }
 
-   sunet::misc::htpasswd_user { $web_admin_user :
-      filename => "/etc/nagios3/htpasswd.users",
-      password => $web_admin_pw,
-      group    => 'www-data',
-    }
+  class {'nagioscfg::slack': domain => 'sunet.slack.com', token => safe_hiera('slack_token','') } ->
+  class {'nagioscfg::passive': enable_notifications => '1', obsess_over_hosts => '0'}
 
-   file {
-      '/root/MONITOR_WEB_PASSWORD':
-        content => sprintf("%s\n%s\n", $web_admin_user, $web_admin_pw),
-        group   => 'root',
-        mode    => '0600',
-        ;
-   }
-   nagioscfg::slack::channel {'eln': } ->
-   nagioscfg::contactgroup {'alerts': } ->
-   nagioscfg::contact {'slack-alerts':
-      host_notification_commands    => ['notify-host-to-slack-eln'],
-      service_notification_commands => ['notify-service-to-slack-eln'],
-      contact_groups                => ['alerts']
-   }
-   nagioscfg::service {'service_ping':
-      hostgroup_name => ['all'],
-      description    => 'PING',
-      check_command  => 'check_ping!400.0,1%!500.0,2%',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'service_ssh':
-      hostgroup_name => ['jumphosts'],
-      description    => 'SSH',
-      check_command  => 'check_ssh_4_hostname',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_load':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_load',
-      description    => 'System Load',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_users':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_users',
-      description    => 'Active Users',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_zombie_procs':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_zombie_procs',
-      description    => 'Zombie Processes',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_total_procs':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_total_procs_lax',
-      description    => 'Total Processes',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_root':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_root',
-      description    => 'Root Disk',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_boot':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_boot_15_5',
-      description    => 'Boot Disk',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_var':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_var',
-      description    => 'Var Disk',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_uptime':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_uptime',
-      description    => 'Uptime',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_reboot':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_reboot',
-      description    => 'Reboot Needed',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_memory':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_memory',
-      description    => 'System Memory',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_entropy':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_entropy',
-      description    => 'System Entropy',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_ntp_time':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_ntp_time',
-      description    => 'System NTP Time',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_process_haveged':
-      hostgroup_name => ['entropyclient'],
-      check_command  => 'check_nrpe_1arg!check_process_haveged',
-      description    => 'haveged running',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_scriptherder':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_scriptherder',
-      description    => 'Scriptherder Status',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_apt':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_apt',
-      description    => 'Packages available for upgrade',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'metadata_aggregate_age':
-      hostgroup_name => ['md_aggregator'],
-      check_command  => 'check_nrpe_1arg!check_fileage_metadata_aggregate',
-      description    => 'metadata aggregate age',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::service {'check_needrestart':
-      hostgroup_name => ['nrpe'],
-      check_command  => 'check_nrpe_1arg!check_needrestart',
-      description    => 'Processes need restart',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::command {'check_ssl_cert_3':
-      command_line   => "/usr/lib/nagios/plugins/check_ssl_cert -A -H '\$HOSTADDRESS\$' -c '\$ARG2\$' -w '\$ARG1\$' -p '\$ARG3\$'"
-   }
-   $public_hosts = ['thiss.io','use.thiss.io']
-   nagioscfg::host {$public_hosts: }
-   nagioscfg::service {'check_public_ssl_cert':
-      host_name      => $public_hosts,
-      check_command  => 'check_ssl_cert_3!30!14!443',
-      description    => 'check https certificate validity on port 443',
-      contact_groups => ['alerts']
-   }
-   nagioscfg::command {'check_website':
-      command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
-   }
+  sunet::misc::htpasswd_user { $web_admin_user :
+    filename => "/etc/nagios3/htpasswd.users",
+    password => $web_admin_pw,
+    group    => 'www-data',
+  }
+
+  file {'/root/MONITOR_WEB_PASSWORD':
+    content => sprintf("%s\n%s\n", $web_admin_user, $web_admin_pw),
+    group   => 'root',
+    mode    => '0600',
+  }
+  nagioscfg::slack::channel {'eln': } ->
+  nagioscfg::contactgroup {'alerts': } ->
+  nagioscfg::contact {'slack-alerts':
+    host_notification_commands    => ['notify-host-to-slack-eln'],
+    service_notification_commands => ['notify-service-to-slack-eln'],
+    contact_groups                => ['alerts']
+  }
+  nagioscfg::service {'service_ping':
+    hostgroup_name => ['all'],
+    description    => 'PING',
+    check_command  => 'check_ping!400.0,1%!500.0,2%',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_load':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_load',
+    description    => 'System Load',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_users':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_users',
+    description    => 'Active Users',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_zombie_procs':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_zombie_procs',
+    description    => 'Zombie Processes',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_total_procs':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_total_procs_lax',
+    description    => 'Total Processes',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_root':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_root',
+    description    => 'Root Disk',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_boot':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_boot_15_5',
+    description    => 'Boot Disk',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_var':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_var',
+    description    => 'Var Disk',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_uptime':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_uptime',
+    description    => 'Uptime',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_reboot':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_reboot',
+    description    => 'Reboot Needed',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_memory':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_memory',
+    description    => 'System Memory',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_entropy':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_entropy',
+    description    => 'System Entropy',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_ntp_time':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_ntp_time',
+    description    => 'System NTP Time',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_process_haveged':
+    hostgroup_name => ['entropyclient'],
+    check_command  => 'check_nrpe_1arg!check_process_haveged',
+    description    => 'haveged running',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_scriptherder':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_scriptherder',
+    description    => 'Scriptherder Status',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_apt':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_apt',
+    description    => 'Packages available for upgrade',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'metadata_aggregate_age':
+    hostgroup_name => ['md_aggregator'],
+    check_command  => 'check_nrpe_1arg!check_fileage_metadata_aggregate',
+    description    => 'metadata aggregate age',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_needrestart':
+    hostgroup_name => ['nrpe'],
+    check_command  => 'check_nrpe_1arg!check_needrestart',
+    description    => 'Processes need restart',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::command {'check_ssl_cert_3':
+    command_line   => "/usr/lib/nagios/plugins/check_ssl_cert -A -H '\$HOSTADDRESS\$' -c '\$ARG2\$' -w '\$ARG1\$' -p '\$ARG3\$'"
+  }
+  $public_hosts = ['thiss.io','use.thiss.io']
+  nagioscfg::host {$public_hosts: }
+  nagioscfg::service {'check_public_ssl_cert':
+    host_name      => $public_hosts,
+    check_command  => 'check_ssl_cert_3!30!14!443',
+    description    => 'check https certificate validity on port 443',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::command {'check_website':
+    command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
+  }
 }
 
 class redis_cluster_node {
