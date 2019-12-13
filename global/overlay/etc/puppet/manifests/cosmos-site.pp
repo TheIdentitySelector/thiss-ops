@@ -90,6 +90,8 @@ class http {
    }
 }
 
+class md_aggregator {}
+
 class servicemonitor {
    $nagios_ip_v4 = join(hiera('nagios_ip_v4')," ");
    ufw::allow { "allow-servicemonitor-from-nagios":
