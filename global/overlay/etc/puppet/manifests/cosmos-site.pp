@@ -206,30 +206,32 @@ class nagios_monitor {
   service { 'apache2':
     ensure  => running,
     enable  => true,
-    require => Class['nagioscfg'],
   }
-  file { '/etc/apache2/sites-available/monitor-default.conf':
+  file { '/etc/apache2/sites-available/000-default.conf':
     ensure  => file,
     mode    => '0644',
-    content => template('thiss/monitor/monitor-default.conf.erb'),
+    content => template('thiss/monitor/000-default.conf.erb'),
     notify => Service['apache2'],
   }
-  -> file { '/etc/apache2/sites-available/monitor-ssl.conf':
-      ensure  => file,
-      mode    => '0644',
-      content => template('thiss/monitor/monitor-ssl.conf.erb'),
-      notify => Service['apache2'],
-      }
-  -> exec { 'a2ensite monitor-default.conf && a2ensite monitor-ssl.conf':
-      creates     => ['/etc/apache2/sites-enabled/monitor-default.conf',
-                      '/etc/apache2/sites-enabled/monitor-ssl.conf'],
-      refreshonly => true,
-      notify      => Service['apache2']
-      }
-  exec { "enables_apache_modules":
-    command => "a2enmod ssl && a2enmod proxy && a2enmod proxy_http && a2enmod headers",
+  file { '/etc/apache2/sites-available/monitor-ssl.conf':
+    ensure  => file,
+    mode    => '0644',
+    content => template('thiss/monitor/monitor-ssl.conf.erb'),
+    notify  => Service['apache2'],
+  }
+  exec { 'a2ensite monitor-ssl.conf':
+    creates     => '/etc/apache2/sites-enabled/monitor-ssl.conf',
+    notify      => Service['apache2'],
+  }
+  exec { 'a2enmod proxy && a2enmod proxy_http && a2enmod headers':
+    subscribe   => File['/etc/apache2/sites-available/000-default.conf'],
     refreshonly => true,
-    notify  => Service['apache2']
+    notify      => Service['apache2'],
+  }
+  exec { 'a2enmod ssl':
+    subscribe   => File['/etc/apache2/sites-available/monitor-ssl.conf'],
+    refreshonly => true,
+    notify      => Service['apache2'],
   }
 
   class {'nagioscfg::slack': domain => 'sunet.slack.com', token => safe_hiera('slack_token','') } ->
