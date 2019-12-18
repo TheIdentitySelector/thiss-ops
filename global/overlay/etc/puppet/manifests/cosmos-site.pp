@@ -234,6 +234,13 @@ class nagios_monitor {
     notify      => Service['apache2'],
   }
 
+  #definition for check_nrpe_1arg
+  file { '/etc/nagios-plugins/config/check_nrpe.cfg':
+    ensure  => file,
+    mode    => '0644',
+    content => template('thiss/monitor/check_nrpe.cfg.erb'),
+  }
+
   class {'nagioscfg::slack': domain => 'sunet.slack.com', token => safe_hiera('slack_token','') } ->
   class {'nagioscfg::passive': enable_notifications => '1', obsess_over_hosts => '0'}
 
