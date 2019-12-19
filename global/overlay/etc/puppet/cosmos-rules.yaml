@@ -66,6 +66,7 @@ a-1.thiss.io:
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
+   md_aggregator:
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
