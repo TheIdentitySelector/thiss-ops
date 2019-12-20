@@ -373,16 +373,19 @@ class nagios_monitor {
   nagioscfg::command {'check_ssl_cert_3':
     command_line   => "/usr/lib/nagios/plugins/check_ssl_cert -A -H '\$HOSTADDRESS\$' -c '\$ARG2\$' -w '\$ARG1\$' -p '\$ARG3\$'"
   }
-  $public_hosts = ['thiss.io','use.thiss.io']
-  nagioscfg::host {$public_hosts: }
-  nagioscfg::service {'check_public_ssl_cert':
-    host_name      => $public_hosts,
-    check_command  => 'check_ssl_cert_3!30!14!443',
-    description    => 'check https certificate validity on port 443',
-    contact_groups => ['alerts']
-  }
   nagioscfg::command {'check_website':
     command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
+  }
+  $public_hosts = ['use.thiss.io','md.seamlessaccess.org']
+  nagioscfg::host {$public_hosts: }
+  $urls = ['use.thiss.io','md.seamlessaccess.org','md.ntx.sunet.eu.seamlessaccess.org','md.se-east.sunet.eu.seamlessaccess.org']
+  $urls.each |$url|{
+    nagioscfg::service {"check_${url}":
+      host_name      => ["${url}"],
+      check_command  => "check_website!https://${url}",
+      description    => 'check web',
+      contact_groups => ['alerts'],
+    }
   }
 }
 
