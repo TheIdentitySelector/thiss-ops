@@ -241,7 +241,7 @@ class nagios_monitor {
     content => template('thiss/monitor/check_nrpe.cfg.erb'),
   }
 
-  class {'nagioscfg::slack': domain => 'seamlessaccesss.slack.com', token => safe_hiera('slack_token','') } ->
+  class {'nagioscfg::slack': domain => 'seamlessaccess.slack.com', token => safe_hiera('slack_token','') } ->
   class {'nagioscfg::passive': enable_notifications => '1', obsess_over_hosts => '0'}
 
   sunet::misc::htpasswd_user { $web_admin_user :
@@ -258,6 +258,8 @@ class nagios_monitor {
   nagioscfg::slack::channel {'nagios': } ->
   nagioscfg::contactgroup {'alerts': } ->
   nagioscfg::contact {'slack-alerts':
+    host_notification_options     => 'd,u,r,f',
+    service_notification_options  => 'w,u,c,r,f',
     host_notification_commands    => ['notify-host-to-slack-nagios'],
     service_notification_commands => ['notify-service-to-slack-nagios'],
     contact_groups                => ['alerts']
