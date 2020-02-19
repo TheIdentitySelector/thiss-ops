@@ -32,7 +32,7 @@ a-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
    thiss::pyffd:
-      pyff_version: 1.1.1
+      pyff_version: 1.1.2
    https:
    md_aggregator:
 
