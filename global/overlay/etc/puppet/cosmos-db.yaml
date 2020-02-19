@@ -163,7 +163,7 @@ classes:
     thiss::dockerhost: null
     thiss::firewall_rules: *id004
     thiss::md_publisher: &id009 {watch: /var/www/html/metadata.json}
-    thiss::pyff: &id010 {output: /var/www/html/metadata.json, pyff_version: 1.0.1}
+    thiss::pyff: &id010 {output: /var/www/html/metadata.json, pyff_version: 1.1.1}
     update_ca_certificates: null
   meta.se-east.sunet.eu.seamlessaccess.org:
     common: null
