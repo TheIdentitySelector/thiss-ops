@@ -61,7 +61,7 @@ a-1.thiss.io:
 '^meta\D+\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::pyff:
-      pyff_version: 1.0.1
+      pyff_version: 1.1.1
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
