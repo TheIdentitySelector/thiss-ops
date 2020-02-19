@@ -1,0 +1,12 @@
+# this command runs a program $ARG1$ with arguments $ARG2$
+# this file is managed with puppet.
+define command {
+        command_name    check_nrpe
+        command_line    /usr/lib/nagios/plugins/check_nrpe -H $HOSTADDRESS$ -c $ARG1$ -a $ARG2$
+}
+
+# this command runs a program $ARG1$ with no arguments
+define command {
+        command_name    check_nrpe_1arg
+        command_line    /usr/lib/nagios/plugins/check_nrpe -H $HOSTADDRESS$ -c $ARG1$
+}

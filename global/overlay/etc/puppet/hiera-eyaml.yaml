@@ -2,7 +2,6 @@
 :backends:
   - eyaml
   - yaml
-  - gpg
 
 :logger: console
 
@@ -16,10 +15,6 @@
 
 :yaml:
    :datadir: /etc/hiera/data
-
-:gpg:
-   :datadir: /etc/hiera/data
-   :key_dir: /etc/hiera/gpg
 
 :eyaml:
     :datadir: '/etc/hiera/data'

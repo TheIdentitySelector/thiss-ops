@@ -34,6 +34,7 @@ a-1.thiss.io:
    thiss::pyffd:
       pyff_version: 1.1.1
    https:
+   md_aggregator:
 
 '^\S+ntx\S+\.seamlessaccess\.org$':
    thiss::firewall_rules:
@@ -65,6 +66,7 @@ a-1.thiss.io:
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
+   md_aggregator:
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -75,3 +77,6 @@ md.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::haproxy:
       location: se-east
+
+monitor.ntx.sunet.eu.seamlessaccess.org:
+   nagios_monitor:

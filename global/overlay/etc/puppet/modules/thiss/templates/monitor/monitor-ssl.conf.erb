@@ -1,0 +1,29 @@
+<IfModule mod_ssl.c>
+  <VirtualHost *:443>
+      ServerName monitor.seamlessaccess.org
+      SSLEngine on
+      SSLCertificateFile /etc/dehydrated/certs/monitor.seamlessaccess.org/fullchain.pem
+      SSLCertificateKeyFile /etc/dehydrated/certs/monitor.seamlessaccess.org/privkey.pem
+
+      Header always set Strict-Transport-Security "max-age=63072000"
+
+      SSLProtocol             all -SSLv3 -TLSv1 -TLSv1.1
+      SSLCipherSuite          ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+      SSLHonorCipherOrder     off
+      SSLSessionTickets       off
+
+      SSLUseStapling On
+      SSLCompression          off
+
+      SSLOptions +StrictRequire
+
+      # Add vhost name to log entries:
+      LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" vhost_combined
+      LogFormat "%v %h %l %u %t \"%r\" %>s %b" vhost_common
+      BrowserMatch "MSIE [2-6]" \
+                    nokeepalive ssl-unclean-shutdown \
+                    downgrade-1.0 force-response-1.0
+                    BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+  </VirtualHost>
+  SSLStaplingCache "shmcb:logs/ssl_stapling(32768)"
+</IfModule>
