@@ -14,6 +14,8 @@ nrpe_clients:
 mgmt_addresses:
     - 130.242.125.68    # hoppjerka.sunet.se
     - 2001:6b0:8:4::68  # hoppjerka.sunet.se
+    - 130.242.121.73    # joppherka.sunet.se
+    - 2001:6b0:7:6::73  # joppherka.sunet.se
 
 md_ntx:
    - 192.36.171.80
