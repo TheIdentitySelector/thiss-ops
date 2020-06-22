@@ -60,6 +60,39 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
+  'jonas-6CB01A0F':
+    ensure: 'present'
+    name:   'jonas-6CB01A0F@nordu.net'
+    key:    "AAAAB3NzaC1yc2EAAAADAQABAAACAQDvuL8XCorTZ1VP5cgbcdN5gNumnZ8RkrS8Hs5b0QKLRwwBNFsl98xMKxzQfBYR610vMnW30iDt3dRnqhfp75yakvt5fvrnk11gSwGoEOeBr5T7jgnJQK/kBIikXfpqsvH/40cSkX3Lx86VzDps/8j5sVYmgWiRk7BKG2/aSVY22RdPliITy2N60BUdZE3blz/I2bpJ1gDzAlJJk/xYHluou7mUuEEMT681hhAC+D32ofTAFSUtvP2PfsOTJxfJ2Iy22cRpR5aA5OCImEmBim4T1vAJUn6xSbeGI4RDHURYveLUT46gE5diWDTmdRKp8P7IpEYhJ1QQtdbsjnt9N6xJUI9ZcujD7yH1Drt0mJH23UhmNtliPeC8nO+58iM9MIgvnqw01wmWG5YnOBJVFWPC90LNGwm29Y6kjxDyVmDXglyx5mBymiEt8l2twi8xVbv6rKAUCUxHpcdsThvyZ75YWpAj0Rpvm5+y76xKqqJ8tK8YUUlD/g/L8gGYsg9GcHdxkUHNF+NMkbzbARM11eALYFdRCM7Kzgf49xMtOcs4s1IcM6u1YX51FvdyWlHHmDTGazz6k/AnF4jqdD4+SBdo7BPdh+FTfNbA1AtOyV1YNLCFrhnSBoUgt+IJ4LZFiRuyak1uxM8zdz5iikzEY+ClEe0GolmG7qtY12DVPy+b+w=="
+    type:   'ssh-rsa'
+    user:   'root'
+
+  'niklasj-000605760456':
+    ensure: 'present'
+    name:   'niklasj-000605760456@sunet.se'
+    key:    "AAAAB3NzaC1yc2EAAAADAQABAAACAQDrqUzN/i/YNIFOo4VIpMYEkLQ3JYQ6n5p47NIR4LF9CF1MBISpqWTN8F17gJSNfvC+gYEncMM3Vdo6BXm14rEvnN9XTjKYjFKSIRNbtJ28hs5/RqQB1jxWdd2h/0BW7wj4nRw0DHFDWGvnU5lybMIrovl4HXncNfCa8j/AynAKsGrY4YMRAuDL9Lmyl7QPcUEnv4caSZYT7u5oFmmEkN4anYCuM0G2HFk+ifkrXbaRfuL1Ei2/YbBAho5zs+IFJqi2zof1+nnSgPGY6FZtmy9UEWtbjXkpwQb3D3WJlYUU/aHWJ0B79JWcgwvzwCt+nb/ybc3oxuQzdLPTo7j+CHm/M19ibBejSQARNg7YtRaaO0m24VYuLlElsJqP4/bBEZepkXRtm/Bfz6oIC41ZsWe9+BOGSv5KuvhDIdMESYgtsxBYJ2JxsfgqsSg/qCwDgs+C15KDP7E2ugQscROrFFKvLgU1nCvPOUoRnj2a/jFQhyq4spBzfOYDpCqQMiOY1LAfqfNO5MjJgCMZKgtxGhUsy97C/+DIiy50cyhd2l529hd1Fucz1swm1OquMiii2whC/lbmKhpV+N/IDG/G3dSggUpszqwqHJRu/CUhGfhEAjgs3J1gvRJ8hnHA1Gpmcumgsc7PlaWFZG4DfDw+GgjaUE8IbIMIjM2rcKzSSn9dFQ=="
+    type:   'ssh-rsa'
+    user:   'root'
+
+  'tobias-000610124578':
+    ensure: 'present'
+    name:   'tobias-000610124578@sunet.se'
+    key :   'AAAAB3NzaC1yc2EAAAADAQABAAACAQDKpQ49O6KUNIotwvgvm1tymmKgdZMqfDPObGdErQRMjVHAh6FYUmIvR6CIupDVBhdZknwzkXHo0ohCfEYPDNsUA7y2KSdJGy5xhXgX3Lgo5MuhfJPy2E4INlJjoYDiZTwPkvWXJSDO0H4tDcvipdBuYHV6dBMwn5UfydptJf7+Dmqa9CS3ZqsN4nlL3Hoe2c/oW8oVscO81q3p4sJ8hMjn6/fqHh6Jj4Rw2II5b/UsCEzcrfkY55eAi5viwSKTLyEMVJKcM7zfTxNbXr+C1ry7xUHaBIEosaV9JkSkrztamVz2StbxNHpRvWqiS9EwlF9aF3v7EIIhrio4vH/Qg0pEOlHSia/8rEW+kUBZevzBGWBcOUL3l83s/2e2DdaxIXZqAU2/WZINo/awsULHLCCnE7WSpuNn/sTiRiboGIqb+v+vhgMjrUZaaxsYjxOGd48ncsDS9Z72nHX1b6KoCFNSgWz6ycgwkOnYMyMBIQdWvE/z7mSFDPmaKgVPTEruL5/lxTvUevE65bgRy8xSZILg1VjSdMIDhaYXRLh8smQNnh0i57DQZzNSBfQAVZbu3krMv0xkXEDJ4Sze4JdO6mpO0HuR+IWmlbRrRYPL2mQDr7rD7WeQINtXJU3U8DTKpVKYPe3c4ED80gHvniAINyaBXCLm0ZYgDy3EFC75HMW8+Q=='
+    type:   'ssh-rsa'
+    user:   'root'
+
+  'patrik+soft':
+    name  : 'patrik@nordu.net'
+    key   : 'AAAAB3NzaC1yc2EAAAABIwAAAQEAs0nFlZmXga5A789gFwmRVYREPNuaGvZBNAkN+fHpfzNfxSDQNlu1v4OWlU2QAs4XBMVIo5O14EuqqunSgFnX1gh9++AM1cQ8pBUeTi0l99MTl7qxc9MIHCyvHhbzra7o3MHEUuNQzbAjEUsuGV5/ymNJv4ysbncX+BiZplkydq2H/MuDQD8dzghfq6HUgf/BZDVxM3K4Ak8ll65PPPA6xnWJA4a2abgHvoBf40R6xF2dgOK3wq4xQRQSUWdw0olRSyXXZ68mt45m9fvwLnpY3xIFWEWJ6ZbEW+K8BsVT7zqbCBdpnfT8Rc2myz3cjgf7WpTHd8JXEcKk2BaEGD4y+w=='
+    type:   'ssh-rsa'
+    user:   'root'
+
+  'salu+7B44FE7C':
+    name   : 'salu+7B44FE7C@sunet.se'
+    key    : 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDepp02t6/oNnO/qKJtB+U2yLWUa+dYo4ECsbX/DGOgr1MYzhtIbP18gUAX0PN9Hj40XdmY5EtAJZamMWCLi0EijanhOLDCzw5s0hzi/gYysmEReLRxhqq4ppjZhSj2HF09a6Rq1TTkndG9mYzTYTkdOyOqmdNcmIZRRvJD0BE1UBkERrURGhA+8YPnHoxEVUqdEDMFX7nHmNl4Q5brj7pNXaBv35PsVIlzDSfltgN7yENF6dv8Fu7nxjKZ+r9Anrb5rCEiBnOkNAbwEMfMvjRRehbY9Nvz1CEn0cP8SstbLYQfBQuCeJW3w9PygLN/a0asva0ttmVhprbnSeZtKmm3'
+    type:   'ssh-rsa'
+    user:   'root'
+
 pyff_pipeline:
     - load:
         - http://mds.edugain.org
