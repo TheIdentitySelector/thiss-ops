@@ -29,6 +29,12 @@ md_se-east:
 haproxy_se-east:
    - 89.45.235.175
 
+md_aws1:
+   - 18.158.14.16
+   - 18.157.244.215
+haproxy_aws1:
+   - 18.195.9.86
+
 ssh_authorized_keys:
 
   'mariah+CA747E57':

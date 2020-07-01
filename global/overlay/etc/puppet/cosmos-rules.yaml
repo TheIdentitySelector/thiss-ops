@@ -45,6 +45,11 @@ a-1.thiss.io:
    thiss::firewall_rules:
       location: se-east
 
+'^\S+aws1\S+\.seamlessaccess\.org$':
+   sunet_iaas_cloud:
+   thiss::firewall_rules:
+      location: aws1
+
 '^md-[0-9]\.ntx+\S+\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::mdq:
