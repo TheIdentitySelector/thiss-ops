@@ -4,7 +4,7 @@ class thiss::firewall_rules($location=undef){
   $haproxy_ip = hiera_array("haproxy_${location}",[])
 
   #metadata aggregator expose port 443 to mdq
-  if $::fqdn =~ /^meta\D+\.seamlessaccess\.org$/ {
+  if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_aggregator':
       from =>  $md_ip,
       port => '443',
@@ -18,7 +18,7 @@ class thiss::firewall_rules($location=undef){
     }
   }
   #haproxy exposes 443 to Internet
-  if $::fqdn =~ /^md\D+\.seamlessaccess\.org$/ {
+  if $::fqdn =~ /^md\.\S+\.seamlessaccess\.org$/ {
     ufw::allow { "allow_https_haproxy":
       ip   => 'any',
       port => '443',
