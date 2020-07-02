@@ -167,13 +167,17 @@ classes:
     entropyclient: null
     infra_ca_rp: null
     mailclient: *id001
+    md_aggregator: null
     nrpe: null
     ops: null
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
+    thiss::dockerhost: null
     thiss::firewall_rules: *id009
+    thiss::md_publisher: &id010 {watch: /var/www/html/metadata.json}
+    thiss::pyff: &id011 {output: /var/www/html/metadata.json, pyff_version: 1.1.2}
     update_ca_certificates: null
   meta.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -188,8 +192,8 @@ classes:
     sunet::updater: *id003
     thiss::dockerhost: null
     thiss::firewall_rules: *id004
-    thiss::md_publisher: &id010 {watch: /var/www/html/metadata.json}
-    thiss::pyff: &id011 {output: /var/www/html/metadata.json, pyff_version: 1.1.2}
+    thiss::md_publisher: *id010
+    thiss::pyff: *id011
     update_ca_certificates: null
   meta.se-east.sunet.eu.seamlessaccess.org:
     common: null
@@ -254,7 +258,8 @@ members:
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
-  md_aggregator: [a-1.thiss.io, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+  md_aggregator: [a-1.thiss.io, meta.aws1.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org,
+    meta.se-east.sunet.eu.seamlessaccess.org]
   nagios_monitor: [monitor.ntx.sunet.eu.seamlessaccess.org]
   nrpe: [a-1.thiss.io, auth-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
@@ -293,18 +298,20 @@ members:
   thiss::dockerhost: [a-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md-2.thiss.io, md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
-    meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+    meta.aws1.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::firewall_rules: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md.aws1.geant.eu.seamlessaccess.org, md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
     meta.aws1.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
   thiss::haproxy: [md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org]
-  thiss::md_publisher: [meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+  thiss::md_publisher: [meta.aws1.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org,
+    meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::mdq: [md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md-2.thiss.io]
-  thiss::pyff: [meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+  thiss::pyff: [meta.aws1.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org,
+    meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::pyffd: [a-1.thiss.io]
   update_ca_certificates: [a-1.thiss.io, auth-1.thiss.io, md-1.ntx.sunet.eu.seamlessaccess.org,
     md-1.se-east.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.ntx.sunet.eu.seamlessaccess.org,
