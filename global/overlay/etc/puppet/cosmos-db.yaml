@@ -164,7 +164,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:19.03.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id005
-    thiss::haproxy: {location: se-east}
+    thiss::haproxy: {location: aws1}
     update_ca_certificates: null
   md.ntx.sunet.eu.seamlessaccess.org:
     common: null
