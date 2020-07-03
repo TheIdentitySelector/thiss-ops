@@ -2,13 +2,13 @@ class thiss::haproxy($location=undef){
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
 
-  $infra_cert = $::tls_certificates[$::fqdn]['infra_cert']
+  $infra_cert = $::tls_certificates[$::fqdn]['infra_bundle']
   $infra_key = $::tls_certificates[$::fqdn]['infra_key']
   ensure_resource(sunet::misc::certbundle, "${::fqdn}_haproxy", {
     group  => 'haproxy',
     bundle => ["cert=${infra_cert}",
                "key=${infra_key}",
-               "out=private/${::fqdn}_haproxy.crt",
+               "out=/etc/ssl/private/${::fqdn}_haproxy.crt",
                ],
   })
 
