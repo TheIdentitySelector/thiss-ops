@@ -114,7 +114,7 @@ md.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:19.03.12~3-0~ubuntu-focal'
    thiss::haproxy:
-      location: se-east
+      location: aws1
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
