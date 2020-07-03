@@ -50,21 +50,46 @@ a-1.thiss.io:
    thiss::firewall_rules:
       location: aws1
 
-'^md-[0-9]\.ntx+\S+\.seamlessaccess\.org$':
+'^md-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::mdq:
       version: 1.1.2
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
-'^md-[0-9]\.se-east+\S+\.seamlessaccess\.org$':
+'^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::mdq:
       version: 1.1.2
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
-'^meta\.\S+\.seamlessaccess\.org$':
+'^md-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
+   thiss::dockerhost:
+   thiss::mdq:
+      version: 1.1.2
+      src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
+      base_url: https://md.seamlessaccess.org
+
+meta.ntx.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+   thiss::pyff:
+      pyff_version: 1.1.2
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
+   md_aggregator:
+
+meta.se-east.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+   thiss::pyff:
+      pyff_version: 1.1.2
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
+   md_aggregator:
+
+meta.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::pyff:
       pyff_version: 1.1.2
@@ -79,6 +104,11 @@ md.ntx.sunet.eu.seamlessaccess.org:
       location: ntx
 
 md.se-east.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+   thiss::haproxy:
+      location: se-east
+
+md.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::haproxy:
       location: se-east
