@@ -39,7 +39,7 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: &id004 {version: '5:19.03.12~3-0~ubuntu-focal'}
-    thiss::firewall_rules: &id005 {location: aws2}
+    thiss::firewall_rules: &id005 {location: aws1}
     thiss::mdq: &id006 {base_url: 'https://md.seamlessaccess.org', src: 'https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json',
       version: 1.1.4}
     update_ca_certificates: null
@@ -222,6 +222,8 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
+    sunet_iaas_cloud: null
+    thiss::firewall_rules: {location: aws2}
     update_ca_certificates: null
   meta.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -348,7 +350,8 @@ members:
   sunet_iaas_cloud: [a-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
-    meta.aws1.geant.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+    meta.aws1.geant.eu.seamlessaccess.org, meta.aws2.geant.eu.seamlessaccess.org,
+    meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::dockerhost: [a-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org,
     md-1.se-east.sunet.eu.seamlessaccess.org, md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
@@ -359,7 +362,8 @@ members:
     md-1.se-east.sunet.eu.seamlessaccess.org, md-2.aws1.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
     md.aws1.geant.eu.seamlessaccess.org, md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
-    meta.aws1.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
+    meta.aws1.geant.eu.seamlessaccess.org, meta.aws2.geant.eu.seamlessaccess.org,
+    meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
   thiss::haproxy: [md.aws1.geant.eu.seamlessaccess.org, md.ntx.sunet.eu.seamlessaccess.org,
     md.se-east.sunet.eu.seamlessaccess.org]
