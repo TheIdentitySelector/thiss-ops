@@ -35,6 +35,12 @@ md_aws1:
 haproxy_aws1:
    - 18.195.9.86
 
+md_aws2:
+   - 184.169.227.115
+   - 3.101.5.178
+haproxy_aws2:
+   - 54.177.34.135
+
 ssh_authorized_keys:
 
   'mariah+CA747E57':
