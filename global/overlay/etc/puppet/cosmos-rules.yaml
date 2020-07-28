@@ -50,7 +50,7 @@ a-1.thiss.io:
    thiss::firewall_rules:
       location: aws1
 
-'^\S+aws1\S+\.seamlessaccess\.org$':
+'^\S+aws2\S+\.seamlessaccess\.org$':
    sunet_iaas_cloud:
    thiss::firewall_rules:
       location: aws2
