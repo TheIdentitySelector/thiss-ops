@@ -14,7 +14,7 @@ classes:
     sunet::updater: &id003 {cosmos_automatic_reboot: true, cron: true}
     sunet_iaas_cloud: null
     thiss::dockerhost: null
-    thiss::pyffd: {pyff_version: 1.1.2}
+    thiss::pyffd: {pyff_version: 1.1.4}
     update_ca_certificates: null
   auth-1.thiss.io:
     common: null
@@ -105,7 +105,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: null
     thiss::mdq: &id014 {base_url: 'https://md.thiss.io', src: 'https://a-1.thiss.io/ds.json',
-      version: 1.1.4}
+      version: 1.2.1}
     update_ca_certificates: null
   md-2.aws1.geant.eu.seamlessaccess.org:
     common: null
