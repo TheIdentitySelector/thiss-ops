@@ -105,6 +105,12 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
+  'mikott+F2E2BD2E':
+    name  : 'mikott+F2E2BD2E@nordu.net'
+    key   : 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDD83rZVsB04AXWeI+DRoOm7ZFDV6t+qDgxPhN/VlMJPlFZjCu2oirtaBz7EHAi+xh7+WKt93BcUDcLuUsIACkdoxxTyyG4FngWU5+10LAuDcO3b0Q1+JG7WRcH/lqClVbay4f/4d71DbtQM8Z6tV7N1HhfVK6dQHYVignhlW22KNEoEIB2wtSEA3rO9oEmg2MWhd2jWQdfEA6g2x5scLdaWsEhqvFudMFRnfxcUSWDprbUUfggkp127zlm33IzbMVkNKUTsS++08tsPkA4VKughkyf0mfZx9Lk36D4HE20IWNOWtuEpMnz6HZ3FGGIEkYyvcqhGTRKBkiQINhfggQX0lUFf1p/74dqz6ZaUK/8uOYG/CzJPccWLP0KRen5IuQqF46257/VI673BaV6jlmjvJmgf4vQxv2gNEInBHgGBUbtUoyPhbF6P+NONZPvfT7gqwRSK1F9pAXlPYsCxFhMC5j4vsduw5aATSolU0luDcEOqSLkcUHhampr7kmQgHtIpTxma1HlEW/X0NhPjitdw7cVW4upBfIoGUU5DgBy1OsWYqQr/UL5BtFYZl2fNhLQf/8jP4PSNv8oZCwEahGnkYGMnYxst2Rt9yoZ1Qmk1SBh6JRSVZoK1ryxJxeyNegEVbEZhl7Y1jjbjuCOQMjK8N+tDoPvineH6426KbjGaw=='
+    type:   'ssh-rsa'
+    user:   'root'
+
 pyff_pipeline:
     - load:
         - http://mds.edugain.org
