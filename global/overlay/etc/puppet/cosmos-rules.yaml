@@ -40,7 +40,9 @@ a-staging-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:19.03.13~3-0~ubuntu-focal'
-   https:
+   thiss::pyffd:
+      pyff_version: 1.1.4
+   md_aggregator:
 
 md-staging-1.thiss.io:
    sunet_iaas_cloud:
