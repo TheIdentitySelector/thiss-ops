@@ -36,6 +36,11 @@ a-1.thiss.io:
    https:
    md_aggregator:
 
+a-staging-1.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+   https:
+
 '^\S+ntx\S+\.seamlessaccess\.org$':
    thiss::firewall_rules:
       location: ntx
