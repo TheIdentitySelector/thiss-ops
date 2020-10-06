@@ -196,6 +196,19 @@ classes:
     thiss::dockerhost: null
     thiss::mdq: *id014
     update_ca_certificates: null
+  md-staging-1.thiss.io:
+    common: null
+    entropyclient: null
+    infra_ca_rp: null
+    mailclient: *id001
+    nrpe: null
+    ops: null
+    sunet::rsyslog: null
+    sunet::server: *id002
+    sunet::updater: *id003
+    sunet_iaas_cloud: null
+    thiss::dockerhost: {version: '5:19.03.13~3-0~ubuntu-focal'}
+    update_ca_certificates: null
   md.aws1.geant.eu.seamlessaccess.org:
     common: null
     entropyclient: null
@@ -340,7 +353,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -348,7 +361,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -356,7 +369,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -366,7 +379,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -374,7 +387,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -385,7 +398,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -393,7 +406,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -401,7 +414,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -409,7 +422,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
@@ -417,21 +430,22 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
   sunet_iaas_cloud: [a-1.thiss.io, a-staging-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
-    md-2.se-east.sunet.eu.seamlessaccess.org, md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org,
-    md.aws2.geant.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
-    meta.aws2.geant.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
+    md-2.se-east.sunet.eu.seamlessaccess.org, md-2.thiss.io, md-staging-1.thiss.io,
+    md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
+    meta.aws1.geant.eu.seamlessaccess.org, meta.aws2.geant.eu.seamlessaccess.org,
+    meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::dockerhost: [a-1.thiss.io, a-staging-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::firewall_rules: [md-1.aws1.geant.eu.seamlessaccess.org, md-1.aws2.geant.eu.seamlessaccess.org,
@@ -458,7 +472,7 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
