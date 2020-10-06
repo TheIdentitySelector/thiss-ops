@@ -97,7 +97,7 @@ meta.ntx.sunet.eu.seamlessaccess.org:
 meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::pyff:
-      pyff_version: 1.1.2
+      pyff_version: 1.1.4
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
@@ -117,7 +117,7 @@ meta.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:19.03.12~3-0~ubuntu-focal'
    thiss::pyff:
-      pyff_version: 1.1.2
+      pyff_version: 1.1.4
       output: /var/www/html/metadata.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
