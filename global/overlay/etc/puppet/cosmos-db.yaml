@@ -56,7 +56,7 @@ classes:
     thiss::dockerhost: &id004 {version: '5:19.03.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: &id005 {location: aws1}
     thiss::mdq: &id006 {base_url: 'https://md.seamlessaccess.org', src: 'https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json',
-      version: 1.2.5}
+      version: 1.1.4}
     update_ca_certificates: null
   md-1.aws2.geant.eu.seamlessaccess.org:
     common: null
@@ -87,7 +87,7 @@ classes:
     thiss::dockerhost: null
     thiss::firewall_rules: &id010 {location: ntx}
     thiss::mdq: &id011 {base_url: 'https://md.seamlessaccess.org', src: 'https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json',
-      version: 1.2.5}
+      version: 1.1.4}
     update_ca_certificates: null
   md-1.se-east.sunet.eu.seamlessaccess.org:
     common: null
