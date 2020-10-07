@@ -26,7 +26,7 @@ class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $w
    service {'lighttpd': ensure => running } ->
    sunet::nagios::nrpe_check_fileage {"metadata_aggregate":
       filename => $watch,
-      warning_age => '600',
+      warning_age => '1100',
       critical_age => '86400'
    }
 }
