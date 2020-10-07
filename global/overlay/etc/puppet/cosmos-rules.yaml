@@ -22,7 +22,7 @@
    sunet_iaas_cloud:
    thiss::dockerhost:
    thiss::mdq:
-      version: 1.2.6-testing2
+      version: 1.2.6
       src: https://a-1.thiss.io/ds.json
       base_url: https://md.thiss.io
    https:
@@ -71,14 +71,14 @@ md-staging-1.thiss.io:
 '^md-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::mdq:
-      version: 1.1.4
+      version: 1.2.6
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
 '^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
    thiss::mdq:
-      version: 1.2.6-testing2
+      version: 1.2.6
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
@@ -86,7 +86,7 @@ md-staging-1.thiss.io:
    thiss::dockerhost:
       version: '5:19.03.12~3-0~ubuntu-focal'
    thiss::mdq:
-      version: 1.1.4
+      version: 1.2.6
       src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
@@ -94,7 +94,7 @@ md-staging-1.thiss.io:
    thiss::dockerhost:
       version: '5:19.03.12~3-0~ubuntu-focal'
    thiss::mdq:
-      version: 1.2.6-testing2
+      version: 1.2.6
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
 
