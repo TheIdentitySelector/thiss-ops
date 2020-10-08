@@ -206,12 +206,17 @@ classes:
     mailclient: *id001
     nrpe: null
     ops: null
+    sunet::frontend::register_sites:
+      sites:
+        md-staging.thiss.io:
+          frontends: [se-fre-lb-1.sunet.se, se-tug-lb-1.sunet.se]
+          port: '443'
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:19.03.13~3-0~ubuntu-focal'}
-    thiss::mdq: {base_url: 'https://md.thiss.io', src: 'https://a-stagin-1.thiss.io/metadata.json',
+    thiss::mdq: {base_url: 'https://md-staging.thiss.io', src: 'https://a-staging-1.thiss.io/metadata.json',
       version: 1.2.6}
     update_ca_certificates: null
   md.aws1.geant.eu.seamlessaccess.org:
@@ -415,6 +420,7 @@ members:
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
+  sunet::frontend::register_sites: [md-staging-1.thiss.io]
   sunet::rsyslog: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
