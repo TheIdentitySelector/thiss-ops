@@ -63,6 +63,8 @@ md-staging-1.thiss.io:
             - 'se-fre-lb-1.sunet.se'
             - 'se-tug-lb-1.sunet.se'
          port: '443'
+   https:
+   http:
 
 '^\S+ntx\S+\.seamlessaccess\.org$':
    thiss::firewall_rules:
