@@ -202,6 +202,8 @@ classes:
   md-staging-1.thiss.io:
     common: null
     entropyclient: null
+    http: null
+    https: null
     infra_ca_rp: null
     mailclient: *id001
     nrpe: null
@@ -383,8 +385,8 @@ members:
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
-  http: [md-1.thiss.io, md-2.thiss.io]
-  https: [a-1.thiss.io, a-staging-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
+  http: [md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io]
+  https: [a-1.thiss.io, a-staging-1.thiss.io, md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io]
   infra_ca_rp: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
