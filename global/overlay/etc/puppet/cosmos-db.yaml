@@ -19,6 +19,7 @@ classes:
   a-staging-1.thiss.io:
     common: null
     entropyclient: null
+    https: null
     infra_ca_rp: null
     mailclient: *id001
     md_aggregator: null
@@ -210,6 +211,8 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:19.03.13~3-0~ubuntu-focal'}
+    thiss::mdq: {base_url: 'https://md.thiss.io', src: 'https://a-stagin-1.thiss.io/metadata.json',
+      version: 1.2.6}
     update_ca_certificates: null
   md.aws1.geant.eu.seamlessaccess.org:
     common: null
@@ -376,7 +379,7 @@ members:
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org]
   http: [md-1.thiss.io, md-2.thiss.io]
-  https: [a-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
+  https: [a-1.thiss.io, a-staging-1.thiss.io, md-1.thiss.io, md-2.thiss.io]
   infra_ca_rp: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
@@ -466,7 +469,7 @@ members:
     md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io]
+    md-2.thiss.io, md-staging-1.thiss.io]
   thiss::pyff: [a-staging-1.thiss.io, meta.aws1.geant.eu.seamlessaccess.org, meta.aws2.geant.eu.seamlessaccess.org,
     meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::pyffd: [a-1.thiss.io]
