@@ -46,11 +46,16 @@ a-staging-1.thiss.io:
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
+   https:
 
 md-staging-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:19.03.13~3-0~ubuntu-focal'
+   thiss::mdq:
+      version: 1.2.6
+      src: https://a-stagin-1.thiss.io/metadata.json
+      base_url: https://md.thiss.io
 
 '^\S+ntx\S+\.seamlessaccess\.org$':
    thiss::firewall_rules:
