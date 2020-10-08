@@ -54,8 +54,15 @@ md-staging-1.thiss.io:
       version: '5:19.03.13~3-0~ubuntu-focal'
    thiss::mdq:
       version: 1.2.6
-      src: https://a-stagin-1.thiss.io/metadata.json
-      base_url: https://md.thiss.io
+      src: https://a-staging-1.thiss.io/metadata.json
+      base_url: https://md-staging.thiss.io
+   sunet::frontend::register_sites:
+     sites:
+       'md-staging.thiss.io':
+         frontends:
+            - 'se-fre-lb-1.sunet.se'
+            - 'se-tug-lb-1.sunet.se'
+         port: '443'
 
 '^\S+ntx\S+\.seamlessaccess\.org$':
    thiss::firewall_rules:
