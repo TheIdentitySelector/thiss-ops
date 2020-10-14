@@ -62,7 +62,7 @@ md-staging-1.thiss.io:
          frontends:
             - 'se-fre-lb-1.sunet.se'
             - 'se-tug-lb-1.sunet.se'
-         port: '443'
+         port: '80'
    https:
    http:
 
