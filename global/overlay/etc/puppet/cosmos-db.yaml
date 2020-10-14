@@ -212,7 +212,7 @@ classes:
       sites:
         md-staging.thiss.io:
           frontends: [se-fre-lb-1.sunet.se, se-tug-lb-1.sunet.se]
-          port: '443'
+          port: '80'
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
