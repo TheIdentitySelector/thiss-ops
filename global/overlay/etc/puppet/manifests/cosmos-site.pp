@@ -378,7 +378,10 @@ class nagios_monitor {
   nagioscfg::command {'check_website':
     command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
   }
-  $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org']
+  nagioscfg::command {'check_metadata_age':
+    command_line   => "/usr/lib/nagios/plugins/check_md_sa.sh '\$ARG1\$'"
+  }
+  $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org','md-staging.thiss.io']
   nagioscfg::host {$public_hosts: }
   $urls = concat ($public_hosts, [ 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org'])
   $urls.each |$url|{
@@ -389,12 +392,21 @@ class nagios_monitor {
       contact_groups => ['alerts'],
     }
   }
-    nagioscfg::service {'check_public_ssl_cert':
-      host_name      => $public_hosts,
-      check_command  => 'check_ssl_cert_3!30!14!443',
-      description    => 'check https certificate validity on port 443',
-      contact_groups => ['alerts']
-   }
+  nagioscfg::service {'check_public_ssl_cert':
+    host_name      => $public_hosts,
+    check_command  => 'check_ssl_cert_3!30!14!443',
+    description    => 'check https certificate validity on port 443',
+    contact_groups => ['alerts']
+  }
+  $md_urls = [ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io', 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
+  $md_urls.each |$url|{
+    nagioscfg::service {"check_metadata_age_${url}":
+      host_name      => ["${url}"],
+      check_command  => "check_metadata_age!https://${url}",
+      description    => "check metadata for ${url}",
+      contact_groups => ['alerts'],
+    }
+  }
 }
 
 class redis_cluster_node {
