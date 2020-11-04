@@ -1,4 +1,9 @@
-class thiss::mdq($version="latest", $src=undef, $dst="/etc/thiss/metadata.json", $base_url=undef) {
+class thiss::mdq($version="latest",
+                 $src=undef,
+                 $dst="/etc/thiss/metadata.json",
+                 $post="/bin/true",
+                 $base_url=undef)
+{
 
    $final_base_url = "BASE_URL=${base_url}"
 

@@ -1,5 +1,9 @@
 #!/bin/bash
 
 tmpf=`mktemp`
-wget -qO$tmpf <%= @src %> && jq -e . $tmpf >/dev/null 2>&1 && mv $tmpf <%= @dst %>
+wget -qO$tmpf <%= @src %> && jq -e . $tmpf >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+   cmp -s $tmpf <%= @dst %>
+   test $? -ne 00&& mv $tmpf <%= @dst %> && <%= @post %>
+fi
 rm -f $tmpf
