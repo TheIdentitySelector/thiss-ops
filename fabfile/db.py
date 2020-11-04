@@ -10,7 +10,7 @@ def _load_db():
    rules_file = "cosmos-rules.yaml";
    if os.path.exists(rules_file):
       with open(rules_file) as fd:
-         rules.update(yaml.load(fd))
+         rules.update(yaml.load(fd, Loader=yaml.FullLoader))
  
    all_hosts = _all_hosts()
 
@@ -46,4 +46,4 @@ def cosmos_db():
    return _db
 
 if __name__ == '__main__':
-   print yaml.dump(cosmos_db())
+   print yaml.dump(cosmos_db(), default_flow_style=False)
