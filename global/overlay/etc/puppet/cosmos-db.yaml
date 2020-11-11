@@ -122,8 +122,8 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: null
-    thiss::mdq: &id014 {base_url: 'https://md.thiss.io', src: 'https://a-1.thiss.io/metadata.json',
-      version: 1.3.0}
+    thiss::mdq: &id014 {base_url: 'https://md.thiss.io', post: /usr/sbin/service docker-thiss_mdq
+        restart, src: 'https://a-1.thiss.io/metadata.json', version: 1.3.0}
     update_ca_certificates: null
   md-2.aws1.geant.eu.seamlessaccess.org:
     common: null
