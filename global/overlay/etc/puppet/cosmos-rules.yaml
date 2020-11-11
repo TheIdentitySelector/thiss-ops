@@ -25,6 +25,7 @@
       version: 1.3.0
       src: https://a-1.thiss.io/metadata.json
       base_url: https://md.thiss.io
+      post: /usr/sbin/service docker-thiss_mdq restart
    https:
    http:
 
