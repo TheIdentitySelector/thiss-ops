@@ -3,7 +3,7 @@
 URL=$1
 
 
-JSONDATE=$(curl -ksL $URL | jq .last_updated 2> /dev/null)
+JSONDATE=$(curl -ksL $URL | jq '.metadata.last_modified' 2> /dev/null)
 EXITCODE=$?
 
 if [ $EXITCODE -ne 0 ]; then
