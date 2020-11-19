@@ -77,8 +77,9 @@ classes:
       location: aws1
     thiss::mdq: &id006
       base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
       src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
-      version: 1.2.6
+      version: 1.3.1
     update_ca_certificates: null
   md-1.aws2.geant.eu.seamlessaccess.org:
     common: null
@@ -97,8 +98,9 @@ classes:
       location: aws2
     thiss::mdq: &id009
       base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
-      version: 1.2.6
+      version: 1.3.1
     update_ca_certificates: null
   md-1.ntx.sunet.eu.seamlessaccess.org:
     common: null
