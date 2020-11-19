@@ -115,8 +115,9 @@ classes:
       location: ntx
     thiss::mdq: &id011
       base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
-      version: 1.2.6
+      version: 1.3.1
     update_ca_certificates: null
   md-1.se-east.sunet.eu.seamlessaccess.org:
     common: null
@@ -134,8 +135,9 @@ classes:
       location: se-east
     thiss::mdq: &id013
       base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
-      version: 1.2.6
+      version: 1.3.1
     update_ca_certificates: null
   md-1.thiss.io:
     common: null
