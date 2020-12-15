@@ -48,7 +48,7 @@ static.thiss.io:
    thiss::static:
       base_url: https://use.thiss.io/
       mdq_search_url: https://md.thiss.io/entities/
-      domain: use.this.io
+      domain: use.thiss.io
       context: thiss.io
    https:
 

@@ -7,7 +7,7 @@ class thiss::static($ds_version="latest",
                       $mdq_hostport=undef) {
 
    $final_mdq_search_url = $mdq_search_url ? {
-    undef   => $base_url/entities,
+    undef   => $base_url/entities/,
     default => $mdq_search_url
    }
    sunet::snippets::somaxconn { "ds_nginx": maxconn => 4096 }
