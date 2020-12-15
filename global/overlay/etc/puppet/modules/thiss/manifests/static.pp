@@ -1,18 +1,23 @@
-class thiss::thiss_js($ds_version="latest",
+class thiss::static($ds_version="latest",
                       $base_url=undef,
+                      $mdq_search_url=undef,
                       $domain=undef,
                       $context=undef,
                       $whitelist=undef,
                       $mdq_hostport=undef) {
 
+   $final_mdq_search_url = $mdq_search_url ? {
+    undef   => $base_url/entities,
+    default => $mdq_search_url
+   }
    sunet::snippets::somaxconn { "ds_nginx": maxconn => 4096 }
    sunet::docker_run { "thiss_js":
       hostname => "${::fqdn}",
       image    => "docker.sunet.se/thiss-js",
       imagetag => $ds_version,
       env      => ["BASE_URL=$base_url/",
-                   "MDQ_URL=https://md.thiss.io/entities/",
-                   "SEARCH_URL=$base_url/entities",
+                   "MDQ_URL=$final_mdq_search_url/",
+                   "SEARCH_URL=$final_mdq_search_url",
                    "STORAGE_DOMAIN=$domain",
                    "LOGLEVEL=warn",
                    "DEFAULT_CONTEXT=$context",
