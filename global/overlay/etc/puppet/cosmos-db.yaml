@@ -379,7 +379,7 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:19.03.13~3-0~ubuntu-focal'}
-    thiss::static: {base_url: 'https://use.thiss.io/', context: thiss.io, domain: use.this.io,
+    thiss::static: {base_url: 'https://use.thiss.io/', context: thiss.io, domain: use.thiss.io,
       mdq_search_url: 'https://md.thiss.io/entities/'}
     update_ca_certificates: null
 members:
