@@ -7,11 +7,15 @@ class thiss::static($ds_version="latest",
                       $mdq_hostport=undef) {
 
    $final_mdq_search_url = $mdq_search_url ? {
-    undef   => $base_url/entities,
+    undef   => chop($base_url)/entities,
     default => $mdq_search_url,
    }
+   $component_url=chop($base_url)
+   $persistence_url=chop($base_url)
+
    sunet::snippets::somaxconn { "ds_nginx": maxconn => 4096 }
    if $whitelist and $mdq_hostport {
+    $mdq_search_url=chop($base_url)
     sunet::docker_run { "thiss_js":
       hostname => "${::fqdn}",
       image    => "docker.sunet.se/thiss-js",
@@ -23,8 +27,8 @@ class thiss::static($ds_version="latest",
                    "LOGLEVEL=warn",
                    "DEFAULT_CONTEXT=$context",
                    "MDQ_HOSTPORT=$mdq_hostport",
-                   "COMPONENT_URL=$base_url/cta",
-                   "PERSISTENCE_URL=$base_url/ps",
+                   "COMPONENT_URL=$component_url/cta/",
+                   "PERSISTENCE_URL=$persistence_url/ps/",
                    "WHITELIST=$whitelist",
                    "TLS_KEY=/etc/ssl/private/${::fqdn}_infra.key",
                    "TLS_CERT=/etc/ssl/certs/${::fqdn}_infra.crt"],
@@ -44,8 +48,8 @@ class thiss::static($ds_version="latest",
                    "STORAGE_DOMAIN=$domain",
                    "LOGLEVEL=warn",
                    "DEFAULT_CONTEXT=$context",
-                   "COMPONENT_URL=$base_url/cta",
-                   "PERSISTENCE_URL=$base_url/ps",
+                   "COMPONENT_URL=$component_url/cta/",
+                   "PERSISTENCE_URL=$persistence_url/ps/",
                    "TLS_KEY=/etc/ssl/private/${::fqdn}_infra.key",
                    "TLS_CERT=/etc/ssl/certs/${::fqdn}_infra.crt"],
       volumes  => ["/etc/ssl:/etc/ssl"],
