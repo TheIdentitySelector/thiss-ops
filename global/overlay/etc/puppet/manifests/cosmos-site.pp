@@ -375,6 +375,9 @@ class nagios_monitor {
   nagioscfg::command {'check_ssl_cert_3':
     command_line   => "/usr/lib/nagios/plugins/check_ssl_cert -A -H '\$HOSTNAME\$' -c '\$ARG2\$' -w '\$ARG1\$' -p '\$ARG3\$'"
   }
+  nagioscfg::command {'check_ssl_cert_3_without_ocsp':
+    command_line   => "/usr/lib/nagios/plugins/check_ssl_cert -A -H '\$HOSTNAME\$' --ignore-ocsp -c '\$ARG2\$' -w '\$ARG1\$' -p '\$ARG3\$'"
+  }
   nagioscfg::command {'check_website':
     command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
   }
@@ -383,7 +386,10 @@ class nagios_monitor {
   }
   $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org','md-staging.thiss.io']
   nagioscfg::host {$public_hosts: }
-  $urls = concat ($public_hosts, [ 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org'])
+  $md_hosts = ['md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
+  $meta_hosts = ['meta.aws1.geant.eu.seamlessaccess.org', 'meta.aws2.geant.eu.seamlessaccess.org', 'meta.se-east.sunet.eu.seamlessaccess.org', 'meta.ntx.sunet.eu.seamlessaccess.org', 'a-1.thiss.io', 'a-staging-1.thiss.io']
+  $static_hosts = ['static-1.thiss.io', 'static-2.thiss.io']
+  $urls = concat ($public_hosts, $md_hosts)
   $urls.each |$url|{
     nagioscfg::service {"check_${url}":
       host_name      => ["${url}"],
@@ -398,7 +404,13 @@ class nagios_monitor {
     description    => 'check https certificate validity on port 443',
     contact_groups => ['alerts']
   }
-  $md_urls = [ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io', 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
+  nagioscfg::service {'check_infra_ssl_cert':
+    host_name      => $md_hosts + $meta_hosts + $static_hosts,
+    check_command  => 'check_ssl_cert_3_without_ocsp!30!14!443',
+    description    => 'check https certificate validity on port 443',
+    contact_groups => ['alerts']
+  }
+  $md_urls = concat ([ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io'] , $md_hosts)
   $md_urls.each |$url|{
     nagioscfg::service {"check_metadata_age_${url}":
       host_name      => ["${url}"],

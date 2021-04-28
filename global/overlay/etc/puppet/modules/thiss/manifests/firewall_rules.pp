@@ -2,11 +2,12 @@ class thiss::firewall_rules($location=undef){
 
   $md_ip = hiera_array("md_${location}",[])
   $haproxy_ip = hiera_array("haproxy_${location}",[])
+  $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
 
   #metadata aggregator expose port 443 to mdq
   if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_aggregator':
-      from =>  $md_ip,
+      from =>  $md_ip + $nagios_ip_v4,
       port => '443',
     }
   }
