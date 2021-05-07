@@ -1,4 +1,4 @@
-class thiss::static($ds_version="latest",
+class thiss::static_prod($ds_version="latest",
                       $base_url=undef,
                       $mdq_search_url=undef,
                       $domain=undef,
@@ -11,6 +11,7 @@ class thiss::static($ds_version="latest",
    }
    $component_url=chop($base_url)
    $persistence_url=chop($base_url)
+   $whitelist = hiera ('whitelist')
 
    sunet::snippets::somaxconn { "ds_nginx": maxconn => 4096 }
    if $mdq_hostport {
@@ -28,6 +29,7 @@ class thiss::static($ds_version="latest",
                    "MDQ_HOSTPORT=$mdq_hostport",
                    "COMPONENT_URL=$component_url/cta/",
                    "PERSISTENCE_URL=$persistence_url/ps/",
+                   "WHITELIST=$whitelist",
                    "TLS_KEY=/etc/ssl/private/${::fqdn}_infra.key",
                    "TLS_CERT=/etc/ssl/certs/${::fqdn}_infra.crt"],
       volumes  => ["/etc/ssl:/etc/ssl"],
@@ -48,6 +50,7 @@ class thiss::static($ds_version="latest",
                    "DEFAULT_CONTEXT=$context",
                    "COMPONENT_URL=$component_url/cta/",
                    "PERSISTENCE_URL=$persistence_url/ps/",
+                   "WHITELIST=$whitelist",
                    "TLS_KEY=/etc/ssl/private/${::fqdn}_infra.key",
                    "TLS_CERT=/etc/ssl/certs/${::fqdn}_infra.crt"],
       volumes  => ["/etc/ssl:/etc/ssl"],

@@ -197,5 +197,17 @@ md.aws2.geant.eu.seamlessaccess.org:
    thiss::haproxy:
       location: aws2
 
+'^static-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:20.10.6~3-0~ubuntu-focal'
+   thiss::static_prodd:
+      ds_version: 1.4.1
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+   https:
+
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
