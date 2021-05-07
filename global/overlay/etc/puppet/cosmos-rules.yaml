@@ -201,7 +201,7 @@ md.aws2.geant.eu.seamlessaccess.org:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
-   thiss::static_prodd:
+   thiss::static_prod:
       ds_version: 1.4.1
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
