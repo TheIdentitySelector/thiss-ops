@@ -380,9 +380,8 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: &id015 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id010
-    thiss::static_prodd: &id016 {base_url: 'https://service.seamlessaccess.org/',
-      context: seamlessaccess.org, domain: service.seamlessaccess.org, ds_version: 1.4.1,
-      mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
+    thiss::static_prod: &id016 {base_url: 'https://service.seamlessaccess.org/', context: seamlessaccess.org,
+      domain: service.seamlessaccess.org, ds_version: 1.4.1, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
   static-1.thiss.io:
     common: null
@@ -414,7 +413,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: *id015
     thiss::firewall_rules: *id010
-    thiss::static_prodd: *id016
+    thiss::static_prod: *id016
     update_ca_certificates: null
   static-2.thiss.io:
     common: null
@@ -568,7 +567,7 @@ members:
   thiss::pyff: [a-1.thiss.io, a-staging-1.thiss.io, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::static: [static-1.thiss.io, static-2.thiss.io]
-  thiss::static_prodd: [static-1.ntx.sunet.eu.seamlessaccess.org, static-2.ntx.sunet.eu.seamlessaccess.org]
+  thiss::static_prod: [static-1.ntx.sunet.eu.seamlessaccess.org, static-2.ntx.sunet.eu.seamlessaccess.org]
   update_ca_certificates: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
