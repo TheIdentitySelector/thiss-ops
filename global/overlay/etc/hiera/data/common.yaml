@@ -113,6 +113,21 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
+  'kjellman-000607431461':
+    name   : 'kjellman-000607431461@sunet.se'
+    key    : 'AAAAB3NzaC1yc2EAAAADAQABAAACAQCij0ZrT2c9H+IkU60B2CqNgaw8mIAggwy6v48pvDfVEZZapRshBlHBNNcFmGDyBifMFiqPAL6+Z/rCCT2Ni9xT1r3gPUe8jPDf0od0xqc+NLY5sUQ7ikj1tL+t7umnIYhcA6B0F8UM2m0MAaFospv1ayhui+HXD7TQJqqp6NotuNibbkLvE85L223vGqp1trwnPKRdbwgbRy4Ak2anDtt+pag3BDP+fnblnGIEKVWcuD6AHcOIXqB4z4wVaLxlq4Mg2JIAdBmAATtxQh7bHZZ9rL4MBJ73S4tlfNsUvTU2XuQQCrKMN9Pyth48bwkqamcryCuvM0pfkoEfVrSjh1zrk4kIeG9lyMEt2gr5UmOT90atlHxXYZGcrHh9RwYgJKikHVvueG9eDQMj4tk0ntpqouj1lT0J8EZkH4pGjh6ik7GygrS9zxEr1j9aynBE06/o6tfpNbi+avXd4MwYsHBTxhwgjO4WRp1Ij6ybHpQSQt1DGB6jG5G6MdvrsaTChJy35kRvUG3L5cNbk7QjazELCks2XI6/9+5r84zJlpiS8hFAT35Jn5aa/83jbz+tarOiyuezGj/UK8U244Hx97cCDvfTzeBdOK0didN4xFvCfXUkNIaUKpmPJVgjdzKYzTM33W3wDEZIpaMW64Unz507IQOlOk8Y8Hz4zdzySfyikQ=='
+
+  'elias+sunetnoc':
+    name   : 'elias@sunet.se'
+    key    : 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDHzHXu+Fp75oMOCZ6WIEIXi0sHzo6zXdxeQ9sbcdlLq2pUB4yxCN36PK4hNtX8x2PXqwQCxPRx85K69qDRPsOwQFYIKKSQj0H9NxBQszq42dKyYjdXPRPWpt8C4TmFBf3nfH9F/IZ1HnRXcf3Dxclpx/jGRJERk9ic5alCvvvxmB4Zb5RqIyt3jGQi1LdFYTITYZJyVWtFeEsjet3H2bWYBigG9VSwtfC0rIfeit8gXFXrw4Uve3YTOEIdtlR6Lizv2j8VQkNu9GEM/cFiJGJjkm9VWRr5ZTpNv6HcsCu+GSpXXbLwaHudOEwrRx4Dtui8INwKd/7UinrsBM+AQ8SVnVyxWir3bN0+tBEZaDqX0proKDIGnQ+SclbDDCpHguUrOYtgxDlOFyfvoq2sUXrkCuEW0STNags9iJ3aqZRHB+x+pNoiVc31551oUJkc6SZeqvrutDMJ/7OxgXy/3+rC+5ZIMVCn5cjnM9G1WELFmLY5ARrNemMhZtiwu33WmnmCgcXALXI1tMP02vm8/ti4c0s4MnRN5qzqyvCp/ray1kOIA7EnjNOS5Lk6NMwHuKl9B+wVfq17zR9ThuGzRkZN8nt1K92QGCBbGeGJAw/owiqBHLpv17kKCfkjUby+dFZcjwM5rxRumMb+LbkcIiRTfxhq2UQP1VBxrfqyzkM6Tw=='
+
+  'bjorn+8E2DA8EB05F646D7':
+    name  : 'bjorn+8E2DA8EB05F646D7'
+    key   : 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDO1nktCA7fWcbmXAlcSEAeAxqlo2bobQblqqhvbjzmDfZdvhUYRXNjc2R4GjAU60yB/qqODE2km1z2xcIojlT/uHIXPx7jkSXvDZQFVDWplGiWKbOZS/apvva2vHBtfDBPSQnDSxr3sINAqehG58gL1coP95uWXod
+XSfv+BzGqQfYomlqU9f5qjXT2vFA+0XzoGTT9yG2utD3uhYd1k9EN+ED6NCXyCsUoihtEI8M8fF0Sps/QYpdyR34yP98lL+8DwZCtq0eQRMhF6mTcRcTDFdYdgS8jL+lSbw9DaPrWhGll0ie/Xk/v9RC+d3FGE6av0e8YDboNlduwy2iUbA1w1ll/VUOmXy6gudIZ91Edl+s
+OOyDVfLY3+Dz+RnmoSuCoWyJ00KovBIfgDOUDKe0QMHyVZ9ccMMihTUMUfJ7kYQ9EuidBLsy9GO+ar7FFPHYyVKiWYoxFBafAtIVDM79v9KvQeF2PAfuhSM3yIXeSb+8cp2ANVLX5dncoMPEgdfFRVie5HMwMct+BFwkyIuQ8++kCInGxbM5X1B3uhYTlkYyT3eAR3jHiwZo
+iBssCPXtmkXjJ0CFB1BcBlGSZktFoBRstGlEb/nEpTH/71JdA60a1eNwbhslNpAWfi3Jco3QPKBoRdwbeIsmDrK1hpJZG9Ke/jZxr3WSv39tu0l4JAw== cardno:000610116759'
+
 pyff_pipeline:
     - load:
         - http://mds.edugain.org
