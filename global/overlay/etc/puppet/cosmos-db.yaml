@@ -376,6 +376,8 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
+    sunet_iaas_cloud: null
+    thiss::dockerhost: {version: '5:20.10.11~3-0~ubuntu-focal'}
     update_ca_certificates: null
   static-1.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -544,7 +546,8 @@ members:
     md-2.se-east.sunet.eu.seamlessaccess.org, md-2.thiss.io, md-staging-1.thiss.io,
     md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
     meta.aws1.geant.eu.seamlessaccess.org, meta.aws2.geant.eu.seamlessaccess.org,
-    meta.se-east.sunet.eu.seamlessaccess.org, static-1.thiss.io, static-2.thiss.io]
+    meta.se-east.sunet.eu.seamlessaccess.org, sp-test.seamlessaccess.org, static-1.thiss.io,
+    static-2.thiss.io]
   thiss::dockerhost: [a-1.thiss.io, a-staging-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
@@ -552,8 +555,8 @@ members:
     md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
-    static-1.ntx.sunet.eu.seamlessaccess.org, static-1.thiss.io, static-2.ntx.sunet.eu.seamlessaccess.org,
-    static-2.thiss.io]
+    sp-test.seamlessaccess.org, static-1.ntx.sunet.eu.seamlessaccess.org, static-1.thiss.io,
+    static-2.ntx.sunet.eu.seamlessaccess.org, static-2.thiss.io]
   thiss::firewall_rules: [md-1.aws1.geant.eu.seamlessaccess.org, md-1.aws2.geant.eu.seamlessaccess.org,
     md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
