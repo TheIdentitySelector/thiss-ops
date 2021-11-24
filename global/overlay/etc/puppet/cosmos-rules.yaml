@@ -210,3 +210,8 @@ md.aws2.geant.eu.seamlessaccess.org:
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
+
+sp-test.seamlessaccess.org:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:20.10.11~3-0~ubuntu-focal'
