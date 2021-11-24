@@ -198,7 +198,6 @@ md.aws2.geant.eu.seamlessaccess.org:
       location: aws2
 
 '^static-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
-   sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
    thiss::static_prod:
