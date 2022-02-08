@@ -125,8 +125,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: null
-    thiss::mdq: &id014 {base_url: 'https://md.thiss.io', post: /usr/sbin/service docker-thiss_mdq
+    thiss::dockerhost: &id014 {version: '5:20.10.12~3-0~ubuntu-focal'}
+    thiss::mdq: &id015 {base_url: 'https://md.thiss.io', post: /usr/sbin/service docker-thiss_mdq
         restart, src: 'https://a-1.thiss.io/metadata.json', version: 1.3.2}
     update_ca_certificates: null
   md-2.aws1.geant.eu.seamlessaccess.org:
@@ -201,8 +201,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: null
-    thiss::mdq: *id014
+    thiss::dockerhost: *id014
+    thiss::mdq: *id015
     update_ca_certificates: null
   md-staging-1.thiss.io:
     common: null
@@ -390,9 +390,9 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
-    thiss::dockerhost: &id015 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id016 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id010
-    thiss::static_prod: &id016 {base_url: 'https://service.seamlessaccess.org/', context: seamlessaccess.org,
+    thiss::static_prod: &id017 {base_url: 'https://service.seamlessaccess.org/', context: seamlessaccess.org,
       domain: service.seamlessaccess.org, ds_version: 1.4.1, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
   static-1.thiss.io:
@@ -407,8 +407,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id017 {version: '5:19.03.13~3-0~ubuntu-focal'}
-    thiss::static: &id018 {base_url: 'https://use.thiss.io/', context: thiss.io, domain: use.thiss.io,
+    thiss::dockerhost: &id018 {version: '5:19.03.13~3-0~ubuntu-focal'}
+    thiss::static: &id019 {base_url: 'https://use.thiss.io/', context: thiss.io, domain: use.thiss.io,
       ds_version: 1.6.2pre2, mdq_search_url: 'https://md.thiss.io/entities/'}
     update_ca_certificates: null
   static-2.ntx.sunet.eu.seamlessaccess.org:
@@ -422,9 +422,9 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
-    thiss::dockerhost: *id015
+    thiss::dockerhost: *id016
     thiss::firewall_rules: *id010
-    thiss::static_prod: *id016
+    thiss::static_prod: *id017
     update_ca_certificates: null
   static-2.thiss.io:
     common: null
@@ -438,8 +438,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: *id017
-    thiss::static: *id018
+    thiss::dockerhost: *id018
+    thiss::static: *id019
     update_ca_certificates: null
 members:
   all: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
