@@ -125,7 +125,7 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id014 {version: '5:20.10.12~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id014 {version: '5:20.10.12~3-0~ubuntu-bionic'}
     thiss::mdq: &id015 {base_url: 'https://md.thiss.io', post: /usr/sbin/service docker-thiss_mdq
         restart, src: 'https://a-1.thiss.io/metadata.json', version: 1.3.2}
     update_ca_certificates: null
