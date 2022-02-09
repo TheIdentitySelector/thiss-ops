@@ -18,10 +18,22 @@
    sunet::rsyslog:
    update_ca_certificates:
 
-'^md-[0-9]+\.thiss\.io$':
+md-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:20.10.12~3-0~ubuntu-bionic'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://a-1.thiss.io/metadata.json
+      base_url: https://md.thiss.io
+      post: /usr/sbin/service docker-thiss_mdq restart
+   https:
+   http:
+
+md-2.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:20.10.7~3-0~ubuntu-xenial'
    thiss::mdq:
       version: 1.3.2
       src: https://a-1.thiss.io/metadata.json
