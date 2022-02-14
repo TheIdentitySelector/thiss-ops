@@ -410,7 +410,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: &id016 {version: '5:19.03.13~3-0~ubuntu-focal'}
     thiss::static: &id017 {base_url: 'https://use.thiss.io/', context: thiss.io, domain: use.thiss.io,
-      ds_version: 1.6.2pre2, mdq_search_url: 'https://md.thiss.io/entities/'}
+      ds_version: 1.6.2, mdq_search_url: 'https://md.thiss.io/entities/'}
     update_ca_certificates: null
   static-2.ntx.sunet.eu.seamlessaccess.org:
     common: null
