@@ -450,7 +450,7 @@ classes:
     sunet::rsyslog: null
     sunet::server: {encrypted_swap: false}
     sunet::updater: *id003
-    thiss::dockerhost: {version: '5:20.10.8~3-0~ubuntu-bionic'}
+    thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id010
     thiss::haproxy_static: {location: ntx}
     update_ca_certificates: null
