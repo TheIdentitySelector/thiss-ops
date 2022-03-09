@@ -383,7 +383,6 @@ classes:
   static-1.ntx.sunet.eu.seamlessaccess.org:
     common: null
     entropyclient: null
-    https: null
     infra_ca_rp: null
     mailclient: *id001
     nrpe: null
@@ -415,7 +414,6 @@ classes:
   static-2.ntx.sunet.eu.seamlessaccess.org:
     common: null
     entropyclient: null
-    https: null
     infra_ca_rp: null
     mailclient: *id001
     nrpe: null
@@ -450,9 +448,11 @@ classes:
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: *id002
+    sunet::server: {encrypted_swap: false}
     sunet::updater: *id003
+    thiss::dockerhost: {version: '5:20.10.8~3-0~ubuntu-bionic'}
     thiss::firewall_rules: *id010
+    thiss::haproxy_static: {location: ntx}
     update_ca_certificates: null
 members:
   all: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
@@ -487,8 +487,7 @@ members:
     static.ntx.sunet.eu.seamlessaccess.org]
   http: [md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io]
   https: [a-1.thiss.io, a-staging-1.thiss.io, md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io,
-    static-1.ntx.sunet.eu.seamlessaccess.org, static-1.thiss.io, static-2.ntx.sunet.eu.seamlessaccess.org,
-    static-2.thiss.io]
+    static-1.thiss.io, static-2.thiss.io]
   infra_ca_rp: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
@@ -552,7 +551,7 @@ members:
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org, sp-test.seamlessaccess.org, static-1.ntx.sunet.eu.seamlessaccess.org,
     static-1.thiss.io, static-2.ntx.sunet.eu.seamlessaccess.org, static-2.thiss.io,
-    static.ntx.sunet.eu.seamlessaccess.org]
+    static.ntx.sunet.eu.seamlessaccess.org, static.ntx.sunet.eu.seamlessaccess.org]
   sunet::updater: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
@@ -579,7 +578,7 @@ members:
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     sp-test.seamlessaccess.org, static-1.ntx.sunet.eu.seamlessaccess.org, static-1.thiss.io,
-    static-2.ntx.sunet.eu.seamlessaccess.org, static-2.thiss.io]
+    static-2.ntx.sunet.eu.seamlessaccess.org, static-2.thiss.io, static.ntx.sunet.eu.seamlessaccess.org]
   thiss::firewall_rules: [md-1.aws1.geant.eu.seamlessaccess.org, md-1.aws2.geant.eu.seamlessaccess.org,
     md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
@@ -591,6 +590,7 @@ members:
     static-2.ntx.sunet.eu.seamlessaccess.org, static.ntx.sunet.eu.seamlessaccess.org]
   thiss::haproxy: [md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org]
+  thiss::haproxy_static: [static.ntx.sunet.eu.seamlessaccess.org]
   thiss::md_publisher: [a-1.thiss.io, a-staging-1.thiss.io, meta.aws1.geant.eu.seamlessaccess.org,
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org]
   thiss::mdq: [md-1.aws1.geant.eu.seamlessaccess.org, md-1.aws2.geant.eu.seamlessaccess.org,
