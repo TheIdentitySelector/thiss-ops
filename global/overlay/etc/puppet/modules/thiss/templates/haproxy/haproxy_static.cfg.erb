@@ -38,7 +38,7 @@ defaults
 
 frontend haproxy_seamlessaccess
     bind *:443 ssl crt <%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>
-    default_backend mdq_servers
+    default_backend static_servers
 
 
 backend static_servers
