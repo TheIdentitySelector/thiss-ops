@@ -29,7 +29,7 @@ class thiss::static_prod($ds_version="latest",
                    "MDQ_HOSTPORT=$mdq_hostport",
                    "COMPONENT_URL=$component_url/cta/",
                    "PERSISTENCE_URL=$persistence_url/ps/",
-                   "WHITELIST=$whitelist",
+                   "WHITELIST=$whitelist"],
       volumes  => ["/etc/ssl:/etc/ssl"],
       ports    => ["80:80"],
       extra_parameters => ["--log-driver=syslog"]
@@ -48,11 +48,9 @@ class thiss::static_prod($ds_version="latest",
                    "DEFAULT_CONTEXT=$context",
                    "COMPONENT_URL=$component_url/cta/",
                    "PERSISTENCE_URL=$persistence_url/ps/",
-                   "WHITELIST=$whitelist",
-                   "TLS_KEY=/etc/ssl/private/${::fqdn}_infra.key",
-                   "TLS_CERT=/etc/ssl/certs/${::fqdn}_infra.crt"],
+                   "WHITELIST=$whitelist"],
       volumes  => ["/etc/ssl:/etc/ssl"],
-      ports    => ["443:443"],
+      ports    => ["80:80"],
       extra_parameters => ["--log-driver=syslog"]
     }
   }
