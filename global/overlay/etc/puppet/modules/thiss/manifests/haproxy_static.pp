@@ -1,4 +1,4 @@
-class thiss::haproxy($location=undef, $image_tag=undef){
+class thiss::haproxy_static($location=undef, $image_tag=undef){
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
 
