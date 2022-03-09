@@ -219,7 +219,14 @@ md.aws2.geant.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-   https:
+
+static.ntx.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:20.10.8~3-0~ubuntu-bionic'
+   thiss::haproxy_static:
+      location: ntx
+   sunet::server:
+      encrypted_swap: false
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:

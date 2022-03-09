@@ -2,18 +2,19 @@ class thiss::firewall_rules($location=undef){
 
   $md_ip = hiera_array("md_${location}",[])
   $haproxy_ip = hiera_array("haproxy_${location}",[])
+  $haproxy_static_ip = hiera_array("haproxy_static_${location}",[])
   $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
 
   #metadata aggregator expose port 443 to mdq
   if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
-    sunet::misc::ufw_allow { 'allow_http_aggregator':
+    sunet::misc::ufw_allow { 'allow_https_aggregator':
       from =>  $md_ip + $nagios_ip_v4,
       port => '443',
     }
   }
   #mdq exposes 80 to haproxy
   if $::fqdn =~ /^md-[0-9]+\S+\.seamlessaccess\.org$/ {
-    sunet::misc::ufw_allow { 'allow_https_mdq':
+    sunet::misc::ufw_allow { 'allow_http_mdq':
       from => $haproxy_ip,
       port => '80',
     }
@@ -21,6 +22,20 @@ class thiss::firewall_rules($location=undef){
   #haproxy exposes 443 to Internet
   if $::fqdn =~ /^md\.\S+\.seamlessaccess\.org$/ {
     ufw::allow { "allow_https_haproxy":
+      ip   => 'any',
+      port => '443',
+    }
+  }
+  #static exposes 80 to haproxy
+  if $::fqdn =~ /^static-[0-9]+\S+\.seamlessaccess\.org$/ {
+    sunet::misc::ufw_allow { 'allow_http_static':
+      from => $haproxy_static_ip,
+      port => '80',
+    }
+  }
+  #haproxy exposes 443 to Internet
+  if $::fqdn =~ /^static\.\S+\.seamlessaccess\.org$/ {
+    ufw::allow { "allow_https_haproxy_static":
       ip   => 'any',
       port => '443',
     }
