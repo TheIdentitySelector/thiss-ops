@@ -229,6 +229,25 @@ static.ntx.sunet.eu.seamlessaccess.org:
    sunet::server:
       encrypted_swap: false
 
+'^static-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
+   thiss::dockerhost:
+      version: '5:20.10.6~3-0~ubuntu-focal'
+   thiss::static_prod:
+      ds_version: 1.5.0
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+
+static.se-east.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:20.10.12~3-0~ubuntu-focal'
+   thiss::haproxy_static:
+      image_tag: stable-tug
+      location: ntx
+   sunet::server:
+      encrypted_swap: false
+
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
 
