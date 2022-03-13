@@ -244,9 +244,43 @@ static.se-east.sunet.eu.seamlessaccess.org:
       version: '5:20.10.12~3-0~ubuntu-focal'
    thiss::haproxy_static:
       image_tag: stable-tug
-      location: ntx
+      location: se-east
    sunet::server:
       encrypted_swap: false
+
+'^static-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
+   thiss::dockerhost:
+      version: '5:20.10.6~3-0~ubuntu-focal'
+   thiss::static_prod:
+      ds_version: 1.5.0
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+
+static.aws1.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:20.10.12~3-0~ubuntu-focal'
+   thiss::haproxy_static:
+      image_tag: stable-tug
+      location: aws1
+
+'^static-[0-9]\.aws2\.geant\.eu\.seamlessaccess.org$':
+   thiss::dockerhost:
+      version: '5:20.10.6~3-0~ubuntu-focal'
+   thiss::static_prod:
+      ds_version: 1.5.0
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+
+static.aws2.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:20.10.12~3-0~ubuntu-focal'
+   thiss::haproxy_static:
+      image_tag: stable-tug
+      location: aws2
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
