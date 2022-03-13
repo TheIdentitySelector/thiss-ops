@@ -1,7 +1,6 @@
 class thiss::haproxy_static($location=undef,$image_tag=undef){
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
-  notice ("SOME comment that I will see ${image_tag}")
 
   $infra_cert = $::tls_certificates[$::fqdn]['infra_bundle']
   $infra_key = $::tls_certificates[$::fqdn]['infra_key']
