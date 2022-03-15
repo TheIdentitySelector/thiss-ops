@@ -3,7 +3,7 @@ version: '3'
 services:
 
   haproxy:
-    image: 'docker.sunet.se/eduid/haproxy:<%= @image_tag %>'
+    image: 'docker.sunet.se/seamlessaccess/haproxy:<%= @image_tag %>'
     restart: always
     ports:
      - 443:443
