@@ -33,6 +33,13 @@ class common {
   package { 'needrestart': ensure => installed}
   }
 
+# remove unencrypted git protocol
+  exec { 'run_secure_git':
+    cwd     => '/var/cache/cosmos/repo',
+    command => '/usr/bin/git remote set-url origin https://github.com/TheIdentitySelector/thiss-ops git://github.com/TheIdentitySelector/thiss-ops.git',
+    onlyif  => '/usr/bin/git remote get-url origin | grep -qi git://github.com/TheIdentitySelector/thiss-ops.git',
+  }
+
 class dhcp6_client {
   ufw::allow { "allow-dhcp6-546":
       ip    => 'any',
