@@ -546,7 +546,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id005
-    thiss::haproxy_static: {image_tag: stable-tug, location: aws1}
+    thiss::haproxy_static: {image_tag: stable, location: aws1}
     update_ca_certificates: null
   static.aws2.geant.eu.seamlessaccess.org:
     common: null
@@ -561,7 +561,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id008
-    thiss::haproxy_static: {image_tag: stable-tug, location: aws2}
+    thiss::haproxy_static: {image_tag: stable, location: aws2}
     update_ca_certificates: null
   static.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -590,7 +590,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id012
-    thiss::haproxy_static: {image_tag: stable-tug, location: se-east}
+    thiss::haproxy_static: {image_tag: stable, location: se-east}
     update_ca_certificates: null
 members:
   all: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
