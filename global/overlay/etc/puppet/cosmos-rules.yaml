@@ -224,7 +224,7 @@ static.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:20.10.12~3-0~ubuntu-focal'
    thiss::haproxy_static:
-      image_tag: stable-tug
+      image_tag: stable
       location: ntx
    sunet::server:
       encrypted_swap: false
