@@ -575,7 +575,7 @@ classes:
     sunet::updater: *id003
     thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id010
-    thiss::haproxy_static: {image_tag: stable-tug, location: ntx}
+    thiss::haproxy_static: {image_tag: stable, location: ntx}
     update_ca_certificates: null
   static.se-east.sunet.eu.seamlessaccess.org:
     common: null
