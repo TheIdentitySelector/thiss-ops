@@ -394,7 +394,7 @@ classes:
     thiss::dockerhost: &id014 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id005
     thiss::static_prod: &id015 {base_url: 'https://service.seamlessaccess.org/', context: seamlessaccess.org,
-      domain: service.seamlessaccess.org, ds_version: 1.5.0, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
+      domain: service.seamlessaccess.org, ds_version: 1.5.0-legacy, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
   static-1.aws2.geant.eu.seamlessaccess.org:
     common: null
@@ -410,7 +410,7 @@ classes:
     thiss::dockerhost: &id016 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id008
     thiss::static_prod: &id017 {base_url: 'https://service.seamlessaccess.org/', context: seamlessaccess.org,
-      domain: service.seamlessaccess.org, ds_version: 1.5.0, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
+      domain: service.seamlessaccess.org, ds_version: 1.5.0-legacy, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
   static-1.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -441,7 +441,7 @@ classes:
     thiss::dockerhost: &id020 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id012
     thiss::static_prod: &id021 {base_url: 'https://service.seamlessaccess.org/', context: seamlessaccess.org,
-      domain: service.seamlessaccess.org, ds_version: 1.5.0, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
+      domain: service.seamlessaccess.org, ds_version: 1.5.0-legacy, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
   static-1.thiss.io:
     common: null
