@@ -214,7 +214,7 @@ md.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
    thiss::static_prod:
-      ds_version: 1.5.0
+      ds_version: 1.5.0-legacy
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
