@@ -396,7 +396,7 @@ class nagios_monitor {
   $md_hosts = ['md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
   $meta_hosts = ['meta.aws1.geant.eu.seamlessaccess.org', 'meta.aws2.geant.eu.seamlessaccess.org', 'meta.se-east.sunet.eu.seamlessaccess.org', 'meta.ntx.sunet.eu.seamlessaccess.org', 'a-1.thiss.io', 'a-staging-1.thiss.io']
   $static_hosts = ['static-1.thiss.io', 'static-2.thiss.io', 'static.ntx.sunet.eu.seamlessaccess.org', 'static.aws1.geant.eu.seamlessaccess.org', 'static.aws2.geant.eu.seamlessaccess.org']
-  $urls = concat ($public_hosts, $md_hosts)
+  $urls = concat ($public_hosts, $md_hosts, $static_hosts)
   $urls.each |$url|{
     nagioscfg::service {"check_${url}":
       host_name      => ["${url}"],
