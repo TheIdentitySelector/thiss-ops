@@ -425,7 +425,7 @@ classes:
     thiss::dockerhost: &id018 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id010
     thiss::static_prod: &id019 {base_url: 'https://service.seamlessaccess.org/', context: seamlessaccess.org,
-      domain: service.seamlessaccess.org, ds_version: 1.5.0, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
+      domain: service.seamlessaccess.org, ds_version: 1.5.0-legacy, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
   static-1.se-east.sunet.eu.seamlessaccess.org:
     common: null
