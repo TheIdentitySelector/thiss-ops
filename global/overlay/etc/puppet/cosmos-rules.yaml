@@ -66,6 +66,14 @@ a-1.thiss.io:
       context: thiss.io
    https:
 
+static.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:20.10.12~3-0~ubuntu-focal'
+   thiss::haproxy_static:
+      image_tag: stable
+      location: thiss
+
 a-staging-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
