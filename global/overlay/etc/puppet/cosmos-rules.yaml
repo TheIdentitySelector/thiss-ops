@@ -73,6 +73,7 @@ static.thiss.io:
    thiss::haproxy_static:
       image_tag: stable
       location: thiss
+   https:
 
 a-staging-1.thiss.io:
    sunet_iaas_cloud:
