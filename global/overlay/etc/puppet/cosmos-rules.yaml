@@ -64,7 +64,7 @@ a-1.thiss.io:
       mdq_search_url: https://md.thiss.io/entities/
       domain: use.thiss.io
       context: thiss.io
-      cache_control: 'public, max-age=3600, must-revalidate, s-maxage=3600, proxy-revalidate'
+      cache_control: "public, max-age=3600, must-revalidate, s-maxage=3600, proxy-revalidate"
    https:
 
 static.thiss.io:
