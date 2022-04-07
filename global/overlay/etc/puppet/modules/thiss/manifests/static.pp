@@ -3,7 +3,8 @@ class thiss::static($ds_version="latest",
                       $mdq_search_url=undef,
                       $domain=undef,
                       $context=undef,
-                      $mdq_hostport=undef) {
+                      $mdq_hostport=undef,
+                      $cache_control=undef) {
 
    $final_mdq_search_url = $mdq_search_url ? {
     undef   => chop($base_url)/entities,
@@ -27,7 +28,8 @@ class thiss::static($ds_version="latest",
                    "DEFAULT_CONTEXT=$context",
                    "MDQ_HOSTPORT=$mdq_hostport",
                    "COMPONENT_URL=$component_url/cta/",
-                   "PERSISTENCE_URL=$persistence_url/ps/"],
+                   "PERSISTENCE_URL=$persistence_url/ps/",
+                   "CACHE_CONTROL=$cache_control"],
       volumes  => ["/etc/ssl:/etc/ssl"],
       ports    => ["443:443"],
       extra_parameters => ["--log-driver=syslog"]
@@ -45,7 +47,8 @@ class thiss::static($ds_version="latest",
                    "LOGLEVEL=warn",
                    "DEFAULT_CONTEXT=$context",
                    "COMPONENT_URL=$component_url/cta/",
-                   "PERSISTENCE_URL=$persistence_url/ps/"],
+                   "PERSISTENCE_URL=$persistence_url/ps/",
+                   "CACHE_CONTROL=$cache_control"],
       volumes  => ["/etc/ssl:/etc/ssl"],
       ports    => ["80:80"],
       extra_parameters => ["--log-driver=syslog"]
