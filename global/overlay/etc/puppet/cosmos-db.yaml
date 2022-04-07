@@ -456,9 +456,8 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: &id022 {version: '5:19.03.13~3-0~ubuntu-focal'}
-    thiss::static: &id023 {base_url: 'https://use.thiss.io/', cache_control: 'public,
-        max-age=3600, must-revalidate, s-maxage=3600, proxy-revalidate', context: thiss.io,
-      domain: use.thiss.io, ds_version: 1.6.3, mdq_search_url: 'https://md.thiss.io/entities/'}
+    thiss::static: &id023 {base_url: 'https://use.thiss.io/', context: thiss.io, domain: use.thiss.io,
+      ds_version: 1.6.3, mdq_search_url: 'https://md.thiss.io/entities/'}
     update_ca_certificates: null
   static-2.aws1.geant.eu.seamlessaccess.org:
     common: null
