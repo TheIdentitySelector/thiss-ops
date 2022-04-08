@@ -262,7 +262,7 @@ static.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
    thiss::static_prod:
-      ds_version: 1.5.0-legacy
+      ds_version: 1.5.0-legacy2
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
