@@ -224,7 +224,7 @@ md.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
    thiss::static_prod:
-      ds_version: 1.5.0-legacy2
+      ds_version: 1.6.3
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
@@ -244,7 +244,7 @@ static.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
    thiss::static_prod:
-      ds_version: 1.5.0-legacy2
+      ds_version: 1.6.3
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
@@ -264,7 +264,7 @@ static.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
    thiss::static_prod:
-      ds_version: 1.5.0-legacy2
+      ds_version: 1.6.3
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
@@ -282,7 +282,7 @@ static.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:20.10.6~3-0~ubuntu-focal'
    thiss::static_prod:
-      ds_version: 1.5.0-legacy2
+      ds_version: 1.6.3
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
