@@ -374,6 +374,7 @@ classes:
     mailclient: *id001
     nrpe: null
     ops: null
+    sunet::dehydrated::client: {domain: sp-test.seamlessaccess.org, ssl_links: true}
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
@@ -717,6 +718,7 @@ members:
     static-2.se-east.sunet.eu.seamlessaccess.org, static-2.thiss.io, static.aws1.geant.eu.seamlessaccess.org,
     static.aws2.geant.eu.seamlessaccess.org, static.ntx.sunet.eu.seamlessaccess.org,
     static.se-east.sunet.eu.seamlessaccess.org, static.thiss.io]
+  sunet::dehydrated::client: [sp-test.seamlessaccess.org]
   sunet::frontend::register_sites: [md-staging-1.thiss.io]
   sunet::rsyslog: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
