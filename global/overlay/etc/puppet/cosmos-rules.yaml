@@ -303,3 +303,6 @@ sp-test.seamlessaccess.org:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:20.10.11~3-0~ubuntu-focal'
+   sunet::dehydrated::client:
+      domain: sp-test.seamlessaccess.org
+      ssl_links: true
