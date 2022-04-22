@@ -370,6 +370,8 @@ classes:
   sp-test.seamlessaccess.org:
     common: null
     entropyclient: null
+    http: null
+    https: null
     infra_ca_rp: null
     mailclient: *id001
     nrpe: null
@@ -657,9 +659,9 @@ members:
     static-2.se-east.sunet.eu.seamlessaccess.org, static-2.thiss.io, static.aws1.geant.eu.seamlessaccess.org,
     static.aws2.geant.eu.seamlessaccess.org, static.ntx.sunet.eu.seamlessaccess.org,
     static.se-east.sunet.eu.seamlessaccess.org, static.thiss.io]
-  http: [md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io]
+  http: [md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io, sp-test.seamlessaccess.org]
   https: [a-1.thiss.io, a-staging-1.thiss.io, md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io,
-    static-1.thiss.io, static-2.thiss.io, static.thiss.io]
+    sp-test.seamlessaccess.org, static-1.thiss.io, static-2.thiss.io, static.thiss.io]
   infra_ca_rp: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
