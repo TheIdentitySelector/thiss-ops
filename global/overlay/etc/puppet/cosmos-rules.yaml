@@ -306,3 +306,4 @@ sp-test.seamlessaccess.org:
    sunet::dehydrated::client:
       domain: sp-test.seamlessaccess.org
       ssl_links: true
+   thiss::demo_sp:
