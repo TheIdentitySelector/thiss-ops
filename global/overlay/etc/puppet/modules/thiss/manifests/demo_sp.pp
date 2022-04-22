@@ -12,7 +12,7 @@ class thiss::demo_sp($version='latest')
     imagetag            => $version,
     env                 => ['SP_METADATAFEED=http://mds.swamid.se/md/swamid-idp-transitive.xml'],
     volumes             => ['/var/www:/var/www',
-                            '/etc/dehydrated/certs/metadata.lab.swamid.se:/etc/dehydrated',
+                            '/etc/dehydrated/certs/${::fqdn}:/etc/dehydrated',
                             '/etc/shibboleth/certs:/etc/shibboleth/certs'],
     ports               => ['443:443'],
     uid_gid_consistency => false
