@@ -307,3 +307,5 @@ sp-test.seamlessaccess.org:
       domain: sp-test.seamlessaccess.org
       ssl_links: true
    thiss::demo_sp:
+   https:
+   http:
