@@ -15,7 +15,12 @@ class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $w
       ensure => 'link',
       target => "/etc/ssl/private/${_keyname}.pem"
    } ->
-   apparmor::profile { 'usr.sbin.lighttpd': source => '/etc/apparmor-cosmos/usr.sbin.lighttpd' } ->
+   if ($::operatingsystemrelease < '20.04') {
+     apparmor::profile { 'usr.sbin.lighttpd': source => '/etc/apparmor-cosmos/usr.sbin.lighttpd' }
+     }
+   else {
+     apparmor::profile { 'usr.sbin.lighttpd': source => '/etc/apparmor-cosmos/usr.sbin.lighttpd.upgraded' }
+     }
    file {'/etc/lighttpd/conf-enabled/99-mime-xattr.conf':
       ensure  => file,
       mode    => '0640',
