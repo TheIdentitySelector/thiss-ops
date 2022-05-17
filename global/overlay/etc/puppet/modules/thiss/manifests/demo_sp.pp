@@ -11,9 +11,10 @@ class thiss::demo_sp($version='latest')
     image               => 'docker.sunet.se/swamid/metadata-sp',
     imagetag            => $version,
     env                 => ['SP_METADATAFEED=http://mds.swamid.se/md/swamid-idp-transitive.xml'],
-    volumes             => ['/var/www:/var/www',
-                            "/etc/dehydrated/certs/${::fqdn}:/etc/dehydrated",
-                            '/etc/shibboleth/certs:/etc/shibboleth/certs'],
+    volumes             => ['/var/www:/var/www:ro',
+                            "/etc/dehydrated/certs/${::fqdn}:/etc/dehydrated:ro",
+                            '/etc/shibboleth/certs:/etc/shibboleth/certs',
+                            '/etc/apache2/sites-available/default-ssl.conf:/etc/apache2/sites-available/default-ssl.conf:ro'],
     ports               => ['443:443'],
     uid_gid_consistency => false
   }
