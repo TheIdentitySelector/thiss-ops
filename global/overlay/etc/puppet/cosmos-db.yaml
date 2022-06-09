@@ -426,11 +426,11 @@ classes:
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: *id002
+    sunet::server: &id018 {encrypted_swap: false}
     sunet::updater: *id003
-    thiss::dockerhost: &id018 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id019 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id010
-    thiss::static_prod: &id019 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
+    thiss::static_prod: &id020 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
       domain: service.seamlessaccess.org, ds_version: 1.6.3, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
@@ -445,9 +445,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id020 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id021 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id012
-    thiss::static_prod: &id021 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
+    thiss::static_prod: &id022 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
       domain: service.seamlessaccess.org, ds_version: 1.6.3, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
@@ -463,8 +463,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id022 {version: '5:19.03.13~3-0~ubuntu-focal'}
-    thiss::static: &id023 {base_url: 'https://use.thiss.io/', cache_control: 'public,
+    thiss::dockerhost: &id023 {version: '5:19.03.13~3-0~ubuntu-focal'}
+    thiss::static: &id024 {base_url: 'https://use.thiss.io/', cache_control: 'public,
         max-age=3601, must-revalidate, s-maxage=3601, proxy-revalidate', context: thiss.io,
       domain: use.thiss.io, ds_version: 1.6.3, mdq_search_url: 'https://md.thiss.io/entities/'}
     update_ca_certificates: null
@@ -506,11 +506,11 @@ classes:
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: *id002
+    sunet::server: *id018
     sunet::updater: *id003
-    thiss::dockerhost: *id018
+    thiss::dockerhost: *id019
     thiss::firewall_rules: *id010
-    thiss::static_prod: *id019
+    thiss::static_prod: *id020
     update_ca_certificates: null
   static-2.se-east.sunet.eu.seamlessaccess.org:
     common: null
@@ -523,9 +523,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: *id020
+    thiss::dockerhost: *id021
     thiss::firewall_rules: *id012
-    thiss::static_prod: *id021
+    thiss::static_prod: *id022
     update_ca_certificates: null
   static-2.thiss.io:
     common: null
@@ -539,8 +539,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: *id022
-    thiss::static: *id023
+    thiss::dockerhost: *id023
+    thiss::static: *id024
     update_ca_certificates: null
   static.aws1.geant.eu.seamlessaccess.org:
     common: null
@@ -746,8 +746,9 @@ members:
     meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     monitor.ntx.sunet.eu.seamlessaccess.org, sp-test.seamlessaccess.org, static-1.aws1.geant.eu.seamlessaccess.org,
     static-1.aws2.geant.eu.seamlessaccess.org, static-1.ntx.sunet.eu.seamlessaccess.org,
-    static-1.se-east.sunet.eu.seamlessaccess.org, static-1.thiss.io, static-2.aws1.geant.eu.seamlessaccess.org,
-    static-2.aws2.geant.eu.seamlessaccess.org, static-2.ntx.sunet.eu.seamlessaccess.org,
+    static-1.ntx.sunet.eu.seamlessaccess.org, static-1.se-east.sunet.eu.seamlessaccess.org,
+    static-1.thiss.io, static-2.aws1.geant.eu.seamlessaccess.org, static-2.aws2.geant.eu.seamlessaccess.org,
+    static-2.ntx.sunet.eu.seamlessaccess.org, static-2.ntx.sunet.eu.seamlessaccess.org,
     static-2.se-east.sunet.eu.seamlessaccess.org, static-2.thiss.io, static.aws1.geant.eu.seamlessaccess.org,
     static.aws2.geant.eu.seamlessaccess.org, static.ntx.sunet.eu.seamlessaccess.org,
     static.ntx.sunet.eu.seamlessaccess.org, static.se-east.sunet.eu.seamlessaccess.org,
