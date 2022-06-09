@@ -230,6 +230,8 @@ md.aws2.geant.eu.seamlessaccess.org:
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
       cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+   sunet::server:
+      encrypted_swap: false
 
 static.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
