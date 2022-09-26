@@ -170,7 +170,7 @@ class nrpe {
     command_line => '/usr/lib/nagios/plugins/check_disk -w 15% -c 5% -p /boot'
   }
   sunet::nagios::nrpe_command {'check_entropy':
-    command_line => '/usr/lib/nagios/plugins/check_entropy'
+    command_line => '/usr/lib/nagios/plugins/check_entropy -w 200'
   }
   sunet::nagios::nrpe_command {'check_ntp_time':
     command_line => '/usr/lib/nagios/plugins/check_ntp_time -H localhost'
