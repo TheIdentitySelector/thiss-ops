@@ -31,7 +31,7 @@ export DEBIAN_FRONTEND='noninteractive'
 
 apt-get -y update
 apt-get -y upgrade
-for pkg in rsync git git-core wget; do
+for pkg in rsync git git-core wget gpg; do
    apt-get -y install $pkg
 done
 dpkg -i cosmos_1.5-1_all.deb
