@@ -12,13 +12,17 @@ fi
 
 set -x
 
-ssh "debian@${ip}" sudo cp -r /home/debian/.ssh /root/
-ssh "debian@${ip}" sudo chown -R root:root /root/.ssh
-ssh "debian@${ip}" sudo chmod 700 /root/.ssh
-ssh "debian@${ip}" sudo chmod 600 /root/.ssh/authorized_keys
-ssh "root@${ip}" deluser debian
-ssh "root@${ip}" rm /home/debian -rf
-ssh "root@${ip}" rm /etc/sudoers.d/*
-ssh "root@${ip}" DEBIAN_FRONTEND="noninteractive" apt-get -y update
-ssh "root@${ip}" DEBIAN_FRONTEND="noninteractive" apt-get -o Dpkg::Options::="--force-confnew" --fix-broken --assume-yes dist-upgrade
-ssh "root@${ip}" reboot
+# Make sure we read the additional scripts from the same directory as
+# this script is located at
+script_dir=$(dirname "$0")
+
+# The reason for running two separate logins is that it is tricky to
+# remove the initial debian user while logged in as that same user:
+# ===
+# Removing user `debian' ...
+# Warning: group `debian' has no more members.
+# userdel: user debian is currently used by process 12081
+# /usr/sbin/deluser: `/sbin/userdel debian' returned error code 8. Exiting.
+# ===
+ssh "debian@${ip}" "bash -s" < "$script_dir"/debian-enable-root.sh
+ssh "root@${ip}" "bash -s" < "$script_dir"/debian-setup.sh
