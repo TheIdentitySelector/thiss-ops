@@ -171,6 +171,7 @@ meta.ntx.sunet.eu.seamlessaccess.org:
 
 meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
+      version: '5:20.10.18~3-0~ubuntu-bionic'
    thiss::pyff:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
