@@ -1,7 +1,6 @@
 #!/bin/sh
 
-#set -e 
-# not all breakage is un-recoverable...
+set -e
 
 cmd_hostname="$1"
 if test -z "$cmd_hostname"; then
@@ -32,7 +31,9 @@ export DEBIAN_FRONTEND='noninteractive'
 apt-get -y update
 apt-get -y upgrade
 for pkg in rsync git git-core wget gpg; do
-   apt-get -y install $pkg
+   # script is running with "set -e", use "|| true" to allow packages to not
+   # exist without stopping the script
+   apt-get -y install $pkg || true
 done
 dpkg -i cosmos_1.5-1_all.deb
 
@@ -40,8 +41,10 @@ if ! test -d /var/cache/cosmos/repo; then
     cosmos clone "$cmd_repo"
 fi
 
-# re-run cosmos at reboot until it succeeds - use bash -l to get working proxy settings
-grep -v "^exit 0" /etc/rc.local > /etc/rc.local.new
+# Re-run cosmos at reboot until it succeeds - use bash -l to get working proxy settings.
+# It is possible the file does not exist or contains no matching lines,
+# both cases are OK
+grep -v "^exit 0" /etc/rc.local > /etc/rc.local.new || true
 (echo ""
  echo "test -f /etc/run-cosmos-at-boot && (bash -l cosmos -v update; bash -l cosmos -v apply && rm /etc/run-cosmos-at-boot)"
  echo ""
@@ -52,8 +55,7 @@ mv -f /etc/rc.local.new /etc/rc.local
 touch /etc/run-cosmos-at-boot
 
 # If this cloud-config is set, it will interfere with our changes to /etc/hosts
-grep -q 'manage_etc_hosts: true' /etc/cloud/cloud.cfg
-if [ ${?} -eq 0 ]; then
+if [ -f /etc/cloud/cloud.cfg ]; then
     sed -i 's/manage_etc_hosts: true/manage_etc_hosts: false/g' /etc/cloud/cloud.cfg
 fi
 
