@@ -18,4 +18,9 @@ class thiss::demo_sp($version='latest')
     ports               => ['443:443'],
     uid_gid_consistency => false
   }
+  vcsrepo { '/var/www/demo':
+    ensure   => latest,
+    provider => git,
+    source   => 'https://github.com/TheIdentitySelector/thiss-demo'
+  }
 }
