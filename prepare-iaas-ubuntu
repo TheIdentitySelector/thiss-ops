@@ -12,13 +12,14 @@ fi
 
 set -x
 
-ssh "ubuntu@${ip}" sudo cp -r /home/ubuntu/.ssh /root/
-ssh "ubuntu@${ip}" sudo chown -R root:root /root/.ssh
-ssh "ubuntu@${ip}" sudo chmod 700 /root/.ssh
-ssh "ubuntu@${ip}" sudo chmod 600 /root/.ssh/authorized_keys
-ssh "root@${ip}" deluser ubuntu
-ssh "root@${ip}" rm /home/ubuntu -rf
-ssh "root@${ip}" rm /etc/sudoers.d/*
-ssh "root@${ip}" DEBIAN_FRONTEND="noninteractive" apt-get -y update
-ssh "root@${ip}" DEBIAN_FRONTEND="noninteractive" apt-get -o Dpkg::Options::="--force-confnew" --fix-broken --assume-yes dist-upgrade
-ssh "root@${ip}" reboot
+# Make sure we read the additional scripts from the same directory as
+# this script is located at
+script_dir=$(dirname "$0")
+
+# The reason for running two separate logins is that it is tricky to
+# remove the initial user while logged in as that same user:
+# ===
+# userdel: user ubuntu is currently used by process 44063
+# ===
+ssh "ubuntu@${ip}" "bash -s" < "$script_dir"/iaas-enable-root.sh
+ssh "root@${ip}" "bash -s" < "$script_dir"/iaas-setup.sh
