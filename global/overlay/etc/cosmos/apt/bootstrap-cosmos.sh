@@ -35,7 +35,8 @@ for pkg in rsync git git-core wget gpg; do
    # exist without stopping the script
    apt-get -y install $pkg || true
 done
-dpkg -i cosmos_1.5-1_all.deb
+cosmos_deb=$(find ./ -maxdepth 1 -name 'cosmos_*.deb' | sort -V | tail -1)
+dpkg -i "$cosmos_deb"
 
 if ! test -d /var/cache/cosmos/repo; then
     cosmos clone "$cmd_repo"
