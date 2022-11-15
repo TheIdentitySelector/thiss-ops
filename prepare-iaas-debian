@@ -17,12 +17,9 @@ set -x
 script_dir=$(dirname "$0")
 
 # The reason for running two separate logins is that it is tricky to
-# remove the initial debian user while logged in as that same user:
+# remove the initial user while logged in as that same user:
 # ===
-# Removing user `debian' ...
-# Warning: group `debian' has no more members.
-# userdel: user debian is currently used by process 12081
-# /usr/sbin/deluser: `/sbin/userdel debian' returned error code 8. Exiting.
+# userdel: user debian is currently used by process 1082
 # ===
-ssh "debian@${ip}" "bash -s" < "$script_dir"/debian-enable-root.sh
-ssh "root@${ip}" "bash -s" < "$script_dir"/debian-setup.sh
+ssh "debian@${ip}" "bash -s" < "$script_dir"/iaas-enable-root.sh
+ssh "root@${ip}" "bash -s" < "$script_dir"/iaas-setup.sh

@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 #
-# This script is called from prepare-iaas-debian after logging in over ssh as
+# This script is called from prepare-iaas-$os after logging in over ssh as
 # the root user
 #
 set -x
+
+os=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
+if [ "$os" != "ubuntu" ] && [ "$os" != "debian" ]; then
+    echo "unsupported os: '$os'"
+    exit 1
+fi
 
 # Get rid of ugly perl messages when running from macOS:
 # ===
@@ -20,26 +26,27 @@ set -x
 # ===
 export LC_CTYPE=C.UTF-8
 
-# Make sure there is no systemd process running as "debian" after the "enable
-# root" step in prepare-iaas-debian. If there are any proceses still running as
-# the "debian" user the "userdel" command below will fail.
+# Make sure there is no systemd process running as the initial cloud image user
+# # after the "enable root" step in prepare-iaas-$os. If there are any #
+# proceses still running as the specified user the "userdel" command # below
+# will fail.
 #
 # Depending on how long we have waited between running the "enable root"
 # script and this one it is possible the process has timed out on its own,
 # so run this command before doing "set -e" in case there is no process
 # to match.
-pkill -u debian -xf "/lib/systemd/systemd --user"
+pkill -u "$os" -xf "/lib/systemd/systemd --user"
 
 # Make sure the process has gone away before continuing
 sleep_seconds=1
 attempt=1
 max_attempts=10
-while pgrep -u debian -xf "/lib/systemd/systemd --user"; do
+while pgrep -u "$os" -xf "/lib/systemd/systemd --user"; do
     if [ $attempt -gt $max_attempts ]; then
         echo "failed waiting for systemd process to exit, please investigate"
         exit 1
     fi
-    echo "systemd process still running as debian user, this is attempt $attempt out of $max_attempts, sleeping for $sleep_seconds seconds..."
+    echo "systemd process still running as '$os' user, this is attempt $attempt out of $max_attempts, sleeping for $sleep_seconds seconds..."
     sleep $sleep_seconds
     attempt=$((attempt + 1))
 done
@@ -49,9 +56,9 @@ set -e
 
 # While the man page for "userdel" recommends using "deluser" we can not
 # run "deluser" with "--remove-home" without installing more than the
-# already included `perl-base` package, so stick with the low level
-# utility.
-userdel --remove debian
+# already included `perl-base` package on debian, so stick with the low
+# level utility.
+userdel --remove "$os"
 rm /etc/sudoers.d/*
 
 # Make sure en_US.UTF-8 is present in the system, expected by at least
