@@ -56,7 +56,8 @@ if [ ! -d "$cmd_fqdn" ]; then
 fi
 
 if [ "$cmd_do_bootstrap" = "yes" ]; then
-   scp apt/cosmos_1.5-2~sunet20220414_all.deb apt/bootstrap-cosmos.sh root@"$cmd_hostname":
+   cosmos_deb=$(find apt/ -maxdepth 1 -name 'cosmos_*.deb' | sort -V | tail -1)
+   scp "$cosmos_deb" apt/bootstrap-cosmos.sh root@"$cmd_hostname":
    ssh root@"$cmd_hostname" ./bootstrap-cosmos.sh "$cmd_fqdn" "$rrepo" "$rtag"
    ssh root@"$cmd_hostname" cosmos update
    ssh root@"$cmd_hostname" cosmos apply
