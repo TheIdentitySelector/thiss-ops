@@ -391,6 +391,9 @@ class nagios_monitor {
   nagioscfg::command {'check_metadata_age':
     command_line   => "/usr/lib/nagios/plugins/check_md_sa.sh '\$ARG1\$'"
   }
+  nagioscfg::command {'check_haproxy_backend':
+    command_line   => "/usr/lib/nagios/plugins/check_haproxy.rb -u '\$ARG1\$'"
+  }
   $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org','md-staging.thiss.io']
   nagioscfg::host {$public_hosts: }
   $md_hosts = ['md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
@@ -425,6 +428,12 @@ class nagios_monitor {
       description    => "check metadata for ${url}",
       contact_groups => ['alerts'],
     }
+  }
+  nagioscfg::service {'check_haproxy_backend':
+    host_name      => ['localhost'],,
+    check_command  => 'check_haproxy_backend!https://static.thiss.io/haproxy?stats',
+    description    => 'check HAproxy backends are up',
+    contact_groups => ['alerts']
   }
 }
 
