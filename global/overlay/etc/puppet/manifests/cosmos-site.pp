@@ -430,7 +430,7 @@ class nagios_monitor {
     }
   }
   nagioscfg::service {'check_haproxy_backend':
-    host_name      => ['localhost'],,
+    host_name      => ['localhost'],
     check_command  => 'check_haproxy_backend!https://static.thiss.io/haproxy?stats',
     description    => 'check HAproxy backends are up',
     contact_groups => ['alerts']
