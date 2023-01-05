@@ -388,6 +388,9 @@ class nagios_monitor {
   nagioscfg::command {'check_website':
     command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
   }
+  nagioscfg::command {'check_website_http':
+    command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -u '\$ARG1\$' -s '\$ARG2\$'"
+  }
   nagioscfg::command {'check_metadata_age':
     command_line   => "/usr/lib/nagios/plugins/check_md_sa.sh '\$ARG1\$'"
   }
@@ -396,10 +399,10 @@ class nagios_monitor {
   }
   $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org','md-staging.thiss.io']
   nagioscfg::host {$public_hosts: }
-  $md_hosts = ['md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
+  $md_haproxy_hosts = ['md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
   $meta_hosts = ['meta.aws1.geant.eu.seamlessaccess.org', 'meta.aws2.geant.eu.seamlessaccess.org', 'meta.se-east.sunet.eu.seamlessaccess.org', 'meta.ntx.sunet.eu.seamlessaccess.org', 'a-1.thiss.io', 'a-staging-1.thiss.io']
-  $static_hosts = ['static.thiss.io', 'static.ntx.sunet.eu.seamlessaccess.org', 'static.aws1.geant.eu.seamlessaccess.org', 'static.aws2.geant.eu.seamlessaccess.org']
-  $urls = concat ($public_hosts, $md_hosts, $static_hosts)
+  $static_haproxy_hosts = ['static.thiss.io', 'static.ntx.sunet.eu.seamlessaccess.org', 'static.se-east.sunet.eu.seamlessaccess.org', 'static.aws1.geant.eu.seamlessaccess.org', 'static.aws2.geant.eu.seamlessaccess.org']
+  $urls = concat ($public_hosts, $md_haproxy_hosts, $static_haproxy_hosts)
   $urls.each |$url|{
     nagioscfg::service {"check_${url}":
       host_name      => ["${url}"],
@@ -415,17 +418,35 @@ class nagios_monitor {
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_infra_ssl_cert':
-    host_name      => $md_hosts + $meta_hosts + $static_hosts,
+    host_name      => $md_haproxy_hosts + $meta_hosts + $static_haproxy_hosts,
     check_command  => 'check_ssl_cert_3_without_ocsp!30!14!443',
-    description    => 'check https certificate validity on port 443',
+    description    => 'check https certif:qicate validity on port 443',
     contact_groups => ['alerts']
   }
-  $md_urls = concat ([ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io'] , $md_hosts)
+  $md_urls = concat ([ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io'] , $md_haproxy_hosts)
   $md_urls.each |$url|{
     nagioscfg::service {"check_metadata_age_${url}":
       host_name      => ["${url}"],
       check_command  => "check_metadata_age!https://${url}",
       description    => "check metadata for ${url}",
+      contact_groups => ['alerts'],
+    }
+  }
+  $md_hosts = ['md-1.ntx.sunet.eu.seamlessaccess.org', 'md-1.se-east.sunet.eu.seamlessaccess.org', 'md-1.aws1.geant.eu.seamlessaccess.org', 'md-1.aws2.geant.eu.seamlessaccess.org','md-2.ntx.sunet.eu.seamlessaccess.org', 'md-2.se-east.sunet.eu.seamlessaccess.org', 'md-2.aws1.geant.eu.seamlessaccess.org', 'md-2.aws2.geant.eu.seamlessaccess.org', 'md-1.thiss.io', 'md-2.thiss.io']
+  $md_hosts.each |$host|{
+    nagioscfg::service {"check_metadata_age_${host}":
+      host_name      => ["${host}"],
+      check_command  => "check_metadata_age!http://${host}",
+      description    => "check metadata for ${host}",
+      contact_groups => ['alerts'],
+    }
+  }
+  $static_hosts = ['static-1.thiss.io', 'static-1.ntx.sunet.eu.seamlessaccess.org', 'static-1.se-east.sunet.eu.seamlessaccess.org', 'static-1.aws1.geant.eu.seamlessaccess.org', 'static-1.aws2.geant.eu.seamlessaccess.org', 'static-2.thiss.io', 'static-2.ntx.sunet.eu.seamlessaccess.org', 'static-2.se-east.sunet.eu.seamlessaccess.org', 'static-2.aws1.geant.eu.seamlessaccess.org', 'static-2.aws2.geant.eu.seamlessaccess.org']
+  $static_hosts.each |$host|{
+    nagioscfg::service {"check_${host}":
+      host_name      => ["${host}"],
+      check_command  => "check_website_http!http://${host}/manifest.json!version",
+      description    => 'check web',
       contact_groups => ['alerts'],
     }
   }

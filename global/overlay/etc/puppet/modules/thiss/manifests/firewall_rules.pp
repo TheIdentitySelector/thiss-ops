@@ -15,7 +15,7 @@ class thiss::firewall_rules($location=undef){
   #mdq exposes 80 to haproxy
   if $::fqdn =~ /^md-[0-9]+\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_mdq':
-      from => $haproxy_ip,
+      from => $haproxy_ip + $nagios_ip_v4,
       port => '80',
     }
   }
@@ -29,7 +29,7 @@ class thiss::firewall_rules($location=undef){
   #static exposes 80 to haproxy
   if $::fqdn =~ /^static-[0-9]+\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_static':
-      from => $haproxy_static_ip,
+      from => $haproxy_static_ip + $nagios_ip_v4,
       port => '80',
     }
   }
