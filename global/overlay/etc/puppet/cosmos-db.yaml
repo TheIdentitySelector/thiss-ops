@@ -614,7 +614,7 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
-    thiss::haproxy_static: {image_tag: stable, location: thiss}
+    thiss::haproxy_static: {image_tag: beta, location: thiss}
     update_ca_certificates: null
 members:
   all: [a-1.thiss.io, a-staging-1.thiss.io, auth-1.thiss.io, md-1.aws1.geant.eu.seamlessaccess.org,
