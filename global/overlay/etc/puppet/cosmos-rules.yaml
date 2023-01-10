@@ -72,7 +72,7 @@ static.thiss.io:
    thiss::dockerhost:
       version: '5:20.10.12~3-0~ubuntu-focal'
    thiss::haproxy_static:
-      image_tag: stable
+      image_tag: beta
       location: thiss
    https:
 
