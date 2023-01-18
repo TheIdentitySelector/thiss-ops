@@ -604,6 +604,7 @@ classes:
   static.thiss.io:
     common: null
     entropyclient: null
+    haproxy_stats: null
     https: null
     infra_ca_rp: null
     mailclient: *id001
@@ -659,6 +660,7 @@ members:
     static-2.se-east.sunet.eu.seamlessaccess.org, static-2.thiss.io, static.aws1.geant.eu.seamlessaccess.org,
     static.aws2.geant.eu.seamlessaccess.org, static.ntx.sunet.eu.seamlessaccess.org,
     static.se-east.sunet.eu.seamlessaccess.org, static.thiss.io]
+  haproxy_stats: [static.thiss.io]
   http: [md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io, sp-test.seamlessaccess.org]
   https: [a-1.thiss.io, a-staging-1.thiss.io, md-1.thiss.io, md-2.thiss.io, md-staging-1.thiss.io,
     sp-test.seamlessaccess.org, static-1.thiss.io, static-2.thiss.io, static.thiss.io]
