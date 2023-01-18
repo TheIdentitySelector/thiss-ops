@@ -100,10 +100,10 @@ class http {
 class haproxy_stats {
    $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
 
-   ufw::allow { "allow-haproxy-stats":
-      ip   => $nagios_ip_v4,
-      port => '8404'
-   }
+   sunet::misc::ufw_allow { 'allow_haproxy_stats':
+      from =>  $nagios_ip_v4,
+      port => '8404',
+    }
 }
 
 
@@ -462,7 +462,7 @@ class nagios_monitor {
   }
   nagioscfg::service {'check_haproxy_backend':
     host_name      => ['localhost'],
-    check_command  => 'check_haproxy_backend!https://static.thiss.io/haproxy?stats',
+    check_command  => 'check_haproxy_backend!http://static.thiss.io:8404/stats',
     description    => 'check HAproxy backends are up',
     contact_groups => ['alerts']
   }
