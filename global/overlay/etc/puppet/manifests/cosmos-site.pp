@@ -97,6 +97,16 @@ class http {
    }
 }
 
+class haproxy_stats {
+   $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
+
+   ufw::allow { "allow-haproxy-stats":
+      ip   => $nagios_ip_v4,
+      port => '8404'
+   }
+}
+
+
 class md_aggregator {}
 
 class servicemonitor {

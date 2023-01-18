@@ -75,6 +75,7 @@ static.thiss.io:
       image_tag: beta
       location: thiss
    https:
+   haproxy_stats:
 
 a-staging-1.thiss.io:
    sunet_iaas_cloud:
