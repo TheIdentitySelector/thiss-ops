@@ -36,13 +36,20 @@ defaults
 
     balance roundrobin
 
+frontend stats
+    bind *:8404
+    stats enable
+    stats uri /stats
+    stats refresh 10s
+
 frontend haproxy_seamlessaccess
     bind *:443 ssl crt <%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>
     default_backend static_servers
 
-
 backend static_servers
-    <% @servers.each do |server| -%>
-    server <%= server %>_v4 <%= server %>:80
+    <% @servers.each do |servers_key, servers_value_hash| -%>
+    <% servers_value_hash['backends'].each do |backend_key, backend_value_hash| -%>
+     server <%= "#{backend_key} #{backend_value_hash['ip']}" %>:80 check
+    <% end -%>
     <% end -%>
 

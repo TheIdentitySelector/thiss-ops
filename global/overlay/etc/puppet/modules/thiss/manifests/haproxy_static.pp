@@ -14,7 +14,7 @@ class thiss::haproxy_static($location=undef,$image_tag=undef){
 
     ensure_resource('file','/opt/haproxy', { ensure => directory } )
     ensure_resource('file','/opt/haproxy/compose', { ensure => directory } )
-    $servers = hiera_array("static_${location}",[])
+    $servers = hiera_hash("static_${location}")
 
     file { '/opt/haproxy/haproxy.cfg':
       content      => template('thiss/haproxy/haproxy_static.cfg.erb'),
