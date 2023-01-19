@@ -11,13 +11,13 @@ Exec {
 #include cosmos::ntp
 #include cosmos::rngtools
 #include cosmos::preseed
-include ufw
-include apt
-include cosmos
+#include ufw
+#include apt
+#include cosmos
 
 # you need a default node
 
-node default { 
+node default {
 
 }
 
@@ -33,8 +33,8 @@ node default {
 
 #class nameserver {
 #   package {'bind9':
-#      ensure => latest 
-#   } 
+#      ensure => latest
+#   }
 #   service {'bind9':
 #      ensure => running
 #   }
@@ -49,4 +49,3 @@ node default {
 #      proto => "tcp"
 #   }
 #}
-
