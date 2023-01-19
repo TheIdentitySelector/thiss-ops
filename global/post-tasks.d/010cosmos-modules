@@ -5,7 +5,7 @@
 # The content of that file is chosen according to:
 #
 #   1. If the file is actually present in the model, use that.
-#   2. If there is a script called /etc/puppet/setup_cosmos_models, run that.
+#   2. If there is a script called /etc/puppet/setup_cosmos_modules, run that.
 #   3. If the file still doesn't exist, create it with the defaults in this script.
 #
 
@@ -17,10 +17,10 @@ if [ -f "${COSMOS_MODEL}/overlay/etc/puppet/cosmos-modules.conf" ]; then
     exit 0
 fi
 
-if [ -x /etc/puppet/setup_cosmos_models ]; then
+if [ -x /etc/puppet/setup_cosmos_modules ]; then
     test "$COSMOS_VERBOSE" = "y" && \
-        echo "$0: Updating /etc/puppet/cosmos-modules.conf with /etc/puppet/setup_cosmos_models"
-    /etc/puppet/setup_cosmos_models
+        echo "$0: Updating /etc/puppet/cosmos-modules.conf with /etc/puppet/setup_cosmos_modules"
+    /etc/puppet/setup_cosmos_modules
 
     test -f /etc/puppet/cosmos-modules.conf && exit 0
 fi
