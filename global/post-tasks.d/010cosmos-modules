@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Dynamically configure /etc/puppet/cosmos-modules.conf
+#
+# The content of that file is chosen according to:
+#
+#   1. If the file is actually present in the model, use that.
+#   2. If there is a script called /etc/puppet/setup_cosmos_models, run that.
+#   3. If the file still doesn't exist, create it with the defaults in this script.
+#
+
+set -e
+
+if [ -f "${COSMOS_MODEL}/overlay/etc/puppet/cosmos-modules.conf" ]; then
+    test "$COSMOS_VERBOSE" = "y" && \
+        echo "$0: /etc/puppet/cosmos-modules.conf is present in the model, exiting"
+    exit 0
+fi
+
+if [ -x /etc/puppet/setup_cosmos_models ]; then
+    test "$COSMOS_VERBOSE" = "y" && \
+        echo "$0: Updating /etc/puppet/cosmos-modules.conf with /etc/puppet/setup_cosmos_models"
+    /etc/puppet/setup_cosmos_models
+
+    test -f /etc/puppet/cosmos-modules.conf && exit 0
+fi
+
+test "$COSMOS_VERBOSE" = "y" && \
+    echo "$0: Creating/updating /etc/puppet/cosmos-modules.conf with defaults from this script"
+
+cat > /etc/puppet/cosmos-modules.conf << EOF
+# File created/updated by $0
+#
+concat          puppetlabs/concat     yes
+stdlib          puppetlabs/stdlib     yes
+#ufw             attachmentgenie/ufw   yes
+#apt             puppetlabs/apt        yes
+EOF
