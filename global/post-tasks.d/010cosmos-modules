@@ -35,4 +35,5 @@ concat          puppetlabs/concat     yes
 stdlib          puppetlabs/stdlib     yes
 #ufw             attachmentgenie/ufw   yes
 #apt             puppetlabs/apt        yes
+#cosmos          https://github.com/SUNET/puppet-cosmos.git yes
 EOF

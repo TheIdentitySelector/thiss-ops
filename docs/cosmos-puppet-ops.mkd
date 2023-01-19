@@ -337,30 +337,30 @@ gpg commands to create, sign and push the correct tag.
 Puppet modules
 --------------
 
-Puppet modules can be maintained using a designated cosmos pre-task that reads a file
-global/overlay/etc/puppet/cosmos-modules.conf. This file is a simple text-format file
-with 3 columns:
+Puppet modules can be maintained using a designated cosmos pre-task that reads the file
+/etc/puppet/cosmos-modules.conf. This file is a simple text-format file
+with either three (for puppetlabs modules) or four columns:
 
 ```
 #
-# name source (puppetlabs fq name or git url) upgrade (yes/no)
+# name source (puppetlabs fq name or git url) upgrade (yes/no) tag_pattern
 #
-concat puppetlabs/concat no
-stdlib puppetlabs/stdlib no
-cosmos https://github.com/SUNET/puppet-cosmos.git yes
-ufw https://github.com/SUNET/puppet-module-ufw.git yes
 apt puppetlabs/apt no
+concat puppetlabs/concat no
+cosmos https://github.com/SUNET/puppet-cosmos.git yes sunet-2*
+#golang elithrar/golang yes
+python https://github.com/SUNET/puppet-python.git yes sunet-2*
+stdlib puppetlabs/stdlib no
+ufw https://github.com/SUNET/puppet-module-ufw.git yes sunet-2*
 vcsrepo puppetlabs/vcsrepo no
 xinetd puppetlabs/xinetd no
-#golang elithrar/golang yes
-python https://github.com/SUNET/puppet-python.git yes
-hiera-gpg https://github.com/SUNET/hiera-gpg.git no
 ```
 
 This is an example file - the first field is the name of the module, the second is
-the source: either a puppetlabs path or a git URL. The final field is 'yes' if the
-module should be automatically updated or 'no' if it should only be installed. As usual
-lines beginning with '#' are silently ignored.
+the source: either a puppetlabs path or a git URL. The third field is 'yes' if the
+module should be automatically updated or 'no' if it should only be installed. The
+fourth field is a tag pattern to use (same style as the cosmos tag pattern).
+As usual lines beginning with '#' are silently ignored.
 
 This file is processed in a cosmos pre-hook so the modules should be available for
 use in the puppet post-hook. By default the file contains several lines that are
@@ -369,6 +369,16 @@ commented out so review this file as you start a new multiverse setup.
 In order to add a new module, the best way is to commit a change to this file and
 tag this change, allowing time for the module to get installed everywhere before
 adding a change that relies on this module.
+
+As there might be a need to use different sets of modules (or different tag patterns)
+on different hosts in an ops-repo, the contents of this file can be controlled in
+different ways:
+
+  1. If the file is present in the model, it is used as such.
+  2. If there is a script called /etc/puppet/setup_cosmos_modules, that script is executed.
+     If the file /etc/puppet/cosmos-modules.conf does not exist after this script runs,
+     proceed to step 3, otherwise use this dynamically generated list of modules.
+  3. Use a (very small) default set of modules from the pre-hook global/post-tasks.d/010cosmos-modules.
 
 HOWTO and Common Tasks
 ======================
