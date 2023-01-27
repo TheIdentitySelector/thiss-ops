@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+
+try:
+    from configobj import ConfigObj
+
+    os_info = ConfigObj("/etc/os-release")
+except (IOError, ModuleNotFoundError):
+    os_info = None
+
+
+modulesfile: str = "/etc/puppet/cosmos-modules.conf"
+modules: dict = {
+    "concat": {
+        "repo": "https://github.com/SUNET/puppetlabs-concat.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "stdlib": {
+        "repo": "https://github.com/SUNET/puppetlabs-stdlib.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "cosmos": {
+        "repo": "https://github.com/SUNET/puppet-cosmos.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "ufw": {
+        "repo": "https://github.com/SUNET/puppet-module-ufw.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "apt": {
+        "repo": "https://github.com/SUNET/puppetlabs-apt.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "vcsrepo": {
+        "repo": "https://github.com/SUNET/puppetlabs-vcsrepo.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "xinetd": {
+        "repo": "https://github.com/SUNET/puppetlabs-xinetd.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "python": {
+        "repo": "https://github.com/SUNET/puppet-python.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "hiera-gpg": {
+        "repo": "https://github.com/SUNET/hiera-gpg.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "pound": {
+        "repo": "https://github.com/SUNET/puppet-pound.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "augeas": {
+        "repo": "https://github.com/SUNET/puppet-augeas.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "bastion": {
+        "repo": "https://github.com/SUNET/puppet-bastion.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "pyff": {
+        "repo": "https://github.com/samlbits/puppet-pyff.git",
+        "upgrade": "yes",
+        "tag": "puppet-pyff-*",
+    },
+    "dhcp": {
+        "repo": "https://github.com/SUNET/puppetlabs-dhcp.git",
+        "upgrade": "yes",
+        "tag": "sunet_dev-2*",
+    },
+    "varnish": {
+        "repo": "https://github.com/samlbits/puppet-varnish.git",
+        "upgrade": "yes",
+        "tag": "puppet-varnish-*",
+    },
+    "apparmor": {
+        "repo": "https://github.com/SUNET/puppet-apparmor.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "docker": {
+        "repo": "https://github.com/SUNET/garethr-docker.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "network": {
+        "repo": "https://github.com/SUNET/attachmentgenie-network.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "sunet": {
+        "repo": "https://github.com/SUNET/puppet-sunet.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "sysctl": {
+        "repo": "https://github.com/SUNET/puppet-sysctl.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+    "nagioscfg": {
+        "repo": "https://github.com/SUNET/puppet-nagioscfg.git",
+        "upgrade": "yes",
+        "tag": "sunet-2*",
+    },
+}
+
+# When/if we want we can do stuff to modules here
+if os_info:
+    if os_info["VERSION_CODENAME"] == "bullseye":
+        pass
+
+with open(modulesfile, "w") as fh:
+    for key in modules:
+        fh.write(
+            "{0:11} {1} {2} {3}\n".format(
+                key,
+                modules[key]["repo"],
+                modules[key]["upgrade"],
+                modules[key]["tag"],
+            )
+        )
