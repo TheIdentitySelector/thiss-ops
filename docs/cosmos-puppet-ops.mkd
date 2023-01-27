@@ -381,7 +381,7 @@ different ways:
   3. Use a (very small) default set of modules from the pre-hook global/post-tasks.d/010cosmos-modules.
 
 There is an example implementation of the script to help you get started with writing your own, 
-available in global/etc/puppet/setup_cosmos_modules.example.
+available in docs/setup_cosmos_modules.example.
 
 HOWTO and Common Tasks
 ======================
