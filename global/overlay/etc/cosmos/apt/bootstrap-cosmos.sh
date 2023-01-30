@@ -30,7 +30,7 @@ export DEBIAN_FRONTEND='noninteractive'
 
 apt-get -y update
 apt-get -y upgrade
-for pkg in rsync git git-core wget gpg; do
+for pkg in rsync git git-core wget gpg jq; do
    # script is running with "set -e", use "|| true" to allow packages to not
    # exist without stopping the script
    apt-get -y install $pkg || true
@@ -56,16 +56,43 @@ mv -f /etc/rc.local.new /etc/rc.local
 touch /etc/run-cosmos-at-boot
 
 # If this cloud-config is set, it will interfere with our changes to /etc/hosts
-if [ -f /etc/cloud/cloud.cfg ]; then
-    sed -i 's/manage_etc_hosts: true/manage_etc_hosts: false/g' /etc/cloud/cloud.cfg
-fi
+# The configuration seems to move around between cloud-config versions
+for file in /etc/cloud/cloud.cfg /etc/cloud/cloud.cfg.d/01_debian_cloud.cfg; do
+    if [ -f ${file} ]; then
+        sed -i 's/manage_etc_hosts: true/manage_etc_hosts: false/g' ${file}
+    fi
+done
 
-# Remove potential $hostname.novalocal line from /etc/hosts, added by cloud-init
-sed -i.bak -e "s/^127\.0\.1\.1 $(hostname)\..*novalocal.*//1" /etc/hosts
+# Remove potential $hostname.novalocal, added by cloud-init or Debian default
+# from /etc/hosts. We add our own further down.
+#
+# From # https://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution:
+# "For a system with a permanent IP address, that permanent IP address should
+# be used here instead of 127.0.1.1."
+sed -i.bak -e "/127\.0\.1\.1/d" /etc/hosts
+
+vendor=$(lsb_release -is)
+version=$(lsb_release -rs)
+min_version=1337
+host_ip=127.0.1.1
+if [ "${vendor}" = "Ubuntu" ]; then
+    min_version=20.04
+elif [ "${vendor}" = "Debian" ]; then
+    min_version=11
+fi
 
 hostname $cmd_hostname
 short=`echo ${cmd_hostname} | awk -F. '{print $1}'`
-echo "127.0.1.1 ${cmd_hostname} ${short}" >> /etc/hosts
+# Only change behavior on modern OS where `ip -j` outputs a json predictuble
+# enought to work with.
+#
+# Use `dpkg` to easier compare ubuntu versions.
+if dpkg --compare-versions "${version}" "ge" "${min_version}"; then
+    # When hostname pointed to loopback in /etc/hosts containers running on the
+    # host tried to connect to the container itself instead of the host.
+    host_ip=$(ip -j address show "$(ip -j route show default | jq -r '.[0].dev')"  | jq -r .[0].addr_info[0].local)
+fi
+echo "${host_ip} ${cmd_hostname} ${short}" >> /etc/hosts
 
 # Set up cosmos models. They are in the order of most significant first, so we want
 # <host> <group (if it exists)> <global>
