@@ -42,6 +42,8 @@ if [ -f $CONFIG -o $LOCALCONFIG ]; then
             if [ "$src" != "$(git config remote.origin.url)" ]; then
               git config remote.origin.url $src
             fi
+            # Support master branch being renamed to main
+            git branch --all | grep -q '^[[:space:]]*remotes/origin/main$' && git checkout main
             # Update repo and clean out any local inconsistencies
             git pull -q || (git fetch && git reset --hard)
           else
