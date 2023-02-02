@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+RUN_COSMOS=/usr/local/bin/run-cosmos
+SCRIPTHERDER_CMD=''
+
+if [ -f /usr/local/bin/scriptherder ]; then
+   SCRIPTHERDER_CMD='/usr/local/bin/scriptherder --mode wrap --syslog --name cosmos --'
+fi
+
+${SCRIPTHERDER_CMD} ${RUN_COSMOS}
