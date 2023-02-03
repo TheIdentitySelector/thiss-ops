@@ -15,5 +15,9 @@ if ! test -d "$MODEL_OVERLAY"; then
 fi
 
 if [ -d "$MODEL_OVERLAY/root" ]; then
-    chmod -v 0700 "$MODEL_OVERLAY"/root
+    args=""
+    if [ "x$COSMOS_VERBOSE" = "xy" ]; then
+        args="-v"
+    fi
+    chmod ${args} 0700 "$MODEL_OVERLAY"/root
 fi
