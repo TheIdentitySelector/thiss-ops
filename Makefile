@@ -8,7 +8,7 @@ upgrade:
 
 db: global/overlay/etc/puppet/cosmos-db.yaml
 
-global/overlay/etc/puppet/cosmos-db.yaml: global/overlay/etc/puppet/cosmos-rules.yaml:
+global/overlay/etc/puppet/cosmos-db.yaml: global/overlay/etc/puppet/cosmos-rules.yaml
 	@python ./fabfile/db.py > global/overlay/etc/puppet/cosmos-db.yaml
 	@git add global/overlay/etc/puppet/cosmos-db.yaml && git commit -m "update db" global/overlay/etc/puppet/cosmos-db.yaml
 
