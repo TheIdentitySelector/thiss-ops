@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Set up eyaml for Hiera
+#
+
+set -e
+
+EYAMLDIR=/etc/hiera/eyaml
+
+vendor=$(lsb_release -is)
+version=$(lsb_release -rs)
+# eyaml is only used on Ubuntu 20.04 and newer, and Debian 11 and newer (earlier OSes use hiera-gpg instead)
+test "${vendor}" = "Ubuntu" && dpkg --compare-versions "${version}" "lt" "18.04" && exit 0
+test "${vendor}" = "Debian" && dpkg --compare-versions "${version}" "lt" "10" && exit 0
+
+stamp="$COSMOS_BASE/stamps/hiera-eyaml-v01.stamp"
+
+test -f "$stamp" && exit 0
+
+if [ ! -f /usr/bin/eyaml ] || [ ! -d /usr/share/doc/yaml-mode ]; then
+    apt-get update
+    apt-get -y install hiera-eyaml yaml-mode
+fi
+
+if [ ! -f ${EYAMLDIR}/public_certkey.pkcs7.pem ] || [ ! -f ${EYAMLDIR}/private_key.pkcs7.pem ]; then
+    # hiera-eyaml wants a certificate and public key, not just a public key oddly enough
+    echo "$0: Generating eyaml key in ${EYAMLDIR} - this might take a while..."
+    mkdir -p /etc/hiera/eyaml
+    openssl req -x509 -newkey rsa:4096 -keyout ${EYAMLDIR}/private_key.pkcs7.pem \
+	    -out ${EYAMLDIR}/public_certkey.pkcs7.pem -days 3653 -nodes -sha256 \
+	    -subj "/C=SE/O=SUNET/OU=EYAML/CN=$(hostname)"
+    rm -f ${EYAMLDIR}/public_key.pkcs7.pem  # cleanup
+fi
+
+mkdir -p "$(dirname "${stamp}")"
+touch "$stamp"
