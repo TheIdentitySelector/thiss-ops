@@ -16,29 +16,29 @@ lock() {
     eval "exec $fd>$lock_file"
 
     # acquier the lock
-    flock -n $fd \
+    flock -n "$fd" \
         && return 0 \
         || return 1
 }
 
 eexit() {
-    local error_str="$@"
+    local error_str="$*"
 
-    echo $error_str
+    echo "$error_str"
     exit 1
 }
 
 main () {
-   lock $PROGNAME || eexit "Only one instance of $PROGNAME can run at one time."
-   cosmos $* update
-   cosmos $* apply
+   lock "$PROGNAME" || eexit "Only one instance of $PROGNAME can run at one time."
+   cosmos "$@" update
+   cosmos "$@" apply
 
    touch /var/run/last-cosmos-ok.stamp
 
-   find /var/lib/puppet/reports/ -type f -mtime +10 | xargs rm -f
+   find /var/lib/puppet/reports/ -type f -mtime +10 -print0 | xargs -0 rm -f
 }
 
-main $*
+main "$@"
 
 if [ -f /cosmos-reboot ]; then
    rm -f /cosmos-reboot
