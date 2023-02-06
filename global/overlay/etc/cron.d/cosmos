@@ -2,3 +2,5 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 */15 * * * *   root   /usr/local/libexec/cosmos-cron-wrapper
+
+@reboot        root   sleep 30; /usr/local/libexec/cosmos-cron-wrapper
