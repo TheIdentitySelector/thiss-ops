@@ -421,6 +421,14 @@ class nagios_monitor {
       contact_groups => ['alerts'],
     }
   }
+  $static_haproxy_hosts.each |$host|{
+    nagioscfg::service {"check_haproxy_backend_${host}":
+      host_name      => [localhost],
+      check_command  => "check_haproxy_backend!http://${host}:8404/stats",
+      description    => "check HAproxy backends are up for ${host}",
+      contact_groups => ['alerts'],
+    }
+  }
   nagioscfg::service {'check_public_ssl_cert':
     host_name      => $public_hosts,
     check_command  => 'check_ssl_cert_3!30!14!443',
@@ -459,12 +467,6 @@ class nagios_monitor {
       description    => 'check web',
       contact_groups => ['alerts'],
     }
-  }
-  nagioscfg::service {'check_haproxy_backend':
-    host_name      => ['localhost'],
-    check_command  => 'check_haproxy_backend!http://static.thiss.io:8404/stats',
-    description    => 'check HAproxy backends are up',
-    contact_groups => ['alerts']
   }
 }
 

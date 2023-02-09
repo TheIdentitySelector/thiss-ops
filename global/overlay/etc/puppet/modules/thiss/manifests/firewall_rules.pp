@@ -40,4 +40,11 @@ class thiss::firewall_rules($location=undef){
       port => '443',
     }
   }
+  #static exposes 8404 to nagios
+  if $::fqdn =~ /^static\.\S+\.seamlessaccess\.org$/ {
+    sunet::misc::ufw_allow { 'allow_haproxy_stat':
+      from => $nagios_ip_v4,
+      port => '8404',
+    }
+  }
 }
