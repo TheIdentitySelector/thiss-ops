@@ -425,7 +425,7 @@ class nagios_monitor {
     nagioscfg::service {"check_haproxy_backend_${host}":
       host_name      => [localhost],
       check_command  => "check_haproxy_backend!http://${host}:8404/stats",
-      description    => "check HAproxy backends are up for ${host}",
+      description    => "check HAproxy backends for ${host}",
       contact_groups => ['alerts'],
     }
   }
