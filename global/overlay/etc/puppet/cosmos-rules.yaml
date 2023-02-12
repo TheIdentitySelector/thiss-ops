@@ -27,6 +27,7 @@ md-1.thiss.io:
       src: https://a-1.thiss.io/metadata.json
       base_url: https://md.thiss.io
       post: /usr/sbin/service docker-thiss_mdq restart
+      location: thiss
    https:
    http:
 
