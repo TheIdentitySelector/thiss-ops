@@ -202,8 +202,8 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-bionic'}
-    thiss::mdq: {base_url: 'https://md.thiss.io', post: /usr/sbin/service docker-thiss_mdq
-        restart, src: 'https://a-1.thiss.io/metadata.json', version: 1.3.2}
+    thiss::mdq: {base_url: 'https://md.thiss.io', location: thiss, post: /usr/sbin/service
+        docker-thiss_mdq restart, src: 'https://a-1.thiss.io/metadata.json', version: 1.3.2}
     update_ca_certificates: null
   md-staging-1.thiss.io:
     common: null
