@@ -26,7 +26,15 @@ class common {
   include sunet::tools
   include sunet::motd
   include sunet::ntp
-  include ufw
+
+  if $::sunet_nftables_opt_in != 'yes' and ! ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '22.04') >= 0 ) {
+    warning('Enabling UFW')
+    include ufw
+  } else {
+    warning('Enabling nftables')
+    ensure_resource ('class','sunet::nftables::init', { })
+  }
+
   include apt
   include apparmor
   package {'jq': ensure => 'latest'}
@@ -41,13 +49,13 @@ class common {
   }
 
 class dhcp6_client {
-  ufw::allow { "allow-dhcp6-546":
-      ip    => 'any',
+  sunet::misc::ufw_allow { "allow-dhcp6-546":
+      from    => 'any',
       port  => '546',
       proto => 'udp',
   }
-  ufw::allow { "allow-dhcp6-547":
-      ip    => 'any',
+  sunet::misc::ufw_allow { "allow-dhcp6-547":
+      from    => 'any',
       port  => '547',
       proto => 'udp'
   }
@@ -84,15 +92,15 @@ class sunet_iaas_cloud {
 }
 
 class https {
-   ufw::allow { "allow-https":
-      ip   => 'any',
+   sunet::misc::ufw_allow { "allow-https":
+      from => 'any',
       port => '443'
    }
 }
 
 class http {
-   ufw::allow { "allow-http":
-      ip   => 'any',
+   sunet::misc::ufw_allow { "allow-http":
+      from => 'any',
       port => '80'
    }
 }
@@ -111,7 +119,7 @@ class md_aggregator {}
 
 class servicemonitor {
    $nagios_ip_v4 = join(hiera('nagios_ip_v4')," ");
-   ufw::allow { "allow-servicemonitor-from-nagios":
+   sunet::misc::ufw_allow { "allow-servicemonitor-from-nagios":
       ip   => $nagios_ip_v4,
       port => '444',
       ensure => absent

@@ -21,8 +21,8 @@ class thiss::firewall_rules($location=undef){
   }
   #haproxy exposes 443 to Internet
   if $::fqdn =~ /^md\.\S+\.seamlessaccess\.org$/ {
-    ufw::allow { "allow_https_haproxy":
-      ip   => 'any',
+    sunet::misc::ufw_allow { "allow_https_haproxy":
+      from => 'any',
       port => '443',
     }
   }
@@ -35,8 +35,8 @@ class thiss::firewall_rules($location=undef){
   }
   #haproxy exposes 443 to Internet
   if $::fqdn =~ /^static\.\S+\.seamlessaccess\.org$/ {
-    ufw::allow { "allow_https_haproxy_static":
-      ip   => 'any',
+    sunet::misc::ufw_allow { "allow_https_haproxy_static":
+      from => 'any',
       port => '443',
     }
   }
