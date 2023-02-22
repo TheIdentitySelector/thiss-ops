@@ -446,7 +446,7 @@ class nagios_monitor {
   nagioscfg::service {'check_infra_ssl_cert':
     host_name      => $md_haproxy_hosts + $meta_hosts + $static_haproxy_hosts,
     check_command  => 'check_ssl_cert_3_without_ocsp!30!14!443',
-    description    => 'check https certif:qicate validity on port 443',
+    description    => 'check https infra certificate validity on port 443',
     contact_groups => ['alerts']
   }
   $md_urls = concat ([ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io'] , $md_haproxy_hosts)
