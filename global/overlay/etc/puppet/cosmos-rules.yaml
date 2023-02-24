@@ -27,7 +27,6 @@ md-1.thiss.io:
       src: https://a-1.thiss.io/metadata.json
       base_url: https://md.thiss.io
       post: /usr/sbin/service docker-thiss_mdq restart
-      location: thiss
    https:
    http:
 
@@ -40,7 +39,6 @@ md-2.thiss.io:
       src: https://a-1.thiss.io/metadata.json
       base_url: https://md.thiss.io
       post: /usr/sbin/service docker-thiss_mdq restart
-      location: thiss
    https:
    http:
 
@@ -162,7 +160,6 @@ md-staging-1.thiss.io:
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
-      location: aws2
 
 meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:

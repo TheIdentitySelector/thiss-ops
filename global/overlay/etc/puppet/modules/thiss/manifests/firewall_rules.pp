@@ -1,7 +1,7 @@
 class thiss::firewall_rules($location=undef){
 
   $md_ip = hiera_array("md_${location}",[])
-  $haproxy_ip = hiera_array("haproxy_${location}",[])
+  $haproxy_md_ip = hiera_array("haproxy_md_${location}",[])
   $haproxy_static_ip = hiera_array("haproxy_static_${location}",[])
   $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
 
@@ -15,13 +15,13 @@ class thiss::firewall_rules($location=undef){
   #mdq exposes 80 to haproxy
   if $::fqdn =~ /^md-[0-9]+\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_mdq':
-      from => $haproxy_ip + $nagios_ip_v4,
+      from => $haproxy_md_ip + $nagios_ip_v4,
       port => '80',
     }
   }
   #haproxy exposes 443 to Internet
   if $::fqdn =~ /^md\.\S+\.seamlessaccess\.org$/ {
-    sunet::misc::ufw_allow { "allow_https_haproxy":
+    sunet::misc::ufw_allow { "allow_https_haproxy_md":
       from => 'any',
       port => '443',
     }

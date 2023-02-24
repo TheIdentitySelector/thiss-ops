@@ -20,36 +20,26 @@ mgmt_addresses:
 md_ntx:
    - 192.36.171.80
    - 192.36.171.81
-haproxy_ntx:
+haproxy_md_ntx:
    - 192.36.171.79
 
 md_se-east:
    - 89.45.235.152
    - 89.45.235.214
-haproxy_se-east:
+haproxy_md_se-east:
    - 89.45.235.175
 
 md_aws1:
    - 18.158.14.16
    - 18.157.244.215
-haproxy_aws1:
+haproxy_md_aws1:
    - 18.195.9.86
 
 md_aws2:
    - 184.169.227.115
    - 3.101.5.178
-haproxy_aws2:
+haproxy_md_aws2:
    - 54.177.34.135
-
-mdq_thiss:
-   mdq_servers:
-     backends:
-       'md-1.thiss.io':
-          ip: '89.45.233.241'
-          sleep: '0'
-       'md-2.thiss.io':
-          ip: '89.47.184.149'
-          sleep: '15'
 
 static_ntx:
    static_servers:
