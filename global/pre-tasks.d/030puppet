@@ -19,7 +19,7 @@ if ! test -f $stamp -a -f /usr/bin/puppet; then
     #test -f apt-key add $COSMOS_REPO/apt/keys/puppetlabs-EF8D349F.pub && apt-key add $COSMOS_REPO/apt/keys/puppetlabs-EF8D349F.pub
     #dpkg -i $puppetdeb
     apt-get update
-    apt-get -y install puppet-common
+    apt-get -y install puppet-common || apt-get -y install puppet
 
     mkdir -p `dirname $stamp`
     touch $stamp
