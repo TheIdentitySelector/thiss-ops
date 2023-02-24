@@ -162,6 +162,7 @@ md-staging-1.thiss.io:
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
+      location: aws2
 
 meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
