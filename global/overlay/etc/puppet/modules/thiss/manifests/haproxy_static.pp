@@ -30,7 +30,7 @@ class thiss::haproxy_static($location=undef,$image_tag=undef){
       port          => '443',
     }
     sunet::nftables::docker_expose { 'haproxy-stats' :
-      allow_clients => '130.242.121.23/32',
+      allow_clients => ['130.242.121.23/32', '192.36.171.83/32'],
       port          => '8404',
     }
 
