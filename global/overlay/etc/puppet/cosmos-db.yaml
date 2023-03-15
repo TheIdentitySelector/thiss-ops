@@ -215,6 +215,8 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
+    thiss::dockerhost: {version: '5:20.10.16~3-0~ubuntu-jammy'}
+    thiss::haproxy: {location: thiss}
     update_ca_certificates: null
   md-staging-1.thiss.io:
     common: null
@@ -807,9 +809,10 @@ members:
     md-1.aws2.geant.eu.seamlessaccess.org, md-1.ntx.sunet.eu.seamlessaccess.org, md-1.se-east.sunet.eu.seamlessaccess.org,
     md-1.thiss.io, md-2.aws1.geant.eu.seamlessaccess.org, md-2.aws2.geant.eu.seamlessaccess.org,
     md-2.ntx.sunet.eu.seamlessaccess.org, md-2.se-east.sunet.eu.seamlessaccess.org,
-    md-2.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
-    md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org, meta.aws1.geant.eu.seamlessaccess.org,
-    meta.aws2.geant.eu.seamlessaccess.org, meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
+    md-2.thiss.io, md-lb.thiss.io, md-staging-1.thiss.io, md.aws1.geant.eu.seamlessaccess.org,
+    md.aws2.geant.eu.seamlessaccess.org, md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org,
+    meta.aws1.geant.eu.seamlessaccess.org, meta.aws2.geant.eu.seamlessaccess.org,
+    meta.ntx.sunet.eu.seamlessaccess.org, meta.se-east.sunet.eu.seamlessaccess.org,
     sp-test.seamlessaccess.org, static-1.aws1.geant.eu.seamlessaccess.org, static-1.aws2.geant.eu.seamlessaccess.org,
     static-1.ntx.sunet.eu.seamlessaccess.org, static-1.se-east.sunet.eu.seamlessaccess.org,
     static-1.thiss.io, static-2.aws1.geant.eu.seamlessaccess.org, static-2.aws2.geant.eu.seamlessaccess.org,
@@ -831,7 +834,7 @@ members:
     static-2.se-east.sunet.eu.seamlessaccess.org, static.aws1.geant.eu.seamlessaccess.org,
     static.aws2.geant.eu.seamlessaccess.org, static.ntx.sunet.eu.seamlessaccess.org,
     static.se-east.sunet.eu.seamlessaccess.org]
-  thiss::haproxy: [md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
+  thiss::haproxy: [md-lb.thiss.io, md.aws1.geant.eu.seamlessaccess.org, md.aws2.geant.eu.seamlessaccess.org,
     md.ntx.sunet.eu.seamlessaccess.org, md.se-east.sunet.eu.seamlessaccess.org]
   thiss::haproxy_static: [static.aws1.geant.eu.seamlessaccess.org, static.aws2.geant.eu.seamlessaccess.org,
     static.ntx.sunet.eu.seamlessaccess.org, static.se-east.sunet.eu.seamlessaccess.org,
