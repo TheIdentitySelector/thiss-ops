@@ -178,8 +178,15 @@ class nrpe {
   if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease < '18.04') {
     package {'nagios-plugins-extra': ensure => latest}
   }
+  if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '22.04') >= 0 ){
+    $mem_w = '90'
+    $mem_c = '95'
+  } else {
+    $mem_w = '10'
+    $mem_c = '5'
+  }
   sunet::nagios::nrpe_command {'check_memory':
-    command_line => '/usr/lib/nagios/plugins/check_memory -w 10% -c 5%'
+    command_line => "/usr/lib/nagios/plugins/check_memory -w ${mem_w}% -c ${mem_c}%"
   }
   sunet::nagios::nrpe_command {'check_mem':
     command_line => '/usr/lib/nagios/plugins/check_memory -w 10% -c 5%'
