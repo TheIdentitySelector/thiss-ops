@@ -41,6 +41,10 @@ md_aws2:
 haproxy_md_aws2:
    - 54.177.34.135
 
+md_thiss:
+   - 89.45.233.241
+   - 89.47.184.149
+
 static_ntx:
    static_servers:
      backends:

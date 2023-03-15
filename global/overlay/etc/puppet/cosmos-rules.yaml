@@ -42,6 +42,12 @@ md-2.thiss.io:
    https:
    http:
 
+md-lb.thiss.io:
+   thiss::dockerhost:
+      version: '5:20.10.16~3-0~ubuntu-jammy'
+   thiss::haproxy:
+      location: thiss
+
 a-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
