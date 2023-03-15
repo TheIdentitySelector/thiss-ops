@@ -75,6 +75,29 @@ if grep -q '^# en_US.UTF-8 UTF-8$' $locale_gen_file; then
     locale-gen
 fi
 
+if [ "$(lsb_release -is)" == "Debian" ]; then
+    interfaces_file='/etc/network/interfaces.d/50-cloud-init'
+
+    if [ -f "${interfaces_file}" ]; then
+        interface_string='iface ens3 inet6 dhcp'
+        accept_ra_string='    accept_ra 2'
+
+        if ! grep -qPz "${interface_string}\n${accept_ra_string}" ${interfaces_file} ; then
+
+            # By default net.ipv6.conf.ens3.accept_ra is set to 1 which
+            # makes the kernel throw a way the IPv6 route when
+            # net.ipv6.conf.all.forwarding is set to 1 by our service for
+            # Docker.
+             echo "Configuring interfaces to always accept Router Advertisements even with IP Forwarding enabled"
+            sed -i -r  "s/(${interface_string})/\1\n${accept_ra_string}/" ${interfaces_file}
+        else
+            echo "WARN: Configuration already applied or no match for \"${interface_string}\" in ${interfaces_file}"
+        fi
+    else
+        echo "WARN: ${interfaces_file} not found. File renamed in this image?"
+    fi
+fi
+
 DEBIAN_FRONTEND="noninteractive" apt-get -y update
 DEBIAN_FRONTEND="noninteractive" apt-get -o Dpkg::Options::="--force-confnew" --fix-broken --assume-yes dist-upgrade
 reboot
