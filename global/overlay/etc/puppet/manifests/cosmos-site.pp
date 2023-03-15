@@ -105,17 +105,6 @@ class http {
    }
 }
 
-class haproxy_stats {
-   $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
-
-   sunet::misc::ufw_allow { 'allow_haproxy_stats':
-      from =>  $nagios_ip_v4,
-      port => '8404',
-    }
-}
-
-
-class md_aggregator {}
 
 class servicemonitor {
    $nagios_ip_v4 = join(hiera('nagios_ip_v4')," ");

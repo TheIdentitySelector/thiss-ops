@@ -23,6 +23,18 @@ class thiss::haproxy($location=undef){
       mode         => '0640'
     }
 
+if $::sunet_nftables_opt_in == 'yes' or ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '22.04') >= 0 ) {
+    sunet::nftables::docker_expose { 'haproxy' :
+      allow_clients => 'any',
+      port          => '443',
+    }
+    sunet::nftables::docker_expose { 'haproxy-stats' :
+      allow_clients => ['130.242.121.23/32', '192.36.171.83/32'],
+      port          => '8404',
+    }
+
+  }
+
   sunet::docker_compose {'haproxy_docker_compose':
     service_name => 'haproxy_seamlessaccess',
     description  => 'HAProxy Load Blanacer for mdq',
