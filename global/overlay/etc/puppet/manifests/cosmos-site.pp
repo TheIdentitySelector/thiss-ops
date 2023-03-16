@@ -61,6 +61,8 @@ class dhcp6_client {
   }
 }
 
+class md_aggregator {}
+
 class entropyclient {
    include sunet::simple_entropy
    sunet::ucrandom {'random.nordu.net': ensure => absent }
