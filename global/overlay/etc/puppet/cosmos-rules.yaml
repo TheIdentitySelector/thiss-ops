@@ -45,7 +45,9 @@ md-2.thiss.io:
 md-lb.thiss.io:
    thiss::dockerhost:
       version: '5:20.10.16~3-0~ubuntu-jammy'
+      storage_driver: 'overlay2'
    thiss::haproxy:
+      image_tag: beta
       location: thiss
 
 a-1.thiss.io:
