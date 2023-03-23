@@ -215,8 +215,8 @@ classes:
     sunet::rsyslog: null
     sunet::server: *id002
     sunet::updater: *id003
-    thiss::dockerhost: {version: '5:20.10.16~3-0~ubuntu-jammy'}
-    thiss::haproxy: {location: thiss}
+    thiss::dockerhost: {storage_driver: overlay2, version: '5:20.10.16~3-0~ubuntu-jammy'}
+    thiss::haproxy: {image_tag: beta, location: thiss}
     update_ca_certificates: null
   md-staging-1.thiss.io:
     common: null
