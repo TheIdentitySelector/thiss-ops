@@ -211,6 +211,7 @@ md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::haproxy:
       location: ntx
+      image_tag: oldstable
 
 md.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
