@@ -217,6 +217,7 @@ md.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
    thiss::haproxy:
       location: se-east
+      image_tag: oldstable
 
 md.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
