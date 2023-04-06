@@ -283,7 +283,7 @@ classes:
     sunet::updater: *id003
     thiss::dockerhost: null
     thiss::firewall_rules: *id010
-    thiss::haproxy: {location: ntx}
+    thiss::haproxy: {image_tag: oldstable, location: ntx}
     update_ca_certificates: null
   md.se-east.sunet.eu.seamlessaccess.org:
     common: null
