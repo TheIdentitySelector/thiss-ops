@@ -37,7 +37,6 @@ class common {
 
   include apt
   include apparmor
-  package {'jq': ensure => 'latest'}
   package { 'needrestart': ensure => installed}
   }
 

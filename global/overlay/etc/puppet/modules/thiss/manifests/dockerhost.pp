@@ -6,6 +6,7 @@ class thiss::dockerhost(
   String $compose_version      = safe_hiera('docker_compose_version'),
   String $docker_args          = '',
   Optional[String] $docker_dns = undef,
+  $storage_driver               = 'aufs',
 ) {
   if $version == 'NOT_SET_IN_HIERA' {
     fail('Docker version not set in Hiera')
@@ -21,7 +22,7 @@ class thiss::dockerhost(
     manage_dockerhost_unbound => true,
     docker_extra_parameters   => $docker_args,
     docker_dns                => $docker_dns,
-    storage_driver            => 'aufs',
+    storage_driver            => $storage_driver,
     docker_network            => true,  # let docker choose a network for the 'docker' bridge
     compose_version           => $compose_version,
   }
