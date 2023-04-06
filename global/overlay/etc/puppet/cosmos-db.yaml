@@ -254,7 +254,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:19.03.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id005
-    thiss::haproxy: {location: aws1}
+    thiss::haproxy: {image_tag: oldstable, location: aws1}
     update_ca_certificates: null
   md.aws2.geant.eu.seamlessaccess.org:
     common: null
@@ -269,7 +269,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:19.03.12~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id008
-    thiss::haproxy: {location: aws2}
+    thiss::haproxy: {image_tag: oldstable, location: aws2}
     update_ca_certificates: null
   md.ntx.sunet.eu.seamlessaccess.org:
     common: null
