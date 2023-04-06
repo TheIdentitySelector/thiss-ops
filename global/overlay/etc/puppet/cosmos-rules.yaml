@@ -224,12 +224,14 @@ md.aws1.geant.eu.seamlessaccess.org:
       version: '5:19.03.12~3-0~ubuntu-focal'
    thiss::haproxy:
       location: aws1
+      image_tag: oldstable
 
 md.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:19.03.12~3-0~ubuntu-focal'
    thiss::haproxy:
       location: aws2
+      image_tag: oldstable
 
 '^static-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
