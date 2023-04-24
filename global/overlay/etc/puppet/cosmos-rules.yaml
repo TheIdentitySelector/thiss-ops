@@ -242,7 +242,7 @@ md.aws2.geant.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
    sunet::server:
       encrypted_swap: false
 
@@ -264,7 +264,7 @@ static.ntx.sunet.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
 
 static.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -284,7 +284,7 @@ static.se-east.sunet.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
 
 static.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -302,7 +302,7 @@ static.aws1.geant.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
 
 static.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
