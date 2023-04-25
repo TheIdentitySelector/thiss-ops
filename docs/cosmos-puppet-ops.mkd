@@ -222,7 +222,7 @@ you'll try to push to the multiverse remote!
 Finally create a branch for the 'multiverse' upstream so you can merge changes to multiverse:
 
 ```
-# git checkout -b multiverse --track multiverse/master
+# git checkout -b multiverse --track multiverse/main
 ```
 
 Note that you can maintain your repo on just about any git hosting platform, including

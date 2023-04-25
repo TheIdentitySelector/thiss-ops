@@ -1,13 +1,15 @@
 #!/bin/sh
 
+set -e
+
 if [ "x$COSMOS_VERBOSE" = "xy" ]; then
    args="--verbose --show_diff"
 else
    args="--logdest=syslog"
 fi
 
-if [ -f /usr/bin/puppet -a -d /etc/puppet/manifests ]; then
-   for m in `find /etc/puppet/manifests -name \*.pp`; do
+if [ -f /usr/bin/puppet ] && [ -d /etc/puppet/manifests ]; then
+   find /etc/puppet/manifests -name \*.pp | while read -r m; do
       test "x$COSMOS_VERBOSE" = "xy" && echo "$0: Applying Puppet manifest $m"
       puppet apply $args $m
    done

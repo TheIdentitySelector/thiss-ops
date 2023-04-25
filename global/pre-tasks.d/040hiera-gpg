@@ -9,11 +9,20 @@ set -e
 GNUPGHOME=/etc/hiera/gpg
 export GNUPGHOME
 
+vendor=$(lsb_release -is)
+version=$(lsb_release -rs)
+# If the OS is Ubuntu 18.04 or newer, or Debian 10 or newer, we don't need to do anything (those use eyaml instead)
+test "${vendor}" = "Ubuntu" && dpkg --compare-versions "${version}" "ge" "18.04" && exit 0
+test "${vendor}" = "Debian" && dpkg --compare-versions "${version}" "ge" "10" && exit 0
+
+stamp="$COSMOS_BASE/stamps/hiera-gpg-v01.stamp"
+
+test -f "$stamp" && exit 0
+
 if [ ! -f /usr/lib/ruby/vendor_ruby/gpgme.rb ]; then
     apt-get update
     apt-get -y install ruby-gpgme
 fi
-
 
 if [ ! -s $GNUPGHOME/secring.gpg ]; then
 
@@ -35,18 +44,21 @@ if [ ! -s $GNUPGHOME/secring.gpg ]; then
     chmod 700 $GNUPGHOME
 
     TMPFILE=$(mktemp /tmp/hiera-gpg.XXXXXX)
-    cat > $TMPFILE <<EOF
+    cat > "$TMPFILE" <<EOF
 %echo Generating a default key
 Key-Type: default
 Subkey-Type: default
 Name-Real: Cosmos Puppet
 Name-Comment: Hiera GPG key
-Name-Email: root@`hostname --fqdn`
+Name-Email: root@$(hostname --fqdn)
 Expire-Date: 0
 # Do a commit here, so that we can later print "done" :-)
 %commit
 %echo done
 EOF
-    gpg2 --batch --gen-key $TMPFILE
-    rm -f $TMPFILE
+    gpg2 --batch --gen-key "$TMPFILE"
+    rm -f "$TMPFILE"
 fi
+
+mkdir -p "$(dirname "${stamp}")"
+touch "$stamp"
