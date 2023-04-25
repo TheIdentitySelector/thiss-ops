@@ -24,7 +24,8 @@ git tag -v $last_tag > /dev/null 2>&1
 echo ""
 
 echo "Differences between tag $last_tag and what you are about to sign:"
-PAGER=cat git diff --color $last_tag..master
+this_branch=$(git rev-parse --abbrev-ref HEAD)
+PAGER=cat git diff --color $last_tag..$this_branch
 
 iter=1
 ok=
