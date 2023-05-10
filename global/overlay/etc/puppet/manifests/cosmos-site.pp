@@ -214,8 +214,15 @@ class nagios_monitor {
    
   class { 'nagioscfg':
     hostgroups      => $::roles,
-    config          => 'seamless'
+    config          => 'seamless',
+    manage_package  => false,
+    cfgdir          => '/etc/nagios4/conf.d',
+    service         => 'nagios4',
+    host_template   => 'linux-server',
   }
+
+  ensure_resource('package','nagios4', { ensure => present })
+  ensure_resource('package','nagios-nrpe-plugin', { ensure => present })
 
   #web interface configs specifically for monitor.seamlessaccess.org
   class { 'https': }
@@ -255,6 +262,16 @@ class nagios_monitor {
     refreshonly => true,
     notify      => Service['apache2'],
   }
+  exec { 'enable auth_digest':
+    command => 'a2enmod auth_digest',
+    creates => '/etc/apache2/mods-enabled/auth_digest.load',
+    notify  => Service['apache2'],
+  }
+  exec { 'enable authz_groupfile':
+    command => 'a2enmod authz_groupfile',
+    creates => '/etc/apache2/mods-enabled/authz_groupfile.load',
+    notify  => Service['apache2'],
+  }
 
   #definition for check_nrpe_1arg
   file { '/etc/nagios-plugins/config/check_nrpe.cfg':
@@ -267,9 +284,16 @@ class nagios_monitor {
   class {'nagioscfg::passive': enable_notifications => '1', obsess_over_hosts => '0'}
 
   sunet::misc::htpasswd_user { $web_admin_user :
-    filename => "/etc/nagios3/htpasswd.users",
+    filename => "/etc/nagios4/htpasswd.users",
     password => $web_admin_pw,
     group    => 'www-data',
+  }
+  
+  #definition for standard hostgroups
+  file { '/etc/nagios4/conf.d/hostgroups_nagios4.cfg':
+    ensure  => file,
+    mode    => '0644',
+    content => template('thiss/monitor/hostgroups_nagios4.cfg.erb'),
   }
 
   file {'/root/MONITOR_WEB_PASSWORD':
