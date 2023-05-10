@@ -145,6 +145,7 @@ md-staging-1.thiss.io:
 
 '^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::mdq:
       version: 1.3.2
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
