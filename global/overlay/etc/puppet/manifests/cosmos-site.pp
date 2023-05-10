@@ -288,7 +288,13 @@ class nagios_monitor {
     password => $web_admin_pw,
     group    => 'www-data',
   }
-  
+
+  file { '/etc/apache2/conf-enabled/nagios4-cgi.conf':
+    ensure  => file,
+    mode    => '0644',
+    content => template('thiss/monitor/nagios4-cgi.conf.erb'),
+  }
+
   #definition for standard hostgroups
   file { '/etc/nagios4/conf.d/hostgroups_nagios4.cfg':
     ensure  => file,
