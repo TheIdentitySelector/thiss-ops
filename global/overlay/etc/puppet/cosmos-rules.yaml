@@ -171,6 +171,7 @@ md-staging-1.thiss.io:
 
 meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::pyff:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
