@@ -210,6 +210,7 @@ meta.aws2.geant.eu.seamlessaccess.org:
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::haproxy:
       location: ntx
       image_tag: oldstable
