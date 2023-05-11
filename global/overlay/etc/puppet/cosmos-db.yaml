@@ -296,7 +296,7 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: null
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id014
     thiss::haproxy: {image_tag: oldstable, location: se-east}
     update_ca_certificates: null
@@ -362,7 +362,7 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: {version: '5:20.10.18~3-0~ubuntu-bionic'}
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id014
     thiss::md_publisher: {watch: /var/www/html/metadata.json}
     thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.1.4}
