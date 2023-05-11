@@ -89,7 +89,7 @@ static_thiss:
    static_servers:
      backends:
        'static-1.thiss.io':
-          ip: '89.45.232.220'
+          ip: '89.47.185.136'
        'static-2.thiss.io':
           ip: '89.45.232.236'
 
