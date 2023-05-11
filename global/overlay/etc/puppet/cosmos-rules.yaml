@@ -182,7 +182,7 @@ meta.ntx.sunet.eu.seamlessaccess.org:
 
 meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
-      version: '5:20.10.18~3-0~ubuntu-bionic'
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::pyff:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
@@ -219,6 +219,7 @@ md.ntx.sunet.eu.seamlessaccess.org:
 
 md.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::haproxy:
       location: se-east
       image_tag: oldstable
