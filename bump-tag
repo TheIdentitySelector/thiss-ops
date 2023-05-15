@@ -53,8 +53,8 @@ fi
 echo -e "\e[1mONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE\e[0m"
 
 # GITTAGEXTRA is for putting things like "-u 2117364A"
-
-git tag "${GITTAGEXTRA}" -m bump. -s "${this_tag}"
+# shellcheck disable=SC2086
+git tag ${GITTAGEXTRA} -m bump. -s "${this_tag}"
 
 git push
 git push --tags
