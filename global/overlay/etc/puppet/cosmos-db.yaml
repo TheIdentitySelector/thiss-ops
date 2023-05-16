@@ -106,9 +106,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: null
-    thiss::firewall_rules: &id013 {location: se-east}
-    thiss::mdq: &id014 {base_url: 'https://md.seamlessaccess.org', post: /usr/sbin/service
+    thiss::dockerhost: &id013 {version: '5:23.0.6-1~ubuntu.20.04~focal'}
+    thiss::firewall_rules: &id014 {location: se-east}
+    thiss::mdq: &id015 {base_url: 'https://md.seamlessaccess.org', post: /usr/sbin/service
         docker-thiss_mdq restart, src: 'https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json',
       version: 1.3.2}
     update_ca_certificates: null
@@ -184,9 +184,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: null
-    thiss::firewall_rules: *id013
-    thiss::mdq: *id014
+    thiss::dockerhost: *id013
+    thiss::firewall_rules: *id014
+    thiss::mdq: *id015
     update_ca_certificates: null
   md-2.thiss.io:
     common: null
@@ -296,8 +296,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: null
-    thiss::firewall_rules: *id013
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
+    thiss::firewall_rules: *id014
     thiss::haproxy: {image_tag: oldstable, location: se-east}
     update_ca_certificates: null
   meta.aws1.geant.eu.seamlessaccess.org:
@@ -362,8 +362,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: {version: '5:20.10.18~3-0~ubuntu-bionic'}
-    thiss::firewall_rules: *id013
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
+    thiss::firewall_rules: *id014
     thiss::md_publisher: {watch: /var/www/html/metadata.json}
     thiss::pyff: {output: /var/www/html/metadata.json, pyff_version: 1.1.4}
     update_ca_certificates: null
@@ -408,9 +408,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id015 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id016 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id005
-    thiss::static_prod: &id016 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
+    thiss::static_prod: &id017 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
       domain: service.seamlessaccess.org, ds_version: 1.6.7, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
@@ -425,9 +425,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id017 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id018 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id008
-    thiss::static_prod: &id018 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
+    thiss::static_prod: &id019 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
       domain: service.seamlessaccess.org, ds_version: 1.6.7, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
@@ -439,11 +439,11 @@ classes:
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: &id019 {encrypted_swap: false}
+    sunet::server: &id020 {encrypted_swap: false}
     sunet::updater: *id003
-    thiss::dockerhost: &id020 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id021 {version: '5:20.10.6~3-0~ubuntu-focal'}
     thiss::firewall_rules: *id011
-    thiss::static_prod: &id021 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
+    thiss::static_prod: &id022 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
       domain: service.seamlessaccess.org, ds_version: 1.6.7, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
@@ -458,9 +458,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id022 {version: '5:20.10.6~3-0~ubuntu-focal'}
-    thiss::firewall_rules: *id013
-    thiss::static_prod: &id023 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
+    thiss::dockerhost: &id023 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::firewall_rules: *id014
+    thiss::static_prod: &id024 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
       domain: service.seamlessaccess.org, ds_version: 1.6.7, mdq_search_url: 'https://md.seamlessaccess.org/entities/'}
     update_ca_certificates: null
@@ -476,8 +476,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id024 {version: '5:19.03.13~3-0~ubuntu-focal'}
-    thiss::static: &id025 {base_url: 'https://use.thiss.io/', cache_control: 'public,
+    thiss::dockerhost: &id025 {version: '5:19.03.13~3-0~ubuntu-focal'}
+    thiss::static: &id026 {base_url: 'https://use.thiss.io/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=3601, proxy-revalidate', context: thiss.io,
       domain: use.thiss.io, ds_version: 1.6.7, mdq_search_url: 'https://md.thiss.io/entities/'}
     update_ca_certificates: null
@@ -492,9 +492,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: *id015
+    thiss::dockerhost: *id016
     thiss::firewall_rules: *id005
-    thiss::static_prod: *id016
+    thiss::static_prod: *id017
     update_ca_certificates: null
   static-2.aws2.geant.eu.seamlessaccess.org:
     common: null
@@ -507,9 +507,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: *id017
+    thiss::dockerhost: *id018
     thiss::firewall_rules: *id008
-    thiss::static_prod: *id018
+    thiss::static_prod: *id019
     update_ca_certificates: null
   static-2.ntx.sunet.eu.seamlessaccess.org:
     common: null
@@ -519,11 +519,11 @@ classes:
     nrpe: null
     ops: null
     sunet::rsyslog: null
-    sunet::server: *id019
+    sunet::server: *id020
     sunet::updater: *id003
-    thiss::dockerhost: *id020
+    thiss::dockerhost: *id021
     thiss::firewall_rules: *id011
-    thiss::static_prod: *id021
+    thiss::static_prod: *id022
     update_ca_certificates: null
   static-2.se-east.sunet.eu.seamlessaccess.org:
     common: null
@@ -536,9 +536,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: *id022
-    thiss::firewall_rules: *id013
-    thiss::static_prod: *id023
+    thiss::dockerhost: *id023
+    thiss::firewall_rules: *id014
+    thiss::static_prod: *id024
     update_ca_certificates: null
   static-2.thiss.io:
     common: null
@@ -552,8 +552,8 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: *id024
-    thiss::static: *id025
+    thiss::dockerhost: *id025
+    thiss::static: *id026
     update_ca_certificates: null
   static.aws1.geant.eu.seamlessaccess.org:
     common: null
@@ -611,7 +611,7 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
-    thiss::firewall_rules: *id013
+    thiss::firewall_rules: *id014
     thiss::haproxy_static: {image_tag: stable, location: se-east}
     update_ca_certificates: null
   static.thiss.io:
