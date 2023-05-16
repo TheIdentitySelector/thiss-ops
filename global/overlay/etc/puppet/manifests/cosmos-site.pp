@@ -281,7 +281,7 @@ class nagios_monitor {
   }
 
   class {'nagioscfg::slack': domain => 'seamlessaccess.slack.com', token => safe_hiera('slack_token','') } ->
-  class {'nagioscfg::passive': enable_notifications => '1', obsess_over_services => '0', obsess_over_hosts => '0', nagios_config_file   => '/etc/nagios4/nagios.cfg'}
+  class {'nagioscfg::passive': enable_notifications => '0', obsess_over_services => '0', obsess_over_hosts => '0', nagios_config_file   => '/etc/nagios4/nagios.cfg'}
 
   sunet::misc::htpasswd_user { $web_admin_user :
     filename => "/etc/nagios4/htpasswd.users",
