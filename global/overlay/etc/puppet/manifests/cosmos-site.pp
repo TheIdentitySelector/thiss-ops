@@ -304,7 +304,7 @@ class nagios_monitor {
   file { '/etc/nagios4/conf.d/monitor-host_nagios4.cfg':
     ensure  => file,
     mode    => '0644',
-    content => template('eid/monitor/monitor-host_nagios4.cfg.erb'),
+    content => template('thiss/monitor/monitor-host_nagios4.cfg.erb'),
   }
 
   file {'/root/MONITOR_WEB_PASSWORD':
