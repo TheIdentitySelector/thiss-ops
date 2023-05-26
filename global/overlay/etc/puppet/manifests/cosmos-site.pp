@@ -301,6 +301,11 @@ class nagios_monitor {
     mode    => '0644',
     content => template('thiss/monitor/hostgroups_nagios4.cfg.erb'),
   }
+  file { '/etc/nagios4/conf.d/monitor-host_nagios4.cfg':
+    ensure  => file,
+    mode    => '0644',
+    content => template('eid/monitor/monitor-host_nagios4.cfg.erb'),
+  }
 
   file {'/root/MONITOR_WEB_PASSWORD':
     content => sprintf("%s\n%s\n", $web_admin_user, $web_admin_pw),
