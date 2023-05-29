@@ -1,7 +1,7 @@
 # Generic host definition template - This is NOT a real host, just a template!
 
 define host{
-        name                            linux-server   ; The name of this host template
+        name                            monitor-host    ; The name of this host template
         action_url                      /grafana/dashboard/script/histou.js?host=$HOSTNAME$&theme=light&annotations=true
         notifications_enabled           1       ; Host notifications are enabled
         event_handler_enabled           1       ; Host event handler is enabled
