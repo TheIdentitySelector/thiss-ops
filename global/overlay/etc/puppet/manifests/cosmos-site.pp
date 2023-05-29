@@ -218,7 +218,7 @@ class nagios_monitor {
     manage_package  => false,
     cfgdir          => '/etc/nagios4/conf.d',
     service         => 'nagios4',
-    host_template   => 'linux-server',
+    host_template   => 'monitor-host',
   }
 
   ensure_resource('package','nagios4', { ensure => present })
@@ -301,10 +301,10 @@ class nagios_monitor {
     mode    => '0644',
     content => template('thiss/monitor/hostgroups_nagios4.cfg.erb'),
   }
-  file { '/etc/nagios4/conf.d/linux-server_nagios4.cfg':
+  file { '/etc/nagios4/conf.d/monitor-host_nagios4.cfg':
     ensure  => file,
     mode    => '0644',
-    content => template('thiss/monitor/linux-server_nagios4.cfg.erb'),
+    content => template('thiss/monitor/monitor-host_nagios4.cfg.erb'),
   }
 
   file {'/root/MONITOR_WEB_PASSWORD':

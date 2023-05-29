@@ -2,7 +2,7 @@
 
 define host{
         name                            linux-server   ; The name of this host template
-        action_url                      /grafana/dashboard/script/histou.js?host=$HOSTNAME$&theme=light&annotations=true 
+        action_url                      /grafana/dashboard/script/histou.js?host=$HOSTNAME$&theme=light&annotations=true
         notifications_enabled           1       ; Host notifications are enabled
         event_handler_enabled           1       ; Host event handler is enabled
         flap_detection_enabled          1       ; Flap detection is enabled
