@@ -306,6 +306,11 @@ class nagios_monitor {
     mode    => '0644',
     content => template('thiss/monitor/monitor-host_nagios4.cfg.erb'),
   }
+  file { '/etc/nagios4/conf.d/monitor-service_nagios4.cfg':
+    ensure  => file,
+    mode    => '0644',
+    content => template('thiss/monitor/monitor-service_nagios4.cfg.erb'),
+  }
 
   file {'/root/MONITOR_WEB_PASSWORD':
     content => sprintf("%s\n%s\n", $web_admin_user, $web_admin_pw),
@@ -323,108 +328,126 @@ class nagios_monitor {
   }
   nagioscfg::service {'service_ping':
     hostgroup_name => ['all'],
+    use            => 'monitor-service',
     description    => 'PING',
     check_command  => 'check_ping!400.0,1%!500.0,2%',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_load':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_load',
     description    => 'System Load',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_users':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_users',
     description    => 'Active Users',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_zombie_procs':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_zombie_procs',
     description    => 'Zombie Processes',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_total_procs':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_total_procs_lax',
     description    => 'Total Processes',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_root':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_root',
     description    => 'Root Disk',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_boot':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_boot_15_5',
     description    => 'Boot Disk',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_var':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_var',
     description    => 'Var Disk',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_uptime':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_uptime',
     description    => 'Uptime',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_reboot':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_reboot',
     description    => 'Reboot Needed',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_memory':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_memory',
     description    => 'System Memory',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_entropy':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_entropy',
     description    => 'System Entropy',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_ntp_time':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_ntp_time',
     description    => 'System NTP Time',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_process_haveged':
     hostgroup_name => ['entropyclient'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_process_haveged',
     description    => 'haveged running',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_scriptherder':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_scriptherder',
     description    => 'Scriptherder Status',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_apt':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_apt',
     description    => 'Packages available for upgrade',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'metadata_aggregate_age':
     hostgroup_name => ['md_aggregator'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_fileage_metadata_aggregate',
     description    => 'metadata aggregate age',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_needrestart':
     hostgroup_name => ['nrpe'],
+    use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_needrestart',
     description    => 'Processes need restart',
     contact_groups => ['alerts']
@@ -456,6 +479,7 @@ class nagios_monitor {
   $urls.each |$url|{
     nagioscfg::service {"check_${url}":
       host_name      => ["${url}"],
+      use            => 'monitor-service',
       check_command  => "check_website!https://${url}",
       description    => 'check web',
       contact_groups => ['alerts'],
@@ -464,6 +488,7 @@ class nagios_monitor {
   $static_haproxy_hosts.each |$host|{
     nagioscfg::service {"check_haproxy_backend_${host}":
       host_name      => [localhost],
+      use            => 'monitor-service',
       check_command  => "check_haproxy_backend!http://${host}:8404/stats",
       description    => "check HAproxy backends for ${host}",
       contact_groups => ['alerts'],
@@ -471,12 +496,14 @@ class nagios_monitor {
   }
   nagioscfg::service {'check_public_ssl_cert':
     host_name      => $public_hosts,
+    use            => 'monitor-service',
     check_command  => 'check_ssl_cert_3!30!14!443',
     description    => 'check https certificate validity on port 443',
     contact_groups => ['alerts']
   }
   nagioscfg::service {'check_infra_ssl_cert':
     host_name      => $md_haproxy_hosts + $meta_hosts + $static_haproxy_hosts,
+    use            => 'monitor-service',
     check_command  => 'check_ssl_cert_3_without_ocsp!30!14!443',
     description    => 'check https infra certificate validity on port 443',
     contact_groups => ['alerts']
@@ -485,6 +512,7 @@ class nagios_monitor {
   $md_urls.each |$url|{
     nagioscfg::service {"check_metadata_age_${url}":
       host_name      => ["${url}"],
+      use            => 'monitor-service',
       check_command  => "check_metadata_age!https://${url}",
       description    => "check metadata for ${url}",
       contact_groups => ['alerts'],
@@ -494,6 +522,7 @@ class nagios_monitor {
   $md_hosts.each |$host|{
     nagioscfg::service {"check_metadata_age_${host}":
       host_name      => ["${host}"],
+      use            => 'monitor-service',
       check_command  => "check_metadata_age!http://${host}",
       description    => "check metadata for ${host}",
       contact_groups => ['alerts'],
@@ -503,6 +532,7 @@ class nagios_monitor {
   $static_hosts.each |$host|{
     nagioscfg::service {"check_${host}":
       host_name      => ["${host}"],
+      use            => 'monitor-service',
       check_command  => "check_website_http!http://${host}/manifest.json!version",
       description    => 'check web',
       contact_groups => ['alerts'],

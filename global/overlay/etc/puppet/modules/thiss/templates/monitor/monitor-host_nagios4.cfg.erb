@@ -13,7 +13,7 @@ define host{
 		max_check_attempts              10
 		notification_interval           0
 		notification_period             24x7
-		notification_options            d,u,r
-		contact_groups                  admins
+		notification_options            d,u,r,f
+		contact_groups                  alerts
         register                        0       ; DONT REGISTER THIS DEFINITION - ITS NOT A REAL HOST, JUST A TEMPLATE!
         }
