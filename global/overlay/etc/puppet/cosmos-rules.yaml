@@ -226,17 +226,17 @@ md.se-east.sunet.eu.seamlessaccess.org:
 
 md.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
-      version: '5:19.03.12~3-0~ubuntu-focal'
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::haproxy:
       location: aws1
-      image_tag: oldstable
+      image_tag: 20230614-prod
 
 md.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
-      version: '5:19.03.12~3-0~ubuntu-focal'
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::haproxy:
       location: aws2
-      image_tag: oldstable
+      image_tag: 20230614-prod
 
 '^static-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
