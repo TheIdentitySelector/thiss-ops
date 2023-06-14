@@ -298,7 +298,7 @@ classes:
     sunet_iaas_cloud: null
     thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id014
-    thiss::haproxy: {image_tag: oldstable, location: se-east}
+    thiss::haproxy: {image_tag: 20230614-prod, location: se-east}
     update_ca_certificates: null
   meta.aws1.geant.eu.seamlessaccess.org:
     common: null
