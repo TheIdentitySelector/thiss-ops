@@ -610,9 +610,9 @@ classes:
     sunet::server: {encrypted_swap: false}
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id014
-    thiss::haproxy_static: {image_tag: stable, location: se-east}
+    thiss::haproxy_static: {image_tag: 20230614-prod, location: se-east}
     update_ca_certificates: null
   static.thiss.io:
     common: null
