@@ -215,7 +215,7 @@ md.ntx.sunet.eu.seamlessaccess.org:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::haproxy:
       location: ntx
-      image_tag: oldstable
+      image_tag: 20230614-prod
 
 md.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
