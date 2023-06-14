@@ -252,9 +252,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: {version: '5:19.03.12~3-0~ubuntu-focal'}
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id005
-    thiss::haproxy: {image_tag: oldstable, location: aws1}
+    thiss::haproxy: {image_tag: 20230614-prod, location: aws1}
     update_ca_certificates: null
   md.aws2.geant.eu.seamlessaccess.org:
     common: null
@@ -267,9 +267,9 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: {version: '5:19.03.12~3-0~ubuntu-focal'}
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id008
-    thiss::haproxy: {image_tag: oldstable, location: aws2}
+    thiss::haproxy: {image_tag: 20230614-prod, location: aws2}
     update_ca_certificates: null
   md.ntx.sunet.eu.seamlessaccess.org:
     common: null
