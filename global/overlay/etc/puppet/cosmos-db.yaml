@@ -595,9 +595,9 @@ classes:
     sunet::rsyslog: null
     sunet::server: {encrypted_swap: false}
     sunet::updater: *id003
-    thiss::dockerhost: {version: '5:20.10.12~3-0~ubuntu-focal'}
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id011
-    thiss::haproxy_static: {image_tag: stable, location: ntx}
+    thiss::haproxy_static: {image_tag: 20230614-prod, location: ntx}
     update_ca_certificates: null
   static.se-east.sunet.eu.seamlessaccess.org:
     common: null
