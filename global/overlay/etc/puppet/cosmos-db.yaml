@@ -73,7 +73,7 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id007 {version: '5:19.03.12~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id007 {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: &id008 {location: aws2}
     thiss::mdq: &id009 {base_url: 'https://md.seamlessaccess.org', post: /usr/sbin/service
         docker-thiss_mdq restart, src: 'https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json',
