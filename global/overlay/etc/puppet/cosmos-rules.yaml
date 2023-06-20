@@ -240,7 +240,7 @@ md.aws2.geant.eu.seamlessaccess.org:
 
 '^static-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
-      version: '5:20.10.6~3-0~ubuntu-focal'
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static_prod:
       ds_version: 1.6.7
       base_url: https://service.seamlessaccess.org/
@@ -322,7 +322,7 @@ monitor.ntx.sunet.eu.seamlessaccess.org:
 sp-test.seamlessaccess.org:
    sunet_iaas_cloud:
    thiss::dockerhost:
-      version: '5:20.10.11~3-0~ubuntu-focal'
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    sunet::dehydrated::client:
       domain: sp-test.seamlessaccess.org
       ssl_links: true
