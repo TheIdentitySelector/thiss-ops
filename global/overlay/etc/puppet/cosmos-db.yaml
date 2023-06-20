@@ -395,7 +395,7 @@ classes:
     sunet::updater: *id003
     sunet_iaas_cloud: null
     thiss::demo_sp: null
-    thiss::dockerhost: {version: '5:20.10.11~3-0~ubuntu-focal'}
+    thiss::dockerhost: {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     update_ca_certificates: null
   static-1.aws1.geant.eu.seamlessaccess.org:
     common: null
@@ -441,7 +441,7 @@ classes:
     sunet::rsyslog: null
     sunet::server: &id020 {encrypted_swap: false}
     sunet::updater: *id003
-    thiss::dockerhost: &id021 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id021 {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id011
     thiss::static_prod: &id022 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
