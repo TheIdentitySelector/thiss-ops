@@ -192,7 +192,7 @@ meta.se-east.sunet.eu.seamlessaccess.org:
 
 meta.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
-      version: '5:19.03.12~3-0~ubuntu-focal'
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::pyff:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
@@ -202,7 +202,7 @@ meta.aws1.geant.eu.seamlessaccess.org:
 
 meta.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
-      version: '5:19.03.12~3-0~ubuntu-focal'
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::pyff:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
