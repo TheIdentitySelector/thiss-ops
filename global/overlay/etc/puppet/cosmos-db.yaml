@@ -408,7 +408,7 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id016 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id016 {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id005
     thiss::static_prod: &id017 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
@@ -458,7 +458,7 @@ classes:
     sunet::server: *id002
     sunet::updater: *id003
     sunet_iaas_cloud: null
-    thiss::dockerhost: &id023 {version: '5:20.10.6~3-0~ubuntu-focal'}
+    thiss::dockerhost: &id023 {version: '5:23.0.6-1~ubuntu.20.04~focal'}
     thiss::firewall_rules: *id014
     thiss::static_prod: &id024 {base_url: 'https://service.seamlessaccess.org/', cache_control: 'public,
         max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate', context: seamlessaccess.org,
