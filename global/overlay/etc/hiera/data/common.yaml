@@ -1,7 +1,7 @@
 ---
 docker_version: '18.05.0~ce~2.1.rc1-0~ubuntu'
 docker_compose_version: '1.15.0'
-docker_repo: 'test'
+docker_repo: 'stable'
 
 syslog_servers:
    - syslog.sunet.se
