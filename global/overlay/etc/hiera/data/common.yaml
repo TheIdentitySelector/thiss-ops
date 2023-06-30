@@ -32,7 +32,7 @@ md_se-east:
      backends:
        'md-1.se-east.sunet.eu.seamlessaccess.org':
           ip: '89.47.185.226'
-       'md-2.ntx.sunet.eu.seamlessaccess.org':
+       'md-2.se-east.sunet.eu.seamlessaccess.org':
           ip: '89.47.185.43'
 haproxy_md_se-east:
    - 89.47.184.218
