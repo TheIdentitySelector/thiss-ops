@@ -18,32 +18,52 @@ mgmt_addresses:
     - 2001:6b0:7:6::73  # joppherka.sunet.se
 
 md_ntx:
-   - 192.36.171.80
-   - 192.36.171.81
+   md_servers:
+     backends:
+       'md-1.ntx.sunet.eu.seamlessaccess.org':
+          ip: '192.36.171.80'
+       'md-2.ntx.sunet.eu.seamlessaccess.org':
+          ip: '192.36.171.81'
 haproxy_md_ntx:
    - 192.36.171.79
 
 md_se-east:
-   - 89.47.185.226
-   - 89.47.185.43
+   md_servers:
+     backends:
+       'md-1.se-east.sunet.eu.seamlessaccess.org':
+          ip: '89.47.185.226'
+       'md-2.ntx.sunet.eu.seamlessaccess.org':
+          ip: '89.47.185.43'
 haproxy_md_se-east:
    - 89.47.184.218
 
 md_aws1:
-   - 18.158.14.16
-   - 18.157.244.215
+   md_servers:
+     backends:
+       'md-1.aws1.geant.eu.seamlessaccess.org':
+          ip: '18.158.14.16'
+       'md-2.aws1.geant.eu.seamlessaccess.org':
+          ip: '18.157.244.215'
 haproxy_md_aws1:
    - 18.195.9.86
 
 md_aws2:
-   - 184.169.227.115
-   - 3.101.5.178
+   md_servers:
+     backends:
+       'md-1.aws2.geant.eu.seamlessaccess.org':
+          ip: '184.169.227.115'
+       'md-2.aws2.geant.eu.seamlessaccess.org':
+          ip: '3.101.5.178'
 haproxy_md_aws2:
    - 54.177.34.135
 
 md_thiss:
-   - 89.47.184.210
-   - 89.47.184.149
+   md_servers:
+     backends:
+       'md-1.thiss.io':
+          ip: '89.47.184.210'
+       'md-2.thiss.io':
+          ip: '89.47.184.149'
 
 static_ntx:
    static_servers:

@@ -7,6 +7,7 @@ services:
     restart: always
     ports:
      - 443:443
+     - 8404:8404
     volumes:
      - /opt/haproxy/:/etc/haproxy/:ro
      - <%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>:<%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>:ro

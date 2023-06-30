@@ -472,7 +472,7 @@ class nagios_monitor {
   }
   $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org','md-staging.thiss.io']
   nagioscfg::host {$public_hosts: }
-  $md_haproxy_hosts = ['md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
+  $md_haproxy_hosts = ['md-lb.thiss.io', 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
   $meta_hosts = ['meta.aws1.geant.eu.seamlessaccess.org', 'meta.aws2.geant.eu.seamlessaccess.org', 'meta.se-east.sunet.eu.seamlessaccess.org', 'meta.ntx.sunet.eu.seamlessaccess.org', 'a-1.thiss.io', 'a-staging-1.thiss.io']
   $static_haproxy_hosts = ['static.thiss.io', 'static.ntx.sunet.eu.seamlessaccess.org', 'static.se-east.sunet.eu.seamlessaccess.org', 'static.aws1.geant.eu.seamlessaccess.org', 'static.aws2.geant.eu.seamlessaccess.org']
   $urls = concat ($public_hosts, $md_haproxy_hosts, $static_haproxy_hosts)
@@ -486,6 +486,15 @@ class nagios_monitor {
     }
   }
   $static_haproxy_hosts.each |$host|{
+    nagioscfg::service {"check_haproxy_backend_${host}":
+      host_name      => [localhost],
+      use            => 'monitor-service',
+      check_command  => "check_haproxy_backend!http://${host}:8404/stats",
+      description    => "check HAproxy backends for ${host}",
+      contact_groups => ['alerts'],
+    }
+  }
+  $md_haproxy_hosts.each |$host|{
     nagioscfg::service {"check_haproxy_backend_${host}":
       host_name      => [localhost],
       use            => 'monitor-service',

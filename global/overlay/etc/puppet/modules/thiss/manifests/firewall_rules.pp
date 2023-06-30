@@ -1,18 +1,30 @@
 class thiss::firewall_rules($location=undef){
 
-  $md_ip = hiera_array("md_${location}",[])
+  #$md_servers = {md_servers => {backends => {'md-1.ntx.sunet.eu.seamlessaccess.org' => {ip => 123}, 'md-2.ntx.sunet.eu.seamlessaccess.org' => {ip => 456}}}}
+  $md_servers = hiera_hash ("md_${location}")
   $haproxy_md_ip = hiera_array("haproxy_md_${location}",[])
   $haproxy_static_ip = hiera_array("haproxy_static_${location}",[])
   $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
 
   #metadata aggregator expose port 443 to mdq
   if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
-    sunet::misc::ufw_allow { 'allow_https_aggregator':
-      from =>  $md_ip + $nagios_ip_v4,
+    $md_servers.each |$md_servers_key, $md_servers_value_hash|{
+      $md_servers_value_hash['backends'].each |$backend_key, $backend_value_hash|{
+        sunet::misc::ufw_allow { "allow_https_${backend_value_hash['ip']}":
+          from => $backend_value_hash['ip'],
+          port => '443',
+        }
+      }
+    }
+  }
+  #metadata aggregator expose port 443 to nagios
+  if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
+    sunet::misc::ufw_allow { 'allow_https_nagios':
+      from => $nagios_ip_v4,
       port => '443',
     }
   }
-  #mdq exposes 80 to haproxy
+  #mdq exposes 80 to haproxy and nagios
   if $::fqdn =~ /^md-[0-9]+\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_mdq':
       from => $haproxy_md_ip + $nagios_ip_v4,
@@ -26,7 +38,7 @@ class thiss::firewall_rules($location=undef){
       port => '443',
     }
   }
-  #static exposes 80 to haproxy
+  #static exposes 80 to haproxy and nagios
   if $::fqdn =~ /^static-[0-9]+\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_static':
       from => $haproxy_static_ip + $nagios_ip_v4,
