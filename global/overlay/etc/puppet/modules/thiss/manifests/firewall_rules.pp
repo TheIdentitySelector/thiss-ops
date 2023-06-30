@@ -38,6 +38,13 @@ class thiss::firewall_rules($location=undef){
       port => '443',
     }
   }
+  #haproxy exposes 8404 to nagios
+  if $::fqdn =~ /^md\.\S+\.seamlessaccess\.org$/ {
+    sunet::misc::ufw_allow { 'allow_haproxy_md_stats':
+      from => $nagios_ip_v4,
+      port => '8404',
+    }
+  }
   #static exposes 80 to haproxy and nagios
   if $::fqdn =~ /^static-[0-9]+\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_http_static':
@@ -54,7 +61,7 @@ class thiss::firewall_rules($location=undef){
   }
   #static exposes 8404 to nagios
   if $::fqdn =~ /^static\.\S+\.seamlessaccess\.org$/ {
-    sunet::misc::ufw_allow { 'allow_haproxy_stat':
+    sunet::misc::ufw_allow { 'allow_haproxy_static_stats':
       from => $nagios_ip_v4,
       port => '8404',
     }
