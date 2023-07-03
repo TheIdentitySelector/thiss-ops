@@ -206,23 +206,29 @@ changes for your administrative domain. Also add a read-only version of this rem
 as 'ro'. The read-only remote is used by multiverse scripts during host bootstrap.
 
 ```
-# git remote add origin git@yourhost:myproj-cosmos.git
+# git remote add origin git+ssh://git@yourhost:myproj-cosmos.git
 # git remote add ro https://yourhost/myproj-cosmos.git
 ```
 
-Now edit .git/config and rename the 'master' branch to use the new 'origin' remote or
+Now edit .git/config and rename the 'main' branch to use the new 'origin' remote or
 you'll try to push to the multiverse remote!
 
 ```
-[branch "master"]
+[branch "main"]
     remote = origin
-    merge = refs/heads/master
+    merge = refs/heads/main
 ```
 
-Finally create a branch for the 'multiverse' upstream so you can merge changes to multiverse:
+Now create a branch for the 'multiverse' upstream so you can merge changes to multiverse:
 
 ```
 # git checkout -b multiverse --track multiverse/main
+```
+
+Finally, you might need to push you main branch upstream to the new origin
+```
+# git checkout main
+# git push -u origin main
 ```
 
 Note that you can maintain your repo on just about any git hosting platform, including
@@ -246,7 +252,7 @@ At this point you should create and sign your first tag:
 ```
 
 If Git complains during the first run of bump-tag that "Your configuration specifies to
-merge with the ref 'master' from the remote, but no such ref was fetched." then you
+merge with the ref 'main' from the remote, but no such ref was fetched." then you
 have run 'git push' to initialize the connection with the remote repository.
 
 Make sure that you are using the key whose public key you just added to the repository! You
@@ -418,7 +424,7 @@ The multiverse template will continue to evolve and sometimes it may be desirabl
 ```
 # git checkout multiverse
 # git pull
-# git checkout master
+# git checkout main
 # git merge multiverse
 ```
 
