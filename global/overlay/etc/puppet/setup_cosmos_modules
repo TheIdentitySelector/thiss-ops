@@ -92,7 +92,7 @@ def main():
             "upgrade": "yes",
             "tag": "sunet-2*",
         },
-        "cosmos": {
+        "ufw": {
             "repo": "https://github.com/SUNET/puppet-module-ufw.git",
             "upgrade": "yes",
             "tag": "sunet-2*",
@@ -140,17 +140,17 @@ def main():
         "pyff": {
             "repo": "https://github.com/SUNET/puppet-pyff.git",
             "upgrade": "yes",
-            "tag": "sunet-2*",
+            "tag": "puppet-pyff-*",
         },
         "dhcp": {
             "repo": "https://github.com/SUNET/puppetlabs-dhcp.git",
             "upgrade": "yes",
-            "tag": "sunet-2*",
+            "tag": "sunet_dev-2*",
         },
         "varnish": {
             "repo": "https://github.com/SUNET/puppet-varnish.git",
             "upgrade": "yes",
-            "tag": "sunet-2*",
+            "tag": "puppet-varnish-*",
         },
         "apparmor": {
             "repo": "https://github.com/SUNET/puppet-apparmor.git",
@@ -162,7 +162,7 @@ def main():
             "upgrade": "yes",
             "tag": "sunet-2*",
         },
-        "docker": {
+        "network": {
             "repo": "https://github.com/SUNET/attachmentgenie-network.git",
             "upgrade": "yes",
             "tag": "sunet-2*",
