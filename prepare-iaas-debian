@@ -1,0 +1,25 @@
+#!/bin/bash
+ip="${1}"
+
+if [[ -z "${ip}" ]]; then
+    echo "Please specify a cloud image host that the script should do the following on:"
+    echo "  #1 enable root-login"
+    echo "  #2 remove the default user"
+    echo "  #3 run apt-get update and dist-upgrade without interaction"
+    echo "  #4 reboot to start using the new kernel, updated packages etc."
+    exit 1
+fi
+
+set -x
+
+# Make sure we read the additional scripts from the same directory as
+# this script is located at
+script_dir=$(dirname "$0")
+
+# The reason for running two separate logins is that it is tricky to
+# remove the initial user while logged in as that same user:
+# ===
+# userdel: user debian is currently used by process 1082
+# ===
+ssh "debian@${ip}" "bash -s" < "$script_dir"/iaas-enable-root.sh
+ssh "root@${ip}" "bash -s" < "$script_dir"/iaas-setup.sh

@@ -1,57 +1,64 @@
-#!/bin/sh
+#!/bin/bash
 
 cmd_hostname=""
 cmd_do_bootstrap="no"
 cmd_fqdn=""
 
-set -- $(getopt b?h?n: "$@")
+function usage() {
+   echo "Usage: $0 [-h] [-b] [-n fqdn] [--] [<host>]"
+   echo "  -h  show help"
+   echo "  -b  bootstrap <host> (using ssh)"
+   echo "  -n  specify FQDN (if not the same as <host>)"
+   echo ""
+   echo "  <host> can be an IP number, or something that resolves to one"
+}
 
-while [ $# -gt 0 ]; do
-   case "$1" in
-      (-h) echo "Usage: $0 [-h] [-b] [--] [<host>]"; exit 0;;
-      (-b) cmd_do_bootstrap="yes" ;;
-      (-n) cmd_fqdn="$2" ; shift ;;
-      (--) shift; break;;
-      (-*) echo "Unknown option $1\nUsage: $0 [-b] [-h] [-n fqdn] [--] <host>"; exit 1;;
-      (*) break;;
+while getopts "bhn:" this; do
+   case "${this}" in
+      h) usage; exit 0;;
+      b) cmd_do_bootstrap="yes" ;;
+      n) cmd_fqdn="${OPTARG}" ; shift ;;
+      *) echo "Unknown option ${this}"; echo ""; usage; exit 1;;
    esac
-   shift
 done
+shift $((OPTIND-1))
 
-if [ ! -z "$1" -a -z "$cmd_hostname" ]; then 
+if [[ ! $cmd_hostname ]]; then
    cmd_hostname="$1"
 fi
 
-if [ ! -z "$cmd_hostname" -a -z "$cmd_fqdn" ]; then
+if [[ ! $cmd_fqdn ]]; then
    cmd_fqdn="$cmd_hostname"
 fi
 
 if test -z "$cmd_hostname"; then
-    echo "Usage: $0 [-h] [-b] [-n fqdn] [--] <host>"
+    usage
     exit 1
 fi
 
 test -f cosmos.conf && . ./cosmos.conf
 
-defrepo=`git remote -v | grep ${remote:="ro"} | grep fetch | awk '{print $2}'`
+_remote=${remote:='ro'}
+defrepo=$(git remote get-url "${_remote}" 2>/dev/null)
 rrepo=${repo:="$defrepo"}
 rtag=${tag:="changeme"}
 
-if [ "x$rrepo" = "x" ]; then
-    echo "$0: repo not set in cosmos.conf and no git remote named 'ro' found"
+if [[ ! $rrepo ]]; then
+    echo "$0: repo not set in cosmos.conf and no git remote named '${_remote}' found"
     exit 1
 fi
 
-if [ ! -d $cmd_hostname ]; then
-   cp -pr default $cmd_fqdn
-   git add $cmd_fqdn
-   git commit -m "$cmd_fqdn added" $cmd_fqdn
+if [ ! -d "$cmd_fqdn" ]; then
+   cp -pr default "$cmd_fqdn"
+   git add "$cmd_fqdn"
+   git commit -m "$cmd_fqdn added" "$cmd_fqdn"
    ./bump-tag
 fi
 
 if [ "$cmd_do_bootstrap" = "yes" ]; then
-   scp apt/cosmos_1.5-1_all.deb apt/bootstrap-cosmos.sh root@$cmd_hostname:
-   ssh root@$cmd_hostname ./bootstrap-cosmos.sh $cmd_fqdn $rrepo $rtag
-   ssh root@$cmd_hostname cosmos update
-   ssh root@$cmd_hostname cosmos apply
+   cosmos_deb=$(find apt/ -maxdepth 1 -name 'cosmos_*.deb' | sort -V | tail -1)
+   scp "$cosmos_deb" apt/bootstrap-cosmos.sh root@"$cmd_hostname":
+   ssh root@"$cmd_hostname" ./bootstrap-cosmos.sh "$cmd_fqdn" "$rrepo" "$rtag"
+   ssh root@"$cmd_hostname" cosmos update
+   ssh root@"$cmd_hostname" cosmos apply
 fi

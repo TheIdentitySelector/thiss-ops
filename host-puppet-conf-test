@@ -17,16 +17,14 @@ PUPPET_ARGS=${PUPPET_ARGS-"--verbose"}
 
 # Check if cosmos or puppet is already running on host
 echo "Checking if puppet or cosmos is already running..."
-ssh root@$HOSTNAME ps aux | egrep -v "grep|edit-secrets|gpg-agent" | egrep -q "cosmos|puppet"
+ssh root@"$HOSTNAME" ps aux | grep -Ev "grep|edit-secrets|gpg-agent" | grep -Eq "cosmos|puppet"
 
 if [ $? -eq 1 ]
 then
     echo "Copying files to host..."
-    rsync -av --exclude '*~' global/overlay/etc/puppet/cosmos-rules.yaml root@$HOSTNAME:/etc/puppet/cosmos-rules.yaml
-    rsync -av --exclude '*~' global/overlay/etc/puppet/manifests/cosmos-site.pp root@$HOSTNAME:/etc/puppet/manifests/cosmos-site.pp
-    rsync -av --exclude '*~' global/overlay/etc/puppet/cosmos-db.yaml root@$HOSTNAME:/etc/puppet/cosmos-db.yaml
-    rsync -av --exclude '*~' global/overlay/etc/hiera/data/common.yaml root@$HOSTNAME:/etc/hiera/data/common.yaml
-    rsync -av --exclude '*~' global/overlay/etc/puppet/modules/thiss/* root@$HOSTNAME:/etc/puppet/modules/thiss/.
+    rsync -av --exclude '*~' global/overlay/etc/puppet/cosmos-rules.yaml root@"$HOSTNAME":/etc/puppet/cosmos-rules.yaml
+    rsync -av --exclude '*~' global/overlay/etc/puppet/manifests/cosmos-site.pp root@"$HOSTNAME":/etc/puppet/manifests/cosmos-site.pp
+    rsync -av --exclude '*~' global/overlay/etc/hiera/data/common.yaml root@"$HOSTNAME":/etc/hiera/data/common.yaml
 
     # Test if the user has symlinked puppet-sunet correctly
     # by first checking if the link exits and then whether
@@ -38,7 +36,7 @@ then
     fi
 
     echo "Running puppet apply..."
-    ssh root@$HOSTNAME /usr/bin/puppet apply $PUPPET_ARGS /etc/puppet/manifests/cosmos-site.pp
+    ssh root@"$HOSTNAME" /usr/bin/puppet apply $PUPPET_ARGS /etc/puppet/manifests/cosmos-site.pp
 else
     echo "Cosmos or puppet already running. Exiting."
     exit 1

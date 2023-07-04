@@ -8,49 +8,53 @@ echo "Fetching any updates from server:"
 git pull
 echo ""
 
-if [ "x$1" = "x" ]; then
-    deftag=`basename $PWD`
+if [[ -z $1 ]]; then
+	deftag=$(basename "$PWD")
 else
-    deftag="$1"
+	deftag="$1"
 fi
-tagpfx=${tag:="$deftag"}
+tagpfx=${tag:="${deftag}"}
 
-last_tag=`git tag -l "${tagpfx}-*"|sort|tail -1`
+last_tag=$(git tag -l "${tagpfx}-*" | sort | tail -1)
 
-echo "Verifying last tag $last_tag:"
-(git tag -v $last_tag | grep ^gpg:) || true
+echo "Verifying last tag ${last_tag}:"
+(git tag -v "${last_tag}" | grep ^gpg:) || true
 # again to not mask exit status of git with grep
-git tag -v $last_tag > /dev/null 2>&1
+git tag -v "${last_tag}" >/dev/null 2>&1
 echo ""
 
-echo "Differences between tag $last_tag and what you are about to sign:"
-PAGER=cat git diff --color $last_tag..master
+echo "Differences between tag ${last_tag} and what you are about to sign:"
+this_branch=$(git rev-parse --abbrev-ref HEAD)
+env PAGER=cat git diff --color "${last_tag}..${this_branch}"
 
 iter=1
 ok=
 while test -z "$ok"; do
-    this_tag=$(date +${tagpfx}-%Y-%m-%d-v`printf "%02d" $iter`)
-    iter=`expr $iter + 1`
-    case `(echo $this_tag; echo $last_tag) | sort | tail -1` in
-	$last_tag)
-	    ;;
-	$this_tag)
-	    ok=yes
-	    ;;
-    esac
+	this_tag=$(date "+${tagpfx}-%Y-%m-%d-v$(printf "%02d" $iter)")
+	iter=$((iter + 1))
+	case $( (
+		echo "${this_tag}"
+		echo "${last_tag}"
+	) | sort | tail -1) in
+	"${last_tag}") ;;
+
+	"${this_tag}")
+		ok=yes
+		;;
+	esac
 done
 
-if [ "$deftag" != "$tagpfx" ]; then
-    echo -e "Using new tag \e[94m$this_tag\e[0m according to pattern in cosmos.conf"
+if [[ "${deftag}" != "${tagpfx}" ]]; then
+	echo -e "Using new tag \e[94m${this_tag}\e[0m according to pattern in cosmos.conf"
 else
-    echo -e "Using new tag \e[94m$this_tag\e[0m"
+	echo -e "Using new tag \e[94m${this_tag}\e[0m"
 fi
 
 echo -e "\e[1mONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE\e[0m"
 
 # GITTAGEXTRA is for putting things like "-u 2117364A"
-
-git tag $GITTAGEXTRA -m bump. -s $this_tag
+# shellcheck disable=SC2086
+git tag ${GITTAGEXTRA} -m bump. -s "${this_tag}"
 
 git push
 git push --tags

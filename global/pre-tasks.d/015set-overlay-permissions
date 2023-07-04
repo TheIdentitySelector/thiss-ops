@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Set overlay file permissions in model directory before apply.d/60overlay
+# rsyncs it to /
+#
+
+set -e
+self=$(basename "$0")
+
+MODEL_OVERLAY="$COSMOS_MODEL/overlay"
+
+if ! test -d "$MODEL_OVERLAY"; then
+    test -z "$COSMOS_VERBOSE" || echo "$self: overlay is a no-op"
+    exit 0
+fi
+
+if [ -d "$MODEL_OVERLAY/root" ]; then
+    args=""
+    if [ "x$COSMOS_VERBOSE" = "xy" ]; then
+        args="-v"
+    fi
+    chmod ${args} 0700 "$MODEL_OVERLAY"/root
+fi

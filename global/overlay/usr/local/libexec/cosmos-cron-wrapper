@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+test -f /etc/no-automatic-cosmos && exit 0
+
+RUN_COSMOS='/usr/local/bin/run-cosmos'
+SCRIPTHERDER_CMD=''
+
+if [ -x /usr/local/bin/scriptherder ]; then
+   SCRIPTHERDER_CMD='/usr/local/bin/scriptherder --mode wrap --syslog --name cosmos --'
+fi
+
+exec ${SCRIPTHERDER_CMD} ${RUN_COSMOS} "$@"

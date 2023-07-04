@@ -10,30 +10,15 @@ EYAMLDIR=/etc/hiera/eyaml
 GNUPGHOME=/etc/hiera/gpg
 export GNUPGHOME
 
+vendor=$(lsb_release -is)
+version=$(lsb_release -rs)
+# If the OS is Ubuntu 18.04 or newer, or Debian 10 or newer, we don't need to do anything (those use eyaml instead)
+test "${vendor}" = "Ubuntu" && dpkg --compare-versions "${version}" "ge" "18.04" && exit 0
+test "${vendor}" = "Debian" && dpkg --compare-versions "${version}" "ge" "10" && exit 0
 
-# There is no hiera-eyaml on Ubuntu < 16.04
-if [ "x`lsb_release -r | awk '{print $NF}'`" != "x12.04" -a "x`lsb_release -r | awk '{print $NF}'`" != "x14.04"  ]; then
-    if [ ! -f /usr/bin/eyaml ]; then
-        apt-get update
-        apt-get -y install hiera-eyaml
-    fi
-fi
+stamp="$COSMOS_BASE/stamps/hiera-gpg-v01.stamp"
 
-if [ -f /usr/bin/eyaml ]; then
-    # Create eyaml keypair if eyaml is installed but there are no keys
-    if [ ! -f ${EYAMLDIR}/public_certkey.pkcs7.pem -o ! -f ${EYAMLDIR}/private_key.pkcs7.pem ]; then
-	# hiera-eyaml wants a certificate and public key, not just a public key oddly enough
-	echo "$0: Generating eyaml key in ${EYAMLDIR} - this might take a while..."
-	mkdir -p ${EYAMLDIR}
-	openssl req -x509 -newkey rsa:4096 -keyout ${EYAMLDIR}/private_key.pkcs7.pem \
-		-out ${EYAMLDIR}/public_certkey.pkcs7.pem -days 3653 -nodes -sha256 \
-		-subj "/C=SE/O=SUNET/OU=EYAML/CN=`hostname`"
-	rm -f ${EYAMLDIR}/public_key.pkcs7.pem  # cleanup
-    fi
-fi
-
-
-# Old stuff below this point
+test -f "$stamp" && exit 0
 
 if [ ! -f /usr/lib/ruby/vendor_ruby/gpgme.rb ]; then
     apt-get update
@@ -60,19 +45,22 @@ if [ ! -s $GNUPGHOME/secring.gpg ]; then
     chmod 700 $GNUPGHOME
 
     TMPFILE=$(mktemp /tmp/hiera-gpg.XXXXXX)
-    cat > $TMPFILE <<EOF
+    cat > "$TMPFILE" <<EOF
 %echo Generating a default key
 Key-Type: default
 Subkey-Type: default
 Name-Real: Cosmos Puppet
 Name-Comment: Hiera GPG key
-Name-Email: root@`hostname --fqdn`
+Name-Email: root@$(hostname --fqdn)
 Expire-Date: 0
 # Do a commit here, so that we can later print "done" :-)
 %no-protection
 %commit
 %echo done
 EOF
-    gpg2 --batch --gen-key $TMPFILE
-    rm -f $TMPFILE
+    gpg2 --batch --gen-key "$TMPFILE"
+    rm -f "$TMPFILE"
 fi
+
+mkdir -p "$(dirname "${stamp}")"
+touch "$stamp"

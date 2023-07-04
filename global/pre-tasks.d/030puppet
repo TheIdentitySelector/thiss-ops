@@ -8,18 +8,8 @@ set -e
 stamp="$COSMOS_BASE/stamps/puppet-tools-v01.stamp"
 
 if ! test -f $stamp -a -f /usr/bin/puppet; then
-    #codename=`lsb_release -c| awk '{print $2}'`
-    #puppetdeb="$COSMOS_REPO/apt/puppetlabs-release-${codename}.deb"
-    #if [ ! -f $puppetdeb ]; then
-    #	echo "$0: Puppet deb for release $codename not found in $COSMOS_REPO/apt/"
-    #	echo "    Get it from https://apt.puppetlabs.com/ and put it in the Cosmos repo."
-    #	exit 1
-    #fi
-    ## The key currently in use does not appear to actually be installed with $puppetdeb
-    #test -f apt-key add $COSMOS_REPO/apt/keys/puppetlabs-EF8D349F.pub && apt-key add $COSMOS_REPO/apt/keys/puppetlabs-EF8D349F.pub
-    #dpkg -i $puppetdeb
     apt-get update
-    apt-get -y install puppet-common || apt-get -y install puppet
+    apt-get -y install puppet
 
     mkdir -p `dirname $stamp`
     touch $stamp

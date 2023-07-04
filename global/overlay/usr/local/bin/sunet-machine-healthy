@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+# pylint: disable=invalid-name
+# pylint: enable=invalid-name
+
+""" Run any check tools in a directory to decide if the machine is considered
+healthy, called by run-cosmos if fleetlock locking is configured """
+
+import pathlib
+import os
+import os.path
+import subprocess
+import sys
+import signal
+import argparse
+
+from typing import List, Optional
+from types import FrameType
+
+
+class TimeoutException(Exception):
+    """Exception returned when checks takes too long"""
+
+
+def timeout_handler(signum: int, frame: Optional[FrameType]) -> None:
+    """This is called if the tool takes too long to run"""
+    raise TimeoutException(f"{os.path.basename(sys.argv[0])} hit --timeout limit")
+
+
+def find_checks(check_dir: str) -> List[pathlib.Path]:
+    """Find all executable .check files in the given directory"""
+    check_files = []
+
+    dirobj = pathlib.Path(check_dir)
+
+    # iterdir() will raise error if the directory does not exist, and in this
+    # case we will just return an empty list
+    try:
+        for entry in dirobj.iterdir():
+            if entry.is_file():
+                if str(entry).endswith(".check") and os.access(entry, os.X_OK):
+                    check_files.append(entry)
+
+        # run checks in alphabetical order
+        check_files = sorted(check_files)
+    except FileNotFoundError:
+        pass
+
+    return check_files
+
+
+def run_checks(check_files: List[pathlib.Path]) -> bool:
+    """Run all checks"""
+    for check_file in check_files:
+        try:
+            subprocess.run([str(check_file)], check=True)
+        except subprocess.CalledProcessError as exc:
+            print(f"error: {exc}")
+            return False
+
+    return True
+
+
+def main() -> None:
+    """Starting point of the program"""
+
+    default_timeout = 60
+    default_health_check_dir = "/etc/sunet-machine-healthy/health-checks.d"
+
+    parser = argparse.ArgumentParser(
+        description="Determine if machine is considered healthy."
+    )
+    parser.add_argument("--verbose", help="print more information", action="store_true")
+    parser.add_argument(
+        "--health-check-dir",
+        help=f"directory to run checks from (default: {default_health_check_dir}",
+        default=default_health_check_dir,
+    )
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        help=f"seconds before giving up and exiting tool (default: {default_timeout}s)",
+        default=default_timeout,
+    )
+    args = parser.parse_args()
+
+    checks_ok = False
+
+    # Give up if checks has been running for more than --timeout seconds:
+    signal.signal(signal.SIGALRM, timeout_handler)
+    signal.alarm(args.timeout)
+
+    check_files = find_checks(args.health_check_dir)
+
+    checks_ok = run_checks(check_files)
+
+    if checks_ok:
+        sys.exit(0)
+
+    sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

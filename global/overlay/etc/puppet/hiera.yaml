@@ -1,32 +1,27 @@
+# Hiera version 5 configuration
+#
 ---
-:backends:
-  - eyaml
-  - yaml
-  - gpg
+version: 5
+defaults:
+  datadir: /etc/hiera/data
+  data_hash: yaml_data
 
-:logger: console
+hierarchy:
+  - name: "Per-node data"
+    path: "local.yaml"
 
-:hierarchy:
-  - local
-  - group
-  - secrets.yaml
-  - "dist_%{::lsbdistcodename}_override"
-  - common
+  - name: "Per-group data"
+    path: "group.yaml"
 
+  - name: "Per-host secrets"
+    path: "local.eyaml"
+    lookup_key: eyaml_lookup_key
+    options:
+      pkcs7_private_key: /etc/hiera/eyaml/private_key.pkcs7.pem
+      pkcs7_public_key:  /etc/hiera/eyaml/public_certkey.pkcs7.pem
 
-:yaml:
-   :datadir: /etc/hiera/data
+  - name: "Overrides per distribution"
+    path: "dist_%{::lsbdistcodename}_override.yaml"
 
-:gpg:
-   :datadir: /etc/hiera/data
-   :key_dir: /etc/hiera/gpg
-
-:eyaml:
-    :datadir: '/etc/hiera/data'
-
-    # If using the pkcs7 encryptor (default)
-    :pkcs7_private_key: /etc/hiera/eyaml/private_key.pkcs7.pem
-    :pkcs7_public_key:  /etc/hiera/eyaml/public_certkey.pkcs7.pem
-
-    # Optionally cache decrypted data (default: false)
-    :cache_decrypted: false
+  - name: "Data common to whole environment"
+    path: "common.yaml"

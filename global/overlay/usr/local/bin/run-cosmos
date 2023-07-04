@@ -6,6 +6,11 @@
 readonly PROGNAME=$(basename "$0")
 readonly LOCKFILE_DIR=/tmp
 readonly LOCK_FD=200
+readonly FLEETLOCK_CONFIG=/etc/run-cosmos-fleetlock-conf
+readonly FLEETLOCK_DISABLE_FILE=/etc/run-cosmos-fleetlock-disable
+readonly FLEETLOCK_TOOL=/usr/local/bin/sunet-fleetlock
+readonly HEALTHCHECK_TOOL=/usr/local/bin/sunet-machine-healthy
+readonly HEALTHCHECK_DISABLE_FILE=/etc/run-cosmos-healthcheck-disable
 
 lock() {
     local prefix=$1
@@ -16,29 +21,70 @@ lock() {
     eval "exec $fd>$lock_file"
 
     # acquier the lock
-    flock -n $fd \
+    flock -n "$fd" \
         && return 0 \
         || return 1
 }
 
 eexit() {
-    local error_str="$@"
+    local error_str="$*"
 
-    echo $error_str
+    echo "$error_str"
     exit 1
 }
 
+fleetlock_lock() {
+   if [ ! -f $FLEETLOCK_DISABLE_FILE ] && [ -f $FLEETLOCK_CONFIG ] && [ -x $FLEETLOCK_TOOL ]; then
+      local fleetlock_group=""
+      # shellcheck source=/dev/null
+      . $FLEETLOCK_CONFIG || return 1
+      if [ -z "$fleetlock_group" ]; then
+          echo "Unable to set fleetlock_group"
+	  return 1
+      fi
+      echo "Getting fleetlock lock"
+      $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --lock || return 1
+   fi
+   return 0
+}
+
+fleetlock_unlock() {
+   if [ ! -f $FLEETLOCK_DISABLE_FILE ] && [ -f $FLEETLOCK_CONFIG ] && [ -x $FLEETLOCK_TOOL ]; then
+      local fleetlock_group=""
+      # shellcheck source=/dev/null
+      . $FLEETLOCK_CONFIG || return 1
+      if [ -z "$fleetlock_group" ]; then
+          echo "Unable to set fleetlock_group"
+	  return 1
+      fi
+      machine_is_healthy || return 1
+      echo "Releasing fleetlock lock"
+      $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --unlock || return 1
+   fi
+   return 0
+}
+
+machine_is_healthy() {
+   if [ ! -f $HEALTHCHECK_DISABLE_FILE ] && [ -x $HEALTHCHECK_TOOL ]; then
+       echo "Running any health checks"
+       $HEALTHCHECK_TOOL || return 1
+   fi
+   return 0
+}
+
 main () {
-   lock $PROGNAME || eexit "Only one instance of $PROGNAME can run at one time."
-   cosmos $* update
-   cosmos $* apply
+   lock "$PROGNAME" || eexit "Only one instance of $PROGNAME can run at one time."
+   fleetlock_lock || eexit "Unable to acquire fleetlock lock."
+   cosmos "$@" update
+   cosmos "$@" apply
+   fleetlock_unlock || eexit "Unable to release fleetlock lock."
 
    touch /var/run/last-cosmos-ok.stamp
 
-   find /var/lib/puppet/reports/ -type f -mtime +10 | xargs rm -f
+   find /var/lib/puppet/reports/ -type f -mtime +10 -print0 | xargs -0 rm -f
 }
 
-main $*
+main "$@"
 
 if [ -f /cosmos-reboot ]; then
    rm -f /cosmos-reboot
