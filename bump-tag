@@ -2,59 +2,64 @@
 
 set -e
 
-test -f cosmos.conf && . ./cosmos.conf
-
 echo "Fetching any updates from server:"
 git pull
 echo ""
 
-if [[ -z $1 ]]; then
-	deftag=$(basename "$PWD")
+if [[ -f ./cosmos.conf ]]; then
+  . ./cosmos.conf
+fi
+if [[ -z ${1} ]]; then
+	deftag=$(basename "${PWD}")
 else
-	deftag="$1"
+	deftag="${1}"
 fi
 tagpfx=${tag:="${deftag}"}
 
 last_tag=$(git tag -l "${tagpfx}-*" | sort | tail -1)
+if [[ -n ${last_tag} ]]; then
+  echo "Verifying last tag ${last_tag}:"
+  (git tag -v "${last_tag}" | grep ^gpg:) || true
+  # again to not mask exit status of git with grep
+  git tag -v "${last_tag}" >/dev/null 2>&1
+  echo ""
 
-echo "Verifying last tag ${last_tag}:"
-(git tag -v "${last_tag}" | grep ^gpg:) || true
-# again to not mask exit status of git with grep
-git tag -v "${last_tag}" >/dev/null 2>&1
-echo ""
+  echo "Differences between tag ${last_tag} and what you are about to sign:"
+  env PAGER=cat git diff --color "${last_tag}..main"
 
-echo "Differences between tag ${last_tag} and what you are about to sign:"
-this_branch=$(git rev-parse --abbrev-ref HEAD)
-env PAGER=cat git diff --color "${last_tag}..${this_branch}"
+  iter=1
+  ok=
+  while test -z "$ok"; do
+    this_tag=$(date "+${tagpfx}-%Y-%m-%d-v$(printf "%02d" ${iter})")
+    iter=$(( iter + 1))
+    case $( (
+      echo "${this_tag}"
+      echo "${last_tag}"
+    ) | sort | tail -1) in
+    "${last_tag}") ;;
 
-iter=1
-ok=
-while test -z "$ok"; do
-	this_tag=$(date "+${tagpfx}-%Y-%m-%d-v$(printf "%02d" $iter)")
-	iter=$((iter + 1))
-	case $( (
-		echo "${this_tag}"
-		echo "${last_tag}"
-	) | sort | tail -1) in
-	"${last_tag}") ;;
+    "${this_tag}")
+      ok=yes
+      ;;
+    esac
+  done
 
-	"${this_tag}")
-		ok=yes
-		;;
-	esac
-done
+  if [ "${deftag}" != "${tagpfx}" ]; then
+    echo -e "Using new tag \e[94m${this_tag}\e[0m according to pattern in cosmos.conf"
+  else
+    echo -e "Using new tag \e[94m${this_tag}\e[0m"
+  fi
 
-if [[ "${deftag}" != "${tagpfx}" ]]; then
-	echo -e "Using new tag \e[94m${this_tag}\e[0m according to pattern in cosmos.conf"
+  echo -e "\e[1mONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE\e[0m"
 else
-	echo -e "Using new tag \e[94m${this_tag}\e[0m"
+  echo -e "\e[1mCOULD NOT FIND LAST TAG, ASSUMING NEW TAG\e[0m"
+  iter=1
+  this_tag=$(date "+${tagpfx}-%Y-%m-%d-v$(printf "%02d" ${iter})")
 fi
-
-echo -e "\e[1mONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE\e[0m"
 
 # GITTAGEXTRA is for putting things like "-u 2117364A"
 # shellcheck disable=SC2086
-git tag ${GITTAGEXTRA} -m bump. -s "${this_tag}"
+git tag ${GITTAGEXTRA} -s "${this_tag}" -m bump.
 
 git push
 git push --tags
