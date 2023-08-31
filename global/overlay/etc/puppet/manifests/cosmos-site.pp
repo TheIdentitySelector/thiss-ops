@@ -225,8 +225,8 @@ class nagios_monitor {
   ensure_resource('package','nagios-nrpe-plugin', { ensure => present })
 
   #web interface configs specifically for monitor.seamlessaccess.org
-  class { 'https': }
   class { 'http': }
+  sunet::misc::ufw_allow { 'allow_sunet_vpn': from => '130.242.121.23', port => '443', }
   class { 'sunet::dehydrated::client':
     domain     => 'monitor.seamlessaccess.org',
     ssl_links  => true,
