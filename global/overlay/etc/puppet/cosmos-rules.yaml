@@ -73,7 +73,7 @@ a-1.thiss.io:
       domain: use.thiss.io
       context: thiss.io
       cache_control: 'public, max-age=36000, must-revalidate, s-maxage=3601, proxy-revalidate'
-   https:
+   http:
 
 static.thiss.io:
    sunet_iaas_cloud:
