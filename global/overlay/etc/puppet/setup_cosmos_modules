@@ -208,7 +208,7 @@ def main():
 
     if host_info:
         if host_info["environment"] == "beta":
-            modules["sunet"]["tag"] = "sa-beta"
+            modules["sunet"]["tag"] = "sa-beta-2*"
 
     with open(modulesfile, "w") as fh:
         for key in modules:
