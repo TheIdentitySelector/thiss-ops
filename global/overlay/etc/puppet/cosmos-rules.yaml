@@ -78,7 +78,8 @@ a-1.thiss.io:
 static.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      version: '5:23.0.6-1~ubuntu.22.04~jammy'
+      storage_driver: 'overlay2
    thiss::haproxy_static:
       image_tag: beta
       location: thiss
