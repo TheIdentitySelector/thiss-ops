@@ -75,7 +75,7 @@ if grep -q '^# en_US.UTF-8 UTF-8$' $locale_gen_file; then
     locale-gen
 fi
 
-if [ "$(lsb_release -is)" == "Debian" ]; then
+if [ "$(lsb_release -is)" == "Debian" ] && [ "$(lsb_release -cs)" == "bullseye" ]; then
     interfaces_file='/etc/network/interfaces.d/50-cloud-init'
 
     if [ -f "${interfaces_file}" ]; then
