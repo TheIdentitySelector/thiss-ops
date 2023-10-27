@@ -187,7 +187,7 @@ def main():
         "sunet": {
             "repo": "https://github.com/SUNET/puppet-sunet.git",
             "upgrade": "yes",
-            "tag": "sunet-2*",
+            "tag": "sa-prod-2*",
         },
         "sysctl": {
             "repo": "https://github.com/SUNET/puppet-sysctl.git",
