@@ -213,7 +213,8 @@ meta.aws2.geant.eu.seamlessaccess.org:
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      version: '5:24.0.7-1~ubuntu.22.04~jammy'
+      storage_driver: 'overlay2'
    thiss::haproxy:
       location: ntx
       image_tag: 20230614-prod
