@@ -224,4 +224,15 @@ pyff_pipeline:
     - select:
     - discojson:
     - print:
-        output: /opt/pyff/metadata.json 
+        output: /opt/pyff/metadata.json
+
+pyff_pipeline_beta:
+    - load:
+        - /opt/pyff/metadata/eduGAIN.xml 5A:D7:3F:8A:C1:0C:74:56:41:77:45:45:EB:92:76:1F:3D:0D:E6:7C
+        - /opt/pyff/metadata/swamid-registered.xml 40:A3:68:47:50:F3:86:43:36:0C:79:75:0F:87:0D:38:8C:F8:3E:44
+        - /opt/pyff/metadata/incommon.xml 7D:B4:BB:28:D3:D5:C8:52:E0:80:B3:62:43:2A:AF:34:B2:A6:0E:DD
+        - /opt/pyff/metadata/openathens.xml 69:F8:25:18:AF:97:D0:CB:8E:31:E8:10:F1:F0:A1:3E:2F:DF:E1:D8
+    - select:
+    - discojson:
+    - print:
+        output: "/opt/pyff/metadata.json"

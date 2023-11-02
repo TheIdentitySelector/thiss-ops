@@ -54,7 +54,7 @@ a-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
-   thiss::pyff:
+   thiss::pyff_beta:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
    thiss::md_publisher:
