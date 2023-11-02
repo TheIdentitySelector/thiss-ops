@@ -9,7 +9,7 @@ else
 fi
 
 tmpf=`mktemp`
-wget -qO$tmpf <%= @src %> && jq -e . $tmpf >/dev/null 2>&1
+wget -qO$tmpf <%= @src %> && jq -e '.[].title' $tmpf >/dev/null 2>&1
 
 if [ $? -eq 0 ]; then
    cmp -s $tmpf <%= @dst %>
