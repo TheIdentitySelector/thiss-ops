@@ -14,7 +14,8 @@ if ! test -f "${stamp}" -a -f /usr/bin/puppet; then
 
     # Note: in posix shell, string comparison is done with a single =
     if [ "${ID}" = "debian" ] && [ "${VERSION_ID}" -ge 12 ]; then
-      apt-get -y install cron puppet-module-puppetlabs-cron-core puppet-module-camptocamp-augeas
+      apt-get -y install cron puppet-module-puppetlabs-stdlib puppet-module-puppetlabs-cron-core puppet-module-camptocamp-augeas puppet-module-puppetlabs-concat puppet-module-puppetlabs-apt puppet-module-puppetlabs-vcsrepo
+
     fi
 
     mkdir -p "$(dirname "${stamp}")"
