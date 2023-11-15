@@ -25,7 +25,8 @@ if [[ -n ${last_tag} ]]; then
   echo ""
 
   echo "Differences between tag ${last_tag} and what you are about to sign:"
-  env PAGER=cat git diff --color "${last_tag}..main"
+  this_branch=$(git rev-parse --abbrev-ref HEAD)
+  env PAGER=cat git diff --color "${last_tag}..${this_branch}"
 
   iter=1
   ok=
