@@ -170,6 +170,7 @@ verify_last_commit()
 }
 
 tag_list="$(git tag -l "${tagpfx}-*")"
+# shellcheck disable=SC2181
 if [[ ${?} -ne 0 ]] || [[ -z "${tag_list}" ]]; then
 
     echo "No tags found, verifying all commits instead."
@@ -262,7 +263,10 @@ fi
 
 echo -e "\e[1mONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE\e[0m"
 
-git tag $GITTAGEXTRA -m bump. -s "${this_tag}"
+# GITTAGEXTRA is for putting things like "-u 2117364A"
+# Note that this variable cannot be quoted if left empty.
+# shellcheck disable=SC2086
+git tag ${GITTAGEXTRA} -m bump. -s "${this_tag}"
 
 git push
 git push --tags
