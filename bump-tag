@@ -255,7 +255,7 @@ while [[ -z "${ok}" ]]; do
     esac
 done
 
-if [ "${deftag}" != "${tagpfx}" ]; then
+if [[ "${deftag}" != "${tagpfx}" ]]; then
     echo -e "Using new tag \e[94m${this_tag}\e[0m according to pattern in cosmos.conf"
 else
     echo -e "Using new tag \e[94m${this_tag}\e[0m"
