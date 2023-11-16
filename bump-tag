@@ -30,7 +30,7 @@ fi
 # 1. $tag, if specified in cosmos.conf,
 # 2. or $deftag, as specified above.
 # shellcheck disable=SC2154
-if [[ ! -z "${tag}" ]]; then
+if [[ -n "${tag}" ]]; then
     tagpfx="${tag}"
 else
     tagpfx="${deftag}"
@@ -144,7 +144,7 @@ verify_last_commit()
         return 1
     fi
 
-    if [[ ! -z "$(git status --porcelain "${__file_to_verify}")" ]]; then
+    if [[ -n "$(git status --porcelain "${__file_to_verify}")" ]]; then
         echo ""
         echo "INFO: local changes detected in ${__file_to_verify},"
         echo "Not checking the signature of the last commit to ${__file_to_verify}."
@@ -199,7 +199,7 @@ else
 
 fi
 
-if [[ ! -z "${git_log}" ]]; then
+if [[ -n "${git_log}" ]]; then
     echo ""
     echo -e "------WARNING: unsigned or untrusted commits after the last tag------"
     echo "${git_log}"
