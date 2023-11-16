@@ -36,6 +36,9 @@ else
     tagpfx="${deftag}"
 fi
 
+# This is the current branch that Git will diff against.
+this_branch=$(git rev-parse --abbrev-ref HEAD)
+
 # Check why the tag couldn't be verified
 # First argument: the tag to investigate
 check_tag_sig_failure()
