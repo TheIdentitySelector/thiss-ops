@@ -228,7 +228,7 @@ verify_last_commit "./scripts/jsonyaml-no-output.py"
 verify_last_commit "./bump-tag"
 
 # Test the syntax of each YAML-file to be tagged.
-for file in $(git diff --name-only "${last_tag}..${this_branch}" | egrep "^.*\.(yaml|yml)$"); do
+for file in $(git diff --name-only "${last_tag}..${this_branch}" | grep -E "^.*\.(yaml|yml)$"); do
     if [[ -f "${file}" ]]; then
         ./scripts/jsonyaml-no-output.py yaml "${file}"
     fi
