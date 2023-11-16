@@ -2,9 +2,7 @@
 
 echo "Fetching updates from $(git remote get-url origin) ..."
 echo ""
-git pull --verify-signatures
-
-if [[ ${?} -ne 0 ]]; then
+if ! git pull --verify-signatures; then
     echo "WARNING: git pull did not exit successfully."
     echo ""
     echo "EXITING the script. In order to tag your changes,"
@@ -183,8 +181,7 @@ else
     last_tag="$(echo "${tag_list}" | sort | tail -1)"
     echo "Verifying last tag: ${last_tag} and the commits after that"
 
-    git verify-tag "${last_tag}"
-    if [[ ${?} -ne 0 ]]; then
+    if ! git verify-tag "${last_tag}"; then
         check_tag_sig_failure "${last_tag}"
     fi
 
