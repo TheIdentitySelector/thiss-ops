@@ -237,7 +237,7 @@ done
 echo "Differences between tag ${last_tag} and what you are about to sign:"
 # With PAGER=cat, git diff will simply dump the output to the screen.
 # shellcheck disable=SC2037
-PAGER=cat git diff --color "${last_tag}..${this_branch}"
+PAGER="cat" git diff --color "${last_tag}..${this_branch}"
 
 # Iterate over the $last_tag until $this_tag is set to a later version
 iter=1
