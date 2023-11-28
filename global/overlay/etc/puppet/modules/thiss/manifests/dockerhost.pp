@@ -5,6 +5,7 @@ class thiss::dockerhost(
   Enum['stable', 'edge', 'test'] $docker_repo = hiera('docker_repo', 'stable'),
   String $compose_version      = safe_hiera('docker_compose_version'),
   String $docker_args          = '',
+  $manage_dockerhost_unbound    = true,
   Optional[String] $docker_dns = undef,
   $storage_driver               = 'aufs',
 ) {
@@ -19,7 +20,7 @@ class thiss::dockerhost(
     docker_package_name       => $package_name,
     docker_repo               => $docker_repo,
     run_docker_cleanup        => true,
-    manage_dockerhost_unbound => true,
+    manage_dockerhost_unbound => $manage_dockerhost_unbound,
     docker_extra_parameters   => $docker_args,
     docker_dns                => $docker_dns,
     storage_driver            => $storage_driver,

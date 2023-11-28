@@ -54,6 +54,7 @@ a-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
+      docker_dns: 8.8.8.8
    thiss::pyff_beta:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
@@ -194,6 +195,8 @@ meta.se-east.sunet.eu.seamlessaccess.org:
 meta.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
+      manage_dockerhost_unbound: false
+      docker_dns: 8.8.8.8
    thiss::pyff:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
@@ -204,6 +207,8 @@ meta.aws1.geant.eu.seamlessaccess.org:
 meta.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
+      manage_dockerhost_unbound: false
+      docker_dns: 8.8.8.8
    thiss::pyff:
       pyff_version: 1.1.4
       output: /var/www/html/metadata.json
