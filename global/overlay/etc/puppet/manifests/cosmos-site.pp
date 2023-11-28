@@ -573,3 +573,10 @@ class redis_frontend_node ($hostname=undef,$ca="infra") {
       certificate   => "/etc/ssl/private/${::fqdn}_${ca}.pem"
    }
 }
+
+if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
+    file_line { 'cosmos_conf_frontend1_common':
+      path => '/etc/cosmos/cosmos.conf',
+      line => 'COSMOS_REPO_MODELS="$COSMOS_REPO/meta-common/:$COSMOS_REPO_MODELS"',
+    }
+  }
