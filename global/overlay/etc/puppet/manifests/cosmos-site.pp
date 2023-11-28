@@ -575,7 +575,7 @@ class redis_frontend_node ($hostname=undef,$ca="infra") {
 }
 
 if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
-    file_line { 'cosmos_conf_frontend1_common':
+    file_line { 'cosmos_conf_meta_common':
       path => '/etc/cosmos/cosmos.conf',
       line => 'COSMOS_REPO_MODELS="$COSMOS_REPO/meta-common/:$COSMOS_REPO_MODELS"',
     }
