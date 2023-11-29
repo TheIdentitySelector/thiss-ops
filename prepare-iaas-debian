@@ -1,5 +1,6 @@
 #!/bin/bash
 ip="${1}"
+ssh_proxy="${2}"
 
 if [[ -z "${ip}" ]]; then
     echo "Please specify a cloud image host that the script should do the following on:"
@@ -8,6 +9,9 @@ if [[ -z "${ip}" ]]; then
     echo "  #3 run apt-get update and dist-upgrade without interaction"
     echo "  #4 reboot to start using the new kernel, updated packages etc."
     exit 1
+fi
+if [[ -n "${ssh_proxy}" ]]; then
+  proxyjump="-o ProxyJump=${ssh_proxy}"
 fi
 
 set -x
@@ -21,5 +25,5 @@ script_dir=$(dirname "$0")
 # ===
 # userdel: user debian is currently used by process 1082
 # ===
-ssh "debian@${ip}" "bash -s" < "$script_dir"/iaas-enable-root.sh
-ssh "root@${ip}" "bash -s" < "$script_dir"/iaas-setup.sh
+ssh "debian@${ip}" ${proxyjump} "bash -s" < "$script_dir"/iaas-enable-root.sh
+ssh "root@${ip}" ${proxyjump} "bash -s" < "$script_dir"/iaas-setup.sh
