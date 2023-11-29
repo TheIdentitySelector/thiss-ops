@@ -1,5 +1,6 @@
 #!/bin/bash
 ip="${1}"
+ssh_proxy="${2}"
 
 if [[ -z "${ip}" ]]; then
     echo "Please specify a cloud image host that the script should do the following on:"
@@ -10,6 +11,9 @@ if [[ -z "${ip}" ]]; then
     exit 1
 fi
 
+if [[ -n "${ssh_proxy}" ]]; then
+  proxyjump="-o ProxyJump=${ssh_proxy}"
+fi
 set -x
 
 # Make sure we read the additional scripts from the same directory as
@@ -21,5 +25,5 @@ script_dir=$(dirname "$0")
 # ===
 # userdel: user ubuntu is currently used by process 44063
 # ===
-ssh "ubuntu@${ip}" "bash -s" < "$script_dir"/iaas-enable-root.sh
-ssh "root@${ip}" "bash -s" < "$script_dir"/iaas-setup.sh
+ssh "ubuntu@${ip}" ${proxyjump} "bash -s" < "$script_dir"/iaas-enable-root.sh
+ssh "root@${ip}" ${proxyjump} "bash -s" < "$script_dir"/iaas-setup.sh

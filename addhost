@@ -13,11 +13,12 @@ function usage() {
    echo "  <host> can be an IP number, or something that resolves to one"
 }
 
-while getopts "bhn:" this; do
+while getopts "bhnp:" this; do
    case "${this}" in
       h) usage; exit 0;;
       b) cmd_do_bootstrap="yes" ;;
       n) cmd_fqdn="${OPTARG}" ; shift ;;
+      p) cmd_proxy="${OPTARG}" ; shift ;;
       *) echo "Unknown option ${this}"; echo ""; usage; exit 1;;
    esac
 done
@@ -34,6 +35,10 @@ fi
 if test -z "$cmd_hostname"; then
     usage
     exit 1
+fi
+
+if [[ -n $cmd_proxy ]]; then
+  proxyjump="-o ProxyJump=${cmd_proxy}"
 fi
 
 test -f cosmos.conf && . ./cosmos.conf
@@ -57,8 +62,8 @@ fi
 
 if [ "$cmd_do_bootstrap" = "yes" ]; then
    cosmos_deb=$(find apt/ -maxdepth 1 -name 'cosmos_*.deb' | sort -V | tail -1)
-   scp "$cosmos_deb" apt/bootstrap-cosmos.sh root@"$cmd_hostname":
-   ssh root@"$cmd_hostname" ./bootstrap-cosmos.sh "$cmd_fqdn" "$rrepo" "$rtag"
-   ssh root@"$cmd_hostname" cosmos update
-   ssh root@"$cmd_hostname" cosmos apply
+   scp $proxyjump "$cosmos_deb" apt/bootstrap-cosmos.sh root@"$cmd_hostname":
+   ssh root@"$cmd_hostname" $proxyjump ./bootstrap-cosmos.sh "$cmd_fqdn" "$rrepo" "$rtag"
+   ssh root@"$cmd_hostname" $proxyjump cosmos update
+   ssh root@"$cmd_hostname" $proxyjump cosmos apply
 fi
