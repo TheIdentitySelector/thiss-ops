@@ -1,5 +1,5 @@
 class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
-   $_keyname = $keyname ? { 
+   $_keyname = $keyname ? {
       undef   => "${::fqdn}_infra",
       default => $keyname
    }
@@ -7,7 +7,7 @@ class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $w
    file { '/var/www': ensure => directory, mode => '0755' } ->
    file { '/var/www/html': ensure => directory, mode => '0755', owner => 'www-data', group =>'www-data' } ->
    package {['lighttpd','attr']: ensure => latest } ->
-   exec {'enable-ssl': 
+   exec {'enable-ssl':
       command => "/usr/sbin/lighttpd-enable-mod ssl",
       onlyif  => "test ! -h /etc/lighttpd/conf-enabled/*ssl*"
    } ->
@@ -34,5 +34,17 @@ class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $w
       warning_age => '2100',
       critical_age => '86400'
    }
+
+   if ($::fqdn == 'a-1.thiss.io') {
+      $md_files = ['eduGAIN.xml', 'incommon.xml', 'openathens.xml', 'swamid-registered.xml']
+      $md_files.each |$md_file|{
+        sunet::nagios::nrpe_check_fileage {"${md_file}":
+         filename => "/opt/pyff/metadata/${md_file}",
+         warning_age => '2100',
+         critical_age => '86400'
+        }
+      }
+   }
+
 }
 

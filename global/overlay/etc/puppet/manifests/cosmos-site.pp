@@ -446,6 +446,16 @@ class nagios_monitor {
     description    => 'metadata aggregate age',
     contact_groups => ['alerts']
   }
+  $md_files = ['eduGAIN.xml', 'incommon.xml', 'openathens.xml', 'swamid-registered.xml']
+  $md_files.each |$md_file|{
+    nagioscfg::service {"metadata_age_${md_file}":
+      host_name => ['a-1.thiss.io'],
+      use            => 'monitor-service',
+      check_command  => "check_nrpe_1arg!check_fileage_${md_file}",
+      description    => "file age of ${md_file}",
+      contact_groups => ['alerts']
+    }
+   }
   nagioscfg::service {'check_needrestart':
     hostgroup_name => ['nrpe'],
     use            => 'monitor-service',
