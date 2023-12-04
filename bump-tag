@@ -173,12 +173,15 @@ tag_list="$(git tag -l "${tagpfx}-*")"
 # shellcheck disable=SC2181
 if [[ ${?} -ne 0 ]] || [[ -z "${tag_list}" ]]; then
 
-    echo "No tags found, verifying all commits instead."
-    # %H = commit hash
-    # %G? = show "G" for a good (valid) signature
-    git_log="$(git log --pretty="format:%H${t}%G?" \
-                       --first-parent \
-                       | grep -v "${t}G$")"
+    if [[ -z ${ALLOW_UNSIGNED_COMMITS_WITHOUT_TAGS} ]]; then
+      echo "No tags found, verifying all commits instead."
+      echo "Please set environment variable ALLOW_UNSIGNED_COMMITS_WITHOUT_TAGS if you want to disable this check."
+      # %H = commit hash
+      # %G? = show "G" for a good (valid) signature
+      git_log="$(git log --pretty="format:%H${t}%G?" \
+                         --first-parent \
+                         | grep -v "${t}G$")"
+    fi
 
 else
 
