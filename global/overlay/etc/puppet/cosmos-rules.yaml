@@ -41,7 +41,7 @@ md-2.thiss.io:
       post: /usr/sbin/service docker-thiss_mdq restart
    https:
    http:
-   feetlock_reboot:
+   thiss::fleetlock_reboot:
       fleetlock_group: 'seamless-md-beta'
       fleetlock_server: https://fl-test.knubbis.sunet.se
 
