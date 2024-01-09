@@ -2,7 +2,6 @@
 
 while true
 do
-
   exec=$(/usr/lib/nagios/plugins/check_http -H localhost -u http://localhost)
   exec_result=$?
   if [[ $exec_result -ne 0 ]]; then
