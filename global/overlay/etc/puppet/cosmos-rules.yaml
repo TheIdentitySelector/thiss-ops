@@ -29,6 +29,9 @@ md-1.thiss.io:
       post: /usr/sbin/service docker-thiss_mdq restart
    https:
    http:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-md-beta'
+      fleetlock_server: https://fl-test.knubbis.sunet.se
 
 md-2.thiss.io:
    sunet_iaas_cloud:

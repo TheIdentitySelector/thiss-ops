@@ -29,9 +29,9 @@ password = ${password}"
   -> file { '/etc/sunet-machine-healthy/health-checks.d':
       ensure => directory,
      }
-  -> file { '/etc/sunet-machine-healthy/health-checks.d/check_web.sh':
+  -> file { '/etc/sunet-machine-healthy/health-checks.d/check_web.check':
       ensure  => file,
-      content => template("thiss/fleetlock_reboot/check_web.sh.erb"),
+      content => template("thiss/fleetlock_reboot/check_web.check.erb"),
       mode    => '0744',
      }
 }
