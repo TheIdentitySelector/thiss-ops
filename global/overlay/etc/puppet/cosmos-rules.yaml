@@ -17,6 +17,9 @@
       domain: sunet.se
    sunet::rsyslog:
    update_ca_certificates:
+   sunet::invent::client:
+      export_endpoint: https://ni-frontend-test.sunet.se
+      invent_retention_days: 1
 
 md-1.thiss.io:
    sunet_iaas_cloud:
@@ -103,9 +106,6 @@ a-staging-1.thiss.io:
       watch: /var/www/html/metadata.json
    md_aggregator:
    https:
-   sunet::invent::client:
-    export_endpoint: https://ni-frontend-test.sunet.se
-    invent_retention_days: 1
 
 md-staging-1.thiss.io:
    sunet_iaas_cloud:
