@@ -215,6 +215,22 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
+  'thorslund-4A80B948':
+    name  : 'thorslund-4A80B948@sunet.se'
+    key   : "AAAAB3NzaC1yc2EAAAADAQABAAACAQCWiojMhkPGOG9/7AxTiB+cWv0QI7SZRmRTP\
+      l+vvYTk1iLt8StJJVZ6MJzNZEbAqfwthbRJMhUoMHbLV7Lxho4utZHOeNwQp8RFrPoOhAkAv\
+      N+tZ+pitnPqiulJjoms3+uaO23JJOWn0c2UyO98XcbYKVMYaWRKz8W4xeuFy6dZupPP+u8MA\
+      skRqW5zNFrbyqsPLIYrqnTByiibEV9LP3gUBqwupqbEGPJ2DbofQEfkdKb7eiOns48tw3jCj\
+      AP+Xhc9/jFAc/wDDlvC8gm7gPtgmR+1ICPdBEz3t3rDlYr/Fx1XTZXrWlNqgaRmXsWBg+5hY\
+      KR2aAStSShFfgLnUAHtsjd2P2ued2LKjnfkTdFTzWEmtZsZsbQbtA3ChmFvGS52vk/nOWuUl\
+      HK6d0vDtCrr6y5MD9v0Rb0cSMlhsH3WncMtY1QYq5a5bQluwyM6aA2ANZnRX6Pz8GlqCYdIy\
+      Z1EQVW3U8xACs9bebdKX6NLfc1lqSnsR4GSbA7qhzLuyPzoT7UmhpA9dZ+ZGC7qZ4g8R1eQg\
+      H+/RcMEFFF6ju22xgAy0CASdgJHPRXEOjKVIc5pQQc0h6RSCH70ctGETMsErBKTSFVigO6Oe\
+      ec8Y+dR+gWAOmDJgB8vYymz8TWZRSF1lRQGXp3LEbBUNdyQ2Wa5LGFI8eYfp/f1kXuUYMZWG\
+      Q=="
+    type:   'ssh-rsa'
+    user:   'root'
+
 pyff_pipeline:
     - load:
         - /opt/pyff/metadata/eduGAIN.xml 5A:D7:3F:8A:C1:0C:74:56:41:77:45:45:EB:92:76:1F:3D:0D:E6:7C
