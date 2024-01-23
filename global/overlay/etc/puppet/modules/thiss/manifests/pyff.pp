@@ -5,7 +5,7 @@ class thiss::pyff($pyff_version="thiss",$output="/etc/thiss/metadata.json") {
     image   => $image_tag,
     require => Class['sunet::dockerhost'],
   } ->
-  file {["/etc/thiss","/opt/pyff"]: ensure => directory } ->
+  file {["/etc/thiss","/opt/pyff","/opt/pyff/metadata"]: ensure => directory } ->
   file {"/usr/local/sbin/run-pyff":
      content => template("thiss/pyff/run-pyff.erb"),
      mode    => '0755'
