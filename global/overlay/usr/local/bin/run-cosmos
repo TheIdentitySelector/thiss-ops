@@ -102,8 +102,8 @@ machine_is_healthy() {
         # shellcheck source=/dev/null
         . $FLEETLOCK_CONFIG || return 1
         if [ -n "$fleetlock_healthcheck_timeout" ]; then
-           optional_args+=("--timeout")
-           optional_args+=("$fleetlock_healthcheck_timeout")
+            optional_args+=("--timeout")
+            optional_args+=("$fleetlock_healthcheck_timeout")
         fi
         echo "Running any health checks"
         $HEALTHCHECK_TOOL "${optional_args[@]}" || return 1
