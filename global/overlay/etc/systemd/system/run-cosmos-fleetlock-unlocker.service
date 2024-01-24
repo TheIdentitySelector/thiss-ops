@@ -1,0 +1,11 @@
+[Unit]
+Description=run-cosmos fleetlock unlocker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/run-cosmos fleetlock-unlock
+
+[Install]
+WantedBy=multi-user.target

@@ -9,6 +9,7 @@ readonly LOCK_FD=200
 readonly FLEETLOCK_CONFIG=/etc/run-cosmos-fleetlock-conf
 readonly FLEETLOCK_DISABLE_FILE=/etc/run-cosmos-fleetlock-disable
 readonly FLEETLOCK_TOOL=/usr/local/bin/sunet-fleetlock
+readonly FLEETLOCK_UNLOCK_SERVICE=run-cosmos-fleetlock-unlocker.service
 readonly HEALTHCHECK_TOOL=/usr/local/bin/sunet-machine-healthy
 readonly HEALTHCHECK_DISABLE_FILE=/etc/run-cosmos-healthcheck-disable
 
@@ -33,60 +34,109 @@ eexit() {
     exit 1
 }
 
+oexit() {
+    local info_str="$*"
+
+    echo "$info_str"
+    exit 0
+}
+
+fleetlock_enable_unlock_service() {
+    # In case e.g. the unit file has been removed "FragmentPath" will still
+    # return the old filename until daemon-reload is called, so do that here
+    # before we try checking for the FragmentPath.
+    need_reload=$(systemctl show --property NeedDaemonReload $FLEETLOCK_UNLOCK_SERVICE | awk -F= '{print $2}')
+    if [ "$need_reload" = "yes" ]; then
+        systemctl daemon-reload
+    fi
+
+    unit_file=$(systemctl show --property FragmentPath $FLEETLOCK_UNLOCK_SERVICE | awk -F= '{print $2}')
+    if [ -z "$unit_file" ]; then
+        # No unit file matching the service name, do nothing
+        return 0
+    fi
+
+    # Enable the service if needed
+    systemctl is-enabled --quiet $FLEETLOCK_UNLOCK_SERVICE || systemctl enable --quiet $FLEETLOCK_UNLOCK_SERVICE
+}
+
 fleetlock_lock() {
-   if [ ! -f $FLEETLOCK_DISABLE_FILE ] && [ -f $FLEETLOCK_CONFIG ] && [ -x $FLEETLOCK_TOOL ]; then
-      local fleetlock_group=""
-      # shellcheck source=/dev/null
-      . $FLEETLOCK_CONFIG || return 1
-      if [ -z "$fleetlock_group" ]; then
-          echo "Unable to set fleetlock_group"
-	  return 1
-      fi
-      echo "Getting fleetlock lock"
-      $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --lock || return 1
-   fi
-   return 0
+    if [ ! -f $FLEETLOCK_DISABLE_FILE ] && [ -f $FLEETLOCK_CONFIG ] && [ -x $FLEETLOCK_TOOL ]; then
+        # Make sure the unlock service is enabled before we take a lock if
+        # cosmos ends up rebooting the machine before fleetlock_unlock() is
+        # called.
+        fleetlock_enable_unlock_service || return 1
+        local fleetlock_group=""
+        # shellcheck source=/dev/null
+        . $FLEETLOCK_CONFIG || return 1
+        if [ -z "$fleetlock_group" ]; then
+            echo "Unable to set fleetlock_group"
+            return 1
+        fi
+        echo "Getting fleetlock lock"
+        $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --lock || return 1
+    fi
+    return 0
 }
 
 fleetlock_unlock() {
-   if [ ! -f $FLEETLOCK_DISABLE_FILE ] && [ -f $FLEETLOCK_CONFIG ] && [ -x $FLEETLOCK_TOOL ]; then
-      local fleetlock_group=""
-      # shellcheck source=/dev/null
-      . $FLEETLOCK_CONFIG || return 1
-      if [ -z "$fleetlock_group" ]; then
-          echo "Unable to set fleetlock_group"
-	  return 1
-      fi
-      machine_is_healthy || return 1
-      echo "Releasing fleetlock lock"
-      $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --unlock || return 1
-   fi
-   return 0
+    if [ ! -f $FLEETLOCK_DISABLE_FILE ] && [ -f $FLEETLOCK_CONFIG ] && [ -x $FLEETLOCK_TOOL ]; then
+        local fleetlock_group=""
+        # shellcheck source=/dev/null
+        . $FLEETLOCK_CONFIG || return 1
+        if [ -z "$fleetlock_group" ]; then
+            echo "Unable to set fleetlock_group"
+            return 1
+        fi
+        machine_is_healthy || return 1
+        echo "Releasing fleetlock lock"
+        $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --unlock || return 1
+    fi
+    return 0
 }
 
 machine_is_healthy() {
-   if [ ! -f $HEALTHCHECK_DISABLE_FILE ] && [ -x $HEALTHCHECK_TOOL ]; then
-       echo "Running any health checks"
-       $HEALTHCHECK_TOOL || return 1
-   fi
-   return 0
+    if [ ! -f $HEALTHCHECK_DISABLE_FILE ] && [ -x $HEALTHCHECK_TOOL ]; then
+        local fleetlock_healthcheck_timeout=""
+        local optional_args=()
+        # shellcheck source=/dev/null
+        . $FLEETLOCK_CONFIG || return 1
+        if [ -n "$fleetlock_healthcheck_timeout" ]; then
+           optional_args+=("--timeout")
+           optional_args+=("$fleetlock_healthcheck_timeout")
+        fi
+        echo "Running any health checks"
+        $HEALTHCHECK_TOOL "${optional_args[@]}" || return 1
+    fi
+    return 0
 }
 
 main () {
-   lock "$PROGNAME" || eexit "Only one instance of $PROGNAME can run at one time."
-   fleetlock_lock || eexit "Unable to acquire fleetlock lock."
-   cosmos "$@" update
-   cosmos "$@" apply
-   fleetlock_unlock || eexit "Unable to release fleetlock lock."
+    lock "$PROGNAME" || eexit "Only one instance of $PROGNAME can run at one time."
+    fleetlock_lock || eexit "Unable to acquire fleetlock lock."
+    cosmos "$@" update
+    cosmos "$@" apply
+    fleetlock_unlock || eexit "Unable to release fleetlock lock."
 
-   touch /var/run/last-cosmos-ok.stamp
+    touch /var/run/last-cosmos-ok.stamp
 
-   find /var/lib/puppet/reports/ -type f -mtime +10 -print0 | xargs -0 rm -f
+    find /var/lib/puppet/reports/ -type f -mtime +10 -print0 | xargs -0 rm -f
+
+    if [ -f /cosmos-reboot ]; then
+        rm -f /cosmos-reboot
+        reboot
+    fi
 }
 
-main "$@"
-
-if [ -f /cosmos-reboot ]; then
-   rm -f /cosmos-reboot
-   reboot
-fi
+# Most of the time we just pass on any arguments to the underlying cosmos
+# tools, if adding special cases here make sure to not shadow any arguments
+# (like "-v") which users expect to be passed on to cosmos.
+case "$1" in
+    "fleetlock-unlock")
+        lock "$PROGNAME" || oexit "$PROGNAME appears locked by a running run-cosmos, let it handle unlocking instead."
+        fleetlock_unlock || eexit "Unable to release fleetlock lock."
+        ;;
+    *)
+        main "$@"
+        ;;
+esac
