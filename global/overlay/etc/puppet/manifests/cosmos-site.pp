@@ -481,6 +481,9 @@ class nagios_monitor {
   nagioscfg::command {'check_haproxy_backend':
     command_line   => "/usr/lib/nagios/plugins/check_haproxy.rb -u '\$ARG1\$'"
   }
+  nagioscfg::command {'check_service_cluster':
+    command_line   => "/usr/lib/nagios/plugins/check_cluster --service -l '\$ARG1\$' -w '\$ARG2\$' -c '\$ARG3\$' -d '\$ARG4\$'"
+  }
   $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org','md-staging.thiss.io']
   nagioscfg::host {$public_hosts: sort_alphabetically => true }
   $md_haproxy_hosts = ['md-lb.thiss.io', 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
@@ -526,6 +529,20 @@ class nagios_monitor {
     use            => 'monitor-service',
     check_command  => 'check_ssl_cert_3_without_ocsp!30!14!443',
     description    => 'check https infra certificate validity on port 443',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_web_clustercheck':
+    host_name      => [localhost],
+    use            => 'monitor-service',
+    check_command  => 'check_service_cluster!"check web"!0!1!$SERVICESTATEID:md.aws1.geant.eu.seamlessaccess.org:check web$,$SERVICESTATEID:md.aws2.geant.eu.seamlessaccess.org:check web$,$SERVICESTATEID:md.ntx.sunet.eu.seamlessaccess.org:check web$,$SERVICESTATEID:md.se-east.sunet.eu.seamlessaccess.org:check web$',
+    description    => 'check web - md clustercheck',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'check_metadata_clustercheck':
+    host_name      => [localhost],
+    use            => 'monitor-service',
+    check_command  => 'check_service_cluster!"check metadata"!0!1!$SERVICESTATEID:md.aws1.geant.eu.seamlessaccess.org:check metadata for md.aws1.geant.eu.seamlessaccess.org$,$SERVICESTATEID:md.aws2.geant.eu.seamlessaccess.org:check metadata for md.aws2.geant.eu.seamlessaccess.org$,$SERVICESTATEID:md.ntx.sunet.eu.seamlessaccess.org:check metadata for md.ntx.sunet.eu.seamlessaccess.org$,$SERVICESTATEID:md.se-east.sunet.eu.seamlessaccess.org:check metadata for md.se-east.sunet.eu.seamlessaccess.org$', 
+    description    => 'check metadata - md clustercheck',
     contact_groups => ['alerts']
   }
   $md_urls = concat ([ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io'] , $md_haproxy_hosts)
