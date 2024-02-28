@@ -531,14 +531,21 @@ class nagios_monitor {
     description    => 'check https infra certificate validity on port 443',
     contact_groups => ['alerts']
   }
-  nagioscfg::service {'check_web_clustercheck':
+  nagioscfg::service {'static_check_web_clustercheck':
+    host_name      => [localhost],
+    use            => 'monitor-service',
+    check_command  => 'check_service_cluster!"check web"!0!1!$SERVICESTATEID:static.aws1.geant.eu.seamlessaccess.org:check web$,$SERVICESTATEID:static.aws2.geant.eu.seamlessaccess.org:check web$,$SERVICESTATEID:static.ntx.sunet.eu.seamlessaccess.org:check web$,$SERVICESTATEID:static.se-east.sunet.eu.seamlessaccess.org:check web$',
+    description    => 'check web - static clustercheck',
+    contact_groups => ['alerts']
+  }
+  nagioscfg::service {'md_check_web_clustercheck':
     host_name      => [localhost],
     use            => 'monitor-service',
     check_command  => 'check_service_cluster!"check web"!0!1!$SERVICESTATEID:md.aws1.geant.eu.seamlessaccess.org:check web$,$SERVICESTATEID:md.aws2.geant.eu.seamlessaccess.org:check web$,$SERVICESTATEID:md.ntx.sunet.eu.seamlessaccess.org:check web$,$SERVICESTATEID:md.se-east.sunet.eu.seamlessaccess.org:check web$',
     description    => 'check web - md clustercheck',
     contact_groups => ['alerts']
   }
-  nagioscfg::service {'check_metadata_clustercheck':
+  nagioscfg::service {'md_check_metadata_clustercheck':
     host_name      => [localhost],
     use            => 'monitor-service',
     check_command  => 'check_service_cluster!"check metadata"!0!1!$SERVICESTATEID:md.aws1.geant.eu.seamlessaccess.org:check metadata for md.aws1.geant.eu.seamlessaccess.org$,$SERVICESTATEID:md.aws2.geant.eu.seamlessaccess.org:check metadata for md.aws2.geant.eu.seamlessaccess.org$,$SERVICESTATEID:md.ntx.sunet.eu.seamlessaccess.org:check metadata for md.ntx.sunet.eu.seamlessaccess.org$,$SERVICESTATEID:md.se-east.sunet.eu.seamlessaccess.org:check metadata for md.se-east.sunet.eu.seamlessaccess.org$', 
