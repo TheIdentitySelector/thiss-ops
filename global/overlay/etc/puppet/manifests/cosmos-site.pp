@@ -470,7 +470,7 @@ class nagios_monitor {
     command_line   => "/usr/lib/nagios/plugins/check_ssl_cert -A -H '\$HOSTNAME\$' --ignore-ocsp -c '\$ARG2\$' -w '\$ARG1\$' -p '\$ARG3\$'"
   }
   nagioscfg::command {'check_website':
-    command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'"
+    command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$' --sni"
   }
   nagioscfg::command {'check_website_http':
     command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -u '\$ARG1\$' -s '\$ARG2\$'"
