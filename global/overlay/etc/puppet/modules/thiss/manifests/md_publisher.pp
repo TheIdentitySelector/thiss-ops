@@ -35,16 +35,13 @@ class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $w
       critical_age => '86400'
    }
 
-   if ($::fqdn == 'a-1.thiss.io') {
-      $md_files = ['eduGAIN.xml', 'incommon.xml', 'openathens.xml', 'swamid-registered.xml']
-      $md_files.each |$md_file|{
-        sunet::nagios::nrpe_check_fileage {"${md_file}":
-         filename => "/opt/pyff/metadata/${md_file}",
-         warning_age => '2100',
-         critical_age => '86400'
-        }
+   $md_files = ['eduGAIN.xml', 'incommon.xml', 'openathens.xml', 'swamid-registered.xml']
+   $md_files.each |$md_file|{
+      sunet::nagios::nrpe_check_fileage {"${md_file}":
+        filename => "/opt/pyff/metadata/${md_file}",
+        warning_age => '2100',
+        critical_age => '86400'
       }
-   }
-
+    }
 }
 
