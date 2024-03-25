@@ -120,12 +120,12 @@ md-staging-1.thiss.io:
       base_url: https://md-staging.thiss.io
       post: /usr/sbin/service docker-thiss_mdq restart
    sunet::frontend::register_sites:
-      sites:
-         'md-staging.thiss.io':
-            frontends:
-               - 'se-fre-lb-1.sunet.se'
-               - 'se-tug-lb-1.sunet.se'
-            port: '80'
+     sites:
+       'md-staging.thiss.io':
+         frontends:
+            - 'se-fre-lb-1.sunet.se'
+            - 'se-tug-lb-1.sunet.se'
+         port: '80'
    https:
    http:
 
@@ -156,9 +156,6 @@ md-staging-1.thiss.io:
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-md-ntx'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 '^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
@@ -168,9 +165,6 @@ md-staging-1.thiss.io:
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-md-se-east'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 '^md-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
    thiss::dockerhost:
@@ -180,9 +174,6 @@ md-staging-1.thiss.io:
       src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-md-aws1'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 '^md-[0-9]\.aws2\.geant\.eu\.seamlessaccess.org$':
    thiss::dockerhost:
@@ -192,9 +183,6 @@ md-staging-1.thiss.io:
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-md-aws2'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -205,9 +193,6 @@ meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-meta'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -218,9 +203,6 @@ meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-meta'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 meta.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -233,9 +215,6 @@ meta.aws1.geant.eu.seamlessaccess.org:
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-meta'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 meta.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -248,9 +227,6 @@ meta.aws2.geant.eu.seamlessaccess.org:
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-meta'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 md.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -293,9 +269,6 @@ md.aws2.geant.eu.seamlessaccess.org:
       cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
    sunet::server:
       encrypted_swap: false
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ntx'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 static.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -306,9 +279,6 @@ static.ntx.sunet.eu.seamlessaccess.org:
       location: ntx
    sunet::server:
       encrypted_swap: false
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ha'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 '^static-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
@@ -320,9 +290,6 @@ static.ntx.sunet.eu.seamlessaccess.org:
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
       cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-se-east'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 static.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -332,9 +299,6 @@ static.se-east.sunet.eu.seamlessaccess.org:
       location: se-east
    sunet::server:
       encrypted_swap: false
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ha'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 '^static-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
    thiss::dockerhost:
@@ -346,9 +310,6 @@ static.se-east.sunet.eu.seamlessaccess.org:
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
       cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-aws1'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 static.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -356,9 +317,6 @@ static.aws1.geant.eu.seamlessaccess.org:
    thiss::haproxy_static:
       image_tag: 20230614-prod
       location: aws1
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ha'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 '^static-[0-9]\.aws2\.geant\.eu\.seamlessaccess.org$':
    thiss::dockerhost:
@@ -370,9 +328,6 @@ static.aws1.geant.eu.seamlessaccess.org:
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
       cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-aws2'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 static.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
@@ -380,9 +335,6 @@ static.aws2.geant.eu.seamlessaccess.org:
    thiss::haproxy_static:
       image_tag: 20230614-prod
       location: aws2
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ha'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
