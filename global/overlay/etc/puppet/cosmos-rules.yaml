@@ -169,7 +169,7 @@ md-staging-1.thiss.io:
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-md-se-east'
+      fleetlock_group: 'seamless-md-east'
       fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 '^md-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
@@ -321,7 +321,7 @@ static.ntx.sunet.eu.seamlessaccess.org:
       context: seamlessaccess.org
       cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
    thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-se-east'
+      fleetlock_group: 'seamless-static-east'
       fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 static.se-east.sunet.eu.seamlessaccess.org:
