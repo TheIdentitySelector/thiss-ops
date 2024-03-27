@@ -3,13 +3,14 @@ class thiss::fleetlock_reboot(
   String $fleetlock_server,
 ){
 
+  # Configuration for fleetlock
   $content = "fleetlock_group=${fleetlock_group}"
   file { '/etc/run-cosmos-fleetlock-conf':
     ensure  => file,
     content => $content,
   }
 
-  $password = safe_hiera('fleetlock_password',[])
+  $password = safe_hiera('fleetlock_password', [])
 
   $content2 = "[${fleetlock_group}]
 server = ${fleetlock_server}
@@ -23,15 +24,27 @@ password = ${password}"
       content => $content2,
      }
 
+  # Base directory for health checks
   file { '/etc/sunet-machine-healthy':
     ensure => directory,
   }
   -> file { '/etc/sunet-machine-healthy/health-checks.d':
       ensure => directory,
      }
-  -> file { '/etc/sunet-machine-healthy/health-checks.d/check_web.check':
+
+  # Conditional logic for health checks based on the FQDN
+  if $facts['fqdn'] =~ /^static\./ {
+    file { '/etc/sunet-machine-healthy/health-checks.d/check_haproxy.check':
+      ensure  => file,
+      content => template("thiss/fleetlock_reboot/check_haproxy.check.erb"), # Adjust the template path as necessary
+      mode    => '0744',
+    }
+  } elsif $facts['fqdn'] !~ /^meta\./ {
+    file { '/etc/sunet-machine-healthy/health-checks.d/check_web.check':
       ensure  => file,
       content => template("thiss/fleetlock_reboot/check_web.check.erb"),
       mode    => '0744',
-     }
+    }
+  }
 }
+
