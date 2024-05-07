@@ -26,7 +26,8 @@ found = False
 classes = dict()
 for reg, cls in rules.items():
     if re.search(reg, node_name):
-        classes.update(cls)
+        if cls:
+            classes.update(cls)
         found = True
 
 if not found:

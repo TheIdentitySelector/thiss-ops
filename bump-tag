@@ -1,58 +1,273 @@
 #!/bin/bash
 
-set -e
-
-test -f cosmos.conf && . ./cosmos.conf
-
-echo "Fetching any updates from server:"
-git pull
+echo "Fetching updates from $(git remote get-url origin) ..."
 echo ""
-
-if [[ -z $1 ]]; then
-	deftag=$(basename "$PWD")
-else
-	deftag="$1"
+if ! git pull --verify-signatures; then
+    echo "WARNING: git pull did not exit successfully."
+    echo ""
+    echo "EXITING the script. In order to tag your changes,"
+    echo "investigate and then run bump-tag again."
+    exit 1
 fi
-tagpfx=${tag:="${deftag}"}
 
-last_tag=$(git tag -l "${tagpfx}-*" | sort | tail -1)
+if [[ -f ./cosmos.conf ]]; then
+    # shellcheck disable=SC1091
+    source ./cosmos.conf
+fi
 
-echo "Verifying last tag ${last_tag}:"
-(git tag -v "${last_tag}" | grep ^gpg:) || true
-# again to not mask exit status of git with grep
-git tag -v "${last_tag}" >/dev/null 2>&1
-echo ""
+# A tab will be used in multiple commands for git
+t=$'\t'
+
+# Set the default tag according to the repo
+# or by entering a name as the first argument.
+if [[ -z "${1}" ]]; then
+    deftag="$(basename "${PWD}")"
+else
+    deftag="${1}"
+fi
+
+# Set the tag prefix according to:
+# 1. $tag, if specified in cosmos.conf,
+# 2. or $deftag, as specified above.
+# shellcheck disable=SC2154
+if [[ -n "${tag}" ]]; then
+    tagpfx="${tag}"
+else
+    tagpfx="${deftag}"
+fi
+
+# This is the current branch that Git will diff against.
+this_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Check why the tag couldn't be verified
+# First argument: the tag to investigate
+check_tag_sig_failure()
+{
+    local __tag_to_check="${1}"
+
+    # shellcheck disable=SC2155
+    local __verify_tag_output="$(git verify-tag --raw "${__tag_to_check}" 2>&1)"
+
+    if echo "${__verify_tag_output}" | grep -q "VALIDSIG"; then
+
+        if echo "${__verify_tag_output}" | grep -q "EXPKEYSIG"; then
+
+            echo ""
+            echo "WARNING: The tag was correctly signed, but the copy of"
+            echo "the key that you have stored on your computer has expired."
+            echo "Check for an updated key in:"
+            echo "global/overlay/etc/cosmos/keys/"
+            echo ""
+            echo "EXITING the script. In order to tag your changes,"
+            echo "investigate and then run bump-tag again."
+            exit 1
+
+        else
+
+            echo ""
+            echo "WARNING: The tag was probably correctly signed,"
+            echo "but it still didn't pass the verification check."
+            echo ""
+            echo "EXITING the script. In order to tag your changes,"
+            echo "investigate and then run bump-tag again."
+            exit 1
+
+        fi
+
+    else
+
+        echo ""
+        echo "WARNING: The signature of the tag could not be verified."
+        echo "Please make sure that you have imported the key and that"
+        echo "the key is signed by a trusted party."
+        echo "Keys used for signing in a Cosmos repo can be found at:"
+        echo "global/overlay/etc/cosmos/keys/"
+        echo ""
+        echo "EXITING the script. In order to tag your changes,"
+        echo "investigate and then run bump-tag again."
+        exit 1
+
+    fi
+}
+
+check_commit_sig_failure()
+{
+    local __commit_to_check="${1}"
+    local __file_related_to_commit="${2}"
+
+    # shellcheck disable=SC2155
+    local __verify_commit_output="$(git verify-commit --raw "${__commit_to_check}" 2>&1)"
+
+    if echo "${__verify_commit_output}" | grep -q "VALIDSIG"; then
+
+        if echo "${__verify_commit_output}" | grep -q "EXPKEYSIG"; then
+
+            echo "WARNING: The commit to ${__file_related_to_commit}"
+            echo "was correctly signed, but the copy of the key that"
+            echo "you have stored on your computer has expired."
+            echo "Check for an updated key in:"
+            echo "global/overlay/etc/cosmos/keys/"
+            echo ""
+            echo "EXITING the script. In order to tag your changes,"
+            echo "investigate and then run bump-tag again."
+            exit 1
+
+        else
+
+            echo "WARNING: The commit to ${__file_related_to_commit}"
+            echo "was probably correctly signed, but it still didn't"
+            echo "pass the verification check."
+            echo ""
+            echo "EXITING the script. In order to tag your changes,"
+            echo "investigate and then run bump-tag again."
+            exit 1
+
+        fi
+
+    else
+
+        echo "WARNING: The commit to ${__file_related_to_commit}"
+        echo "could not be verified. Please make sure that you have"
+        echo "imported the key and that the key is signed by a trusted party."
+        echo ""
+        echo "EXITING the script. In order to tag your changes,"
+        echo "investigate and then run bump-tag again."
+        exit 1
+
+    fi
+}
+
+# Verify the last commit of a file
+# First argument: the file to verify
+verify_last_commit()
+{
+    local __file_to_verify="${1}"
+
+    if [[ ! -f "${__file_to_verify}" ]]; then
+        return 1
+    fi
+
+    if [[ -n "$(git status --porcelain "${__file_to_verify}")" ]]; then
+        echo ""
+        echo "INFO: local changes detected in ${__file_to_verify},"
+        echo "Not checking the signature of the last commit to ${__file_to_verify}."
+        echo ""
+        return 1
+    fi
+
+    # shellcheck disable=SC2155
+    local __last_commit="$(git log -n 1 --pretty=format:%H -- "${__file_to_verify}")"
+
+    if ! git verify-commit "${__last_commit}" 2> /dev/null; then
+        echo ""
+        echo "WARNING: Untrusted modification to ${__file_to_verify}:"
+        echo "----------------------------"
+        git verify-commit "$(git log -n 1 --pretty=format:%H -- "${__file_to_verify}")"
+        echo "----------------------------"
+
+        check_commit_sig_failure "${__last_commit}" "${__file_to_verify}"
+    fi
+}
+
+tag_list="$(git tag -l "${tagpfx}-*")"
+# shellcheck disable=SC2181
+if [[ ${?} -ne 0 ]] || [[ -z "${tag_list}" ]]; then
+
+    if [[ -z ${ALLOW_UNSIGNED_COMMITS_WITHOUT_TAGS} ]]; then
+      echo "No tags found, verifying all commits instead."
+      echo "Please set environment variable ALLOW_UNSIGNED_COMMITS_WITHOUT_TAGS if you want to disable this check."
+      # %H = commit hash
+      # %G? = show "G" for a good (valid) signature
+      git_log="$(git log --pretty="format:%H${t}%G?" \
+                         --first-parent \
+                         | grep -v "${t}G$")"
+    fi
+
+else
+
+    last_tag="$(echo "${tag_list}" | sort | tail -1)"
+    echo "Verifying last tag: ${last_tag} and the commits after that"
+
+    if ! git verify-tag "${last_tag}"; then
+        check_tag_sig_failure "${last_tag}"
+    fi
+
+    tag_object="$(git verify-tag -v "${last_tag}" 2>&1 | grep ^object | cut -d' ' -f2)"
+
+    # The commits after the last valid signed git tag that we need to check
+    revision_range="${tag_object}..HEAD"
+
+    # Filter out the commits that are unsigned or untrusted
+    # %H = commit hash
+    # %G? = show "G" for a good (valid) signature
+    git_log="$(git log --pretty="format:%H${t}%G?" "${revision_range}" \
+                       --first-parent \
+                       | grep -v "${t}G$")"
+
+fi
+
+if [[ -n "${git_log}" ]]; then
+    echo ""
+    echo -e "------WARNING: unsigned or untrusted commits after the last tag------"
+    echo "${git_log}"
+    echo -e "---------------------------------------------------------------------"
+    echo "Quick referens on how to configure signing of commits in ~/.gitconfig:"
+    echo "[user]"
+    echo "    signingkey = your-prefered-key-id"
+    echo "[commit]"
+    echo "    gpgsign = true"
+    echo ""
+    echo "EXITING the script. In order to tag your changes,"
+    echo "please make sure that you have configured signing of"
+    echo "your own commits and that the listed unsigned commits"
+    echo "have been made by a trusted party and are not malicous."
+    exit 1
+fi
+
+# Always check that the last commit of certain
+# sensitive files is trusted, without taking into
+# account whether the last tag was trusted or not.
+verify_last_commit "./scripts/jsonyaml-no-output.py"
+verify_last_commit "./bump-tag"
+
+# Test the syntax of each YAML-file to be tagged.
+for file in $(git diff --name-only "${last_tag}..${this_branch}" | grep -E "^.*\.(yaml|yml)$"); do
+    if [[ -f "${file}" ]]; then
+        ./scripts/jsonyaml-no-output.py yaml "${file}"
+    fi
+done
 
 echo "Differences between tag ${last_tag} and what you are about to sign:"
-this_branch=$(git rev-parse --abbrev-ref HEAD)
-env PAGER=cat git diff --color "${last_tag}..${this_branch}"
+# With PAGER=cat, git diff will simply dump the output to the screen.
+# shellcheck disable=SC2037
+PAGER="cat" git diff --color "${last_tag}..${this_branch}"
 
+# Iterate over the $last_tag until $this_tag is set to a later version
 iter=1
 ok=
-while test -z "$ok"; do
-	this_tag=$(date "+${tagpfx}-%Y-%m-%d-v$(printf "%02d" $iter)")
-	iter=$((iter + 1))
-	case $( (
-		echo "${this_tag}"
-		echo "${last_tag}"
-	) | sort | tail -1) in
-	"${last_tag}") ;;
+while [[ -z "${ok}" ]]; do
+    this_tag="$(date +"${tagpfx}-%Y-%m-%d-v$(printf "%02d" "${iter}")")"
+    iter="$(( iter + 1))"
 
-	"${this_tag}")
-		ok=yes
-		;;
-	esac
+    case "$( (echo "${this_tag}"; echo "${last_tag}") | sort | tail -1 )" in
+        "${last_tag}")
+            ;;
+        "${this_tag}")
+            ok=yes
+            ;;
+    esac
 done
 
 if [[ "${deftag}" != "${tagpfx}" ]]; then
-	echo -e "Using new tag \e[94m${this_tag}\e[0m according to pattern in cosmos.conf"
+    echo -e "Using new tag \e[94m${this_tag}\e[0m according to pattern in cosmos.conf"
 else
-	echo -e "Using new tag \e[94m${this_tag}\e[0m"
+    echo -e "Using new tag \e[94m${this_tag}\e[0m"
 fi
 
 echo -e "\e[1mONLY SIGN IF YOU APPROVE OF VERIFICATION AND DIFF ABOVE\e[0m"
 
 # GITTAGEXTRA is for putting things like "-u 2117364A"
+# Note that this variable cannot be quoted if left empty.
 # shellcheck disable=SC2086
 git tag ${GITTAGEXTRA} -m bump. -s "${this_tag}"
 

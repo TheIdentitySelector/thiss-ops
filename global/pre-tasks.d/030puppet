@@ -7,10 +7,25 @@ set -e
 
 stamp="$COSMOS_BASE/stamps/puppet-tools-v01.stamp"
 
-if ! test -f $stamp -a -f /usr/bin/puppet; then
+if ! test -f "${stamp}" -a -f /usr/bin/puppet; then
     apt-get update
     apt-get -y install puppet
+    . /etc/os-release
 
-    mkdir -p `dirname $stamp`
-    touch $stamp
+    # Note: in posix shell, string comparison is done with a single =
+    if [ "${ID}" = "debian" ] && [ "${VERSION_ID}" -ge 12 ]; then
+      apt-get -y install \
+          cron \
+          puppet-module-camptocamp-augeas \
+          puppet-module-puppetlabs-apt \
+          puppet-module-puppetlabs-concat \
+          puppet-module-puppetlabs-cron-core \
+          puppet-module-puppetlabs-stdlib \
+          puppet-module-puppetlabs-vcsrepo
+
+    fi
+
+    mkdir -p "$(dirname "${stamp}")"
+    touch "${stamp}"
 fi
+

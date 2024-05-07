@@ -19,6 +19,9 @@ test -f "$stamp" && exit 0
 
 if [ ! -f /usr/bin/eyaml ] || [ ! -d /usr/share/doc/yaml-mode ]; then
     apt-get update
+    # If we don't install emacs before yaml-mode the default emacs package
+    # will be emacs-gtk which brings x11 with friends which we don't need.
+    apt-get -y install emacs-nox
     apt-get -y install hiera-eyaml yaml-mode
 fi
 
