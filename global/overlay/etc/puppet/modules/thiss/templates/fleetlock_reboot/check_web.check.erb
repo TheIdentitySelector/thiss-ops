@@ -5,7 +5,7 @@ do
   exec=$(/usr/lib/nagios/plugins/check_http -H localhost -u http://localhost)
   exec_result=$?
   if [[ $exec_result -ne 0 ]]; then
-        echo "thiss-mdq not working"
+        echo "Service is not working!"
   else
      echo "$exec: Service is working!"
      exit 0
