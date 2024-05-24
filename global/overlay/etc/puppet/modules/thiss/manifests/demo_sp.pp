@@ -1,4 +1,4 @@
-class thiss::demo_sp($version='latest')
+class thiss::demo_sp($version='stable')
 {
   sunet::docker_run { 'always-https':
     image => 'docker.sunet.se/always-https',
