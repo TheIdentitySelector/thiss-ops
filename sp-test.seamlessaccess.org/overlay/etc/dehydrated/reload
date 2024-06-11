@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker exec demo-sp /usr/sbin/apache2ctl graceful
