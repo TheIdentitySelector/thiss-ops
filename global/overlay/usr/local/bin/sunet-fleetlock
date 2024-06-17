@@ -97,10 +97,7 @@ def do_fleetlock_request(
                 timeout=args.request_timeout,
                 auth=("", config[args.lock_group]["password"]),
             )
-        except Exception as e:  # pylint: disable=broad-exception-caught
-            if isinstance(e, TimeoutException):
-                # This means our global timer is up, no more time to retry
-                raise e
+        except requests.exceptions.ConnectionError as e:
             print(f"POST request failed: {e}")
             time.sleep(retry_sleep_delay)
             continue
