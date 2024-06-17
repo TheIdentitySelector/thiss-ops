@@ -24,20 +24,21 @@
 # When modifying this code please make sure it is passed through the following
 # tools:
 # ===
+# isort
 # black
 # pylint
 # mypy --strict
 # ===
 
-import platform
-import sys
-import signal
-import time
 import argparse
 import configparser
 import os.path
-from typing import Optional, Union
+import platform
+import signal
+import sys
+import time
 from types import FrameType
+from typing import Optional, Union
 
 import requests
 
@@ -80,21 +81,14 @@ def do_fleetlock_request(
     request_id_key = "request-id"
     request_id = None
 
+    retry_sleep_delay = 1
+
     # Loop forever: we depend on the SIGALRM timout to raise an error if it
     # takes too long
     while True:
         if args.verbose:
             print(f"{operation} POST at url {url}")
 
-<<<<<<< HEAD
-        resp = requests.post(
-            url,
-            headers=fleetlock_headers,
-            json=fleetlock_data,
-            timeout=args.timeout,
-            auth=("", config[args.lock_group]["password"]),
-        )
-=======
         try:
             resp = requests.post(
                 url,
@@ -107,7 +101,6 @@ def do_fleetlock_request(
             print(f"POST request failed: {e}")
             time.sleep(retry_sleep_delay)
             continue
->>>>>>> e315282 (Use more strict exception checking)
 
         if request_id_key in resp.headers:
             request_id = resp.headers[request_id_key]
@@ -141,7 +134,7 @@ def do_fleetlock_request(
             + f"({request_id_key}: {request_id})"
         )
 
-        time.sleep(1)
+        time.sleep(retry_sleep_delay)
 
 
 def read_config(args: argparse.Namespace) -> Union[configparser.ConfigParser, None]:
@@ -253,3 +246,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
