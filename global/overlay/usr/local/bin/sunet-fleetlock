@@ -86,6 +86,7 @@ def do_fleetlock_request(
         if args.verbose:
             print(f"{operation} POST at url {url}")
 
+<<<<<<< HEAD
         resp = requests.post(
             url,
             headers=fleetlock_headers,
@@ -93,6 +94,20 @@ def do_fleetlock_request(
             timeout=args.timeout,
             auth=("", config[args.lock_group]["password"]),
         )
+=======
+        try:
+            resp = requests.post(
+                url,
+                headers=fleetlock_headers,
+                json=fleetlock_data,
+                timeout=args.request_timeout,
+                auth=("", config[args.lock_group]["password"]),
+            )
+        except requests.exceptions.ConnectionError as e:
+            print(f"POST request failed: {e}")
+            time.sleep(retry_sleep_delay)
+            continue
+>>>>>>> e315282 (Use more strict exception checking)
 
         if request_id_key in resp.headers:
             request_id = resp.headers[request_id_key]
