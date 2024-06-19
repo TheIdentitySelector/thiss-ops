@@ -13,7 +13,7 @@ if ! test -f "${stamp}" -a -f /usr/bin/puppet; then
     . /etc/os-release
 
     # Note: in posix shell, string comparison is done with a single =
-    if [ "${ID}" = "debian" ] && [ "${VERSION_ID}" -ge 12 ]; then
+    if [ "${ID}" = "debian" ] && [ "${VERSION_ID}" -ge 12 ] || ([ "${ID}" = "ubuntu" ] && $(dpkg --compare-versions ${VERSION_ID} ge 24.04)) ; then
       apt-get -y install \
           cron \
           puppet-module-camptocamp-augeas \
