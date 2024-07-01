@@ -119,7 +119,7 @@ md-staging-1.thiss.io:
       src: https://a-staging-1.thiss.io/metadata.json
       base_url: https://md-staging.thiss.io
       post: /usr/sbin/service docker-thiss_mdq restart
-   sunet::frontend::register_sites:
+   sunet::lb::register_sites:
       sites:
          'md-staging.thiss.io':
             frontends:
