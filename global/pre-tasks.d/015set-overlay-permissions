@@ -14,10 +14,17 @@ if ! test -d "$MODEL_OVERLAY"; then
     exit 0
 fi
 
+args=""
+if [ "x$COSMOS_VERBOSE" = "xy" ]; then
+    args="-v"
+fi
+
 if [ -d "$MODEL_OVERLAY/root" ]; then
-    args=""
-    if [ "x$COSMOS_VERBOSE" = "xy" ]; then
-        args="-v"
-    fi
+    chown ${args} root:root "$MODEL_OVERLAY"/root
     chmod ${args} 0700 "$MODEL_OVERLAY"/root
+fi
+
+if [ -d "$MODEL_OVERLAY/root/.ssh" ]; then
+    chown ${args} -R root:root "$MODEL_OVERLAY"/root/.ssh
+    chmod ${args} 0700 "$MODEL_OVERLAY"/root/.ssh
 fi
