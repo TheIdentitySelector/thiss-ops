@@ -97,7 +97,10 @@ def do_fleetlock_request(
                 timeout=args.request_timeout,
                 auth=("", config[args.lock_group]["password"]),
             )
-        except requests.exceptions.ConnectionError as e:
+        except (
+            requests.exceptions.ConnectionError,
+            requests.exceptions.ReadTimeout,
+        ) as e:
             print(f"POST request failed: {e}")
             time.sleep(retry_sleep_delay)
             continue
