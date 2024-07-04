@@ -67,14 +67,19 @@ fleetlock_lock() {
         # called.
         fleetlock_enable_unlock_service || return 1
         local fleetlock_group=""
+        local optional_args=()
         # shellcheck source=/dev/null
         . $FLEETLOCK_CONFIG || return 1
         if [ -z "$fleetlock_group" ]; then
             echo "Unable to set fleetlock_group"
             return 1
         fi
+        if [ -n "$fleetlock_lock_timeout" ]; then
+            optional_args+=("--timeout")
+            optional_args+=("$fleetlock_lock_timeout")
+        fi
         echo "Getting fleetlock lock"
-        $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --lock || return 1
+        $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --lock "${optional_args[@]}" || return 1
     fi
     return 0
 }
@@ -82,15 +87,20 @@ fleetlock_lock() {
 fleetlock_unlock() {
     if [ ! -f $FLEETLOCK_DISABLE_FILE ] && [ -f $FLEETLOCK_CONFIG ] && [ -x $FLEETLOCK_TOOL ]; then
         local fleetlock_group=""
+        local optional_args=()
         # shellcheck source=/dev/null
         . $FLEETLOCK_CONFIG || return 1
         if [ -z "$fleetlock_group" ]; then
             echo "Unable to set fleetlock_group"
             return 1
         fi
+        if [ -n "$fleetlock_unlock_timeout" ]; then
+            optional_args+=("--timeout")
+            optional_args+=("$fleetlock_unlock_timeout")
+        fi
         machine_is_healthy || return 1
         echo "Releasing fleetlock lock"
-        $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --unlock || return 1
+        $FLEETLOCK_TOOL --lock-group "$fleetlock_group" --unlock "${optional_args[@]}" || return 1
     fi
     return 0
 }
