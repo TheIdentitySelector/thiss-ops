@@ -246,7 +246,7 @@ pyff_pipeline_beta:
     - load:
         - /opt/pyff/metadata/eduGAIN.xml 5A:D7:3F:8A:C1:0C:74:56:41:77:45:45:EB:92:76:1F:3D:0D:E6:7C
         - /opt/pyff/metadata/swamid-registered.xml 40:A3:68:47:50:F3:86:43:36:0C:79:75:0F:87:0D:38:8C:F8:3E:44
-        - /opt/pyff/metadata/incommon.xml F8:4E:F8:47:EF:BB:EE:47:86:32:DB:94:17:8A:31:A6:94:73:19:36
+        - /opt/pyff/metadata/incommon.xml cert/incommon.pem
         - /opt/pyff/metadata/openathens.xml 69:F8:25:18:AF:97:D0:CB:8E:31:E8:10:F1:F0:A1:3E:2F:DF:E1:D8
     - select:
     - discojson:
