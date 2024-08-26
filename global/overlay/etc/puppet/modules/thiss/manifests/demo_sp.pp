@@ -14,6 +14,7 @@ class thiss::demo_sp($version='stable')
     volumes             => ['/var/www:/var/www:ro',
                             "/etc/dehydrated/certs/${::fqdn}:/etc/dehydrated:ro",
                             '/etc/shibboleth/certs:/etc/shibboleth/certs',
+                            '/etc/shibboleth/shibboleth2.xml:/etc/shibboleth/shibboleth2.xml:ro',
                             '/etc/apache2/start.sh:/start.sh',
                             '/etc/apache2/sites-available/default-ssl.conf:/etc/apache2/sites-available/default-ssl.conf:ro'],
     ports               => ['443:443'],
