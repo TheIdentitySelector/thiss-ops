@@ -129,6 +129,23 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
+  'berra+96E0A9D4':
+    ensure: 'absent'
+    name:   'berra+96E0A9D4@nordu.net'
+    key:    "AAAAB3NzaC1yc2EAAAADAQABAAACAQDS4cqKA+U/K3jfcqmpEjgZxqHuTalmw8Ljm\
+      26xRSP44qvElfDMwzDguDEYESknkf4LpY+NK/ny+bPG7PUBWt1myt4GpR3q30PRfkzwiWlVn\
+      NBpB9jNj98h+wDU7oKp6fiRDczxd8m8qYbdnPEbnjPECJHAlBtR03+BtiWJMuh6aZHAoFoKU\
+      I6F1SdX6Mj38Tw6sEyE1j0fZoKWLvPfngldnnj2UvhexHFxmT44tyhkiEk4QzqbtLQQU4i7U\
+      uXwZnKztLtYOxjcvSlUsIsb6R4gj7MXqHYyB+aOAYOP+TgZc6C7C34HSkMkPBxwj/1bZhsGS\
+      IVawFU9PJTd3SPXBaLH2Lacy5RPAtrLhIV9MhiRz533pfKgtS8uaceTAyAJFhMbLBzzf4PVR\
+      DLBNLWmcIXT5pHB5vK4c9XMQQPZm9idpQT+qTqfpdnLCyyK+YNntoFfSnTauKIJzVg/pIVlk\
+      rSladcdQstgoieuKWBs5BcRTxbvPS/VxvBo7dF8KGDNNYJ9tCt6m98q0r4xYd3scqnxOdQ7q\
+      lJ7QF8b9ypoCE47Ovzgh3fql4ySn1oe2xJzZssLUGR7H6gt6fDm+47j/UdB7sZVd6u9gVV7H\
+      xgT7Vj5zXjBwrMwEC6GqHqMs510w3XQ8nvAaASb4XMiNX2si7TsQ+Z5F6Fv3XZNMpviZTQZz\
+      Q=="
+    type:   'ssh-rsa'
+    user:   'root'
+
   'jonas-6CB01A0F':
     ensure: 'present'
     name:   'jonas-6CB01A0F@nordu.net'
