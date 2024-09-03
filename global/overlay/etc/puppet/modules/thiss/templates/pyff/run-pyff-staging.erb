@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+
+
+pipeline=$1
+pipeline_trust=$2 
+pdir=`dirname $pipeline`
+output=$3
+output_trust=$4
+
+
+
+
+if [ -r /opt/pyff/feeds ]; then
+    grep -v "#" /opt/pyff/feeds | while read url file cert; do
+	checkfile=$(mktemp)
+
+
+	if [ -n "$cert" ]; then
+	    wget -q -O $checkfile $url && xmlsec1 --verify --pubkey-cert-pem /opt/pyff/$cert --id-attr:ID  urn:oasis:names:tc:SAML:2.0:metadata:EntitiesDescriptor $checkfile && mv $checkfile /opt/pyff/$file && touch /opt/pyff/$file
+	else
+	    wget -q -O $checkfile $url && mv $checkfile /opt/pyff/$file
+	fi
+    done
+fi
+
+
+
+
+docker run -v "${pipeline}:${pipeline}:ro" -v "/opt/pyff:/opt/pyff" docker.sunet.se/pyff:2.1.2 pyff --loglevel=INFO ${pipeline} && cat $pdir/metadata.json > $output
+
+docker run -v "${pipeline_trust}:${pipeline_trust}:ro" -v "/opt/pyff:/opt/pyff" docker.sunet.se/pyff:2.1.2 pyff --loglevel=INFO ${pipeline_trust} && cat $pdir/metadata_trust.json > $output_trust
