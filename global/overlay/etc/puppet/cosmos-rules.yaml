@@ -105,8 +105,10 @@ a-staging-1.thiss.io:
    thiss::pyff_staging:
       pyff_version: 2.1.2
       output: /var/www/html/metadata.json
-   thiss::md_publisher:
+      output_trust: /var/www/html/metadata_sp.json
+   thiss::md_publisher_staging:
       watch: /var/www/html/metadata.json
+      watch_sp: /var/www/html/metadata_sp.json
    md_aggregator:
    https:
 
