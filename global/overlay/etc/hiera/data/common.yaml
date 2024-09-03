@@ -262,4 +262,4 @@ pyff_pipeline_trust:
     - select: 
     - discojson_sp: 
     - print:
-        output: "/opt/pyff/metadata_trust.json" 
+        output: "/opt/pyff/metadata_sp.json" 

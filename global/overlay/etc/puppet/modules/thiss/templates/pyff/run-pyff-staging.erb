@@ -29,4 +29,4 @@ fi
 
 docker run -v "${pipeline}:${pipeline}:ro" -v "/opt/pyff:/opt/pyff" docker.sunet.se/pyff:2.1.2 pyff --loglevel=INFO ${pipeline} && cat $pdir/metadata.json > $output
 
-docker run -v "${pipeline_trust}:${pipeline_trust}:ro" -v "/opt/pyff:/opt/pyff" docker.sunet.se/pyff:2.1.2 pyff --loglevel=INFO ${pipeline_trust} && cat $pdir/metadata_trust.json > $output_trust
+docker run -v "${pipeline_trust}:${pipeline_trust}:ro" -v "/opt/pyff:/opt/pyff" docker.sunet.se/pyff:2.1.2 pyff --loglevel=INFO ${pipeline_trust} && cat $pdir/metadata_sp.json > $output_trust
