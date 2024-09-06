@@ -186,6 +186,7 @@ ssh_authorized_keys:
     user:   'root'
 
   'kjellman-000607431461':
+    ensure: 'absent'
     name   : 'kjellman-000607431461@sunet.se'
     key    : 'AAAAB3NzaC1yc2EAAAADAQABAAACAQCij0ZrT2c9H+IkU60B2CqNgaw8mIAggwy6v48pvDfVEZZapRshBlHBNNcFmGDyBifMFiqPAL6+Z/rCCT2Ni9xT1r3gPUe8jPDf0od0xqc+NLY5sUQ7ikj1tL+t7umnIYhcA6B0F8UM2m0MAaFospv1ayhui+HXD7TQJqqp6NotuNibbkLvE85L223vGqp1trwnPKRdbwgbRy4Ak2anDtt+pag3BDP+fnblnGIEKVWcuD6AHcOIXqB4z4wVaLxlq4Mg2JIAdBmAATtxQh7bHZZ9rL4MBJ73S4tlfNsUvTU2XuQQCrKMN9Pyth48bwkqamcryCuvM0pfkoEfVrSjh1zrk4kIeG9lyMEt2gr5UmOT90atlHxXYZGcrHh9RwYgJKikHVvueG9eDQMj4tk0ntpqouj1lT0J8EZkH4pGjh6ik7GygrS9zxEr1j9aynBE06/o6tfpNbi+avXd4MwYsHBTxhwgjO4WRp1Ij6ybHpQSQt1DGB6jG5G6MdvrsaTChJy35kRvUG3L5cNbk7QjazELCks2XI6/9+5r84zJlpiS8hFAT35Jn5aa/83jbz+tarOiyuezGj/UK8U244Hx97cCDvfTzeBdOK0didN4xFvCfXUkNIaUKpmPJVgjdzKYzTM33W3wDEZIpaMW64Unz507IQOlOk8Y8Hz4zdzySfyikQ=='
     type:   'ssh-rsa'
