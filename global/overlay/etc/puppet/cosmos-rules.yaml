@@ -101,7 +101,7 @@ static.thiss.io:
 a-staging-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
-      version: '5:27.2.0-1~ubuntu.20.04~focall'
+      version: '5:27.2.0-1~ubuntu.20.04~focal'
       storage_driver: 'overlay2'
    thiss::pyff_staging:
       pyff_version: 2.1.2
