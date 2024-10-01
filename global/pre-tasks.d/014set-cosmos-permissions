@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Set Cosmos directory permissions so that
+# the files cannot be read by anyone but root,
+# since it's possible that the directory
+# can contain files that after applying the
+# overlay to / only should be read or writable
+# by root.
+
+set -e
+self=$(basename "$0")
+
+if ! test -d "$COSMOS_BASE"; then
+    test -z "$COSMOS_VERBOSE" || echo "$self: COSMOS_BASE was not found. Aborting change of permissions."
+    exit 0
+fi
+
+args=""
+if [ "x$COSMOS_VERBOSE" = "xy" ]; then
+    args="-v"
+fi
+
+chown ${args} root:root "$COSMOS_BASE"
+chmod ${args} 750 "$COSMOS_BASE"

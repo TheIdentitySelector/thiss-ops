@@ -21,7 +21,7 @@ hierarchy:
       pkcs7_public_key:  /etc/hiera/eyaml/public_certkey.pkcs7.pem
 
   - name: "Overrides per distribution"
-    path: "dist_%{::lsbdistcodename}_override.yaml"
+    path: "dist_%{facts.os.distro.codename}_override.yaml"
 
   - name: "Data common to whole environment"
     path: "common.yaml"
