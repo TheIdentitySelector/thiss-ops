@@ -1,0 +1,70 @@
+# Last Modified: Sun Jan 14 17:49:13 2018
+#include <tunables/global>
+
+# ------------------------------------------------------------------
+#
+#    Copyright (C) 2002-2005 Novell/SUSE
+#
+#    This program is free software; you can redistribute it and/or
+#    modify it under the terms of version 2 of the GNU General Public
+#    License published by the Free Software Foundation.
+#
+# ------------------------------------------------------------------
+#
+# ------------------------------------------------------------------
+# Modified and locked down by john@sunet.se - 2017-05-23
+# ------------------------------------------------------------------
+#
+# vim:syntax=apparmor
+
+
+/usr/sbin/lighttpd {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/web-data>
+
+  capability net_bind_service,
+  capability setgid,
+  capability setuid,
+  capability sys_resource,
+
+  /bin/dash Cx,
+  /etc/lighttpd r,
+  /etc/lighttpd/*.conf r,
+  /etc/lighttpd/auth.d/* r,
+  /etc/lighttpd/conf-available/ r,
+  /etc/lighttpd/conf-available/*.conf r,
+  /etc/lighttpd/conf-enabled/ r,
+  /etc/lighttpd/conf-enabled/*.conf r,
+  /etc/lighttpd/conf.d/*.conf r,
+  /etc/lighttpd/vhosts.d r,
+  /etc/lighttpd/vhosts.d/* r,
+  /etc/mime.types r,
+  /etc/ssl/private/*.pem r,
+  /usr/lib/lighttpd/*.so mr,
+  /usr/lib64/lighttpd/*.so mr,
+  /usr/sbin/lighttpd mix,
+  /usr/share/lighttpd/ r,
+  /var/cache/lighttpd/ r,
+  /var/cache/lighttpd/** rwl,
+  /var/lib/lighttpd/ r,
+  /var/lib/lighttpd/** rwl,
+  /var/log/lighttpd/*.log rw,
+  /var/www/dehydrated/* r,
+  /{,var/}run/lighttpd.pid rwl,
+
+
+  profile /bin/dash {
+    #include <abstractions/base>
+    #include <abstractions/perl>
+
+    network inet6 stream,
+
+    /bin/dash mr,
+    /etc/lighttpd/conf-enabled/ r,
+    /etc/mime.types r,
+    /usr/bin/perl ix,
+    /usr/share/lighttpd/*.pl mrix,
+
+  }
+}

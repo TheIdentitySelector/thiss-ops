@@ -6,6 +6,7 @@
 
 set -e
 
+EYAMLDIR=/etc/hiera/eyaml
 GNUPGHOME=/etc/hiera/gpg
 export GNUPGHOME
 
@@ -53,6 +54,7 @@ Name-Comment: Hiera GPG key
 Name-Email: root@$(hostname --fqdn)
 Expire-Date: 0
 # Do a commit here, so that we can later print "done" :-)
+%no-protection
 %commit
 %echo done
 EOF

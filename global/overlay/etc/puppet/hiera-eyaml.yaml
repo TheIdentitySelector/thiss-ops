@@ -1,0 +1,27 @@
+---
+:backends:
+  - eyaml
+  - yaml
+
+:logger: console
+
+:hierarchy:
+  - local
+  - group
+  - secrets.yaml
+  - "dist_%{::lsbdistcodename}_override"
+  - common
+
+
+:yaml:
+   :datadir: /etc/hiera/data
+
+:eyaml:
+    :datadir: '/etc/hiera/data'
+
+    # If using the pkcs7 encryptor (default)
+    :pkcs7_private_key: /etc/hiera/eyaml/private_key.pkcs7.pem
+    :pkcs7_public_key:  /etc/hiera/eyaml/public_certkey.pkcs7.pem
+
+    # Optionally cache decrypted data (default: false)
+    :cache_decrypted: false

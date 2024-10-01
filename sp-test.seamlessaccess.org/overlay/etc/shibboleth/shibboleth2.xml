@@ -1,0 +1,89 @@
+<SPConfig xmlns="urn:mace:shibboleth:3.0:native:sp:config"
+    xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config"
+    clockSkew="180">
+
+    <OutOfProcess tranLogFormat="%u|%s|%IDP|%i|%ac|%t|%attr|%n|%b|%E|%S|%SS|%L|%UA|%a" />
+
+    <ApplicationDefaults entityID="https://sp.example.org/shibboleth"
+        REMOTE_USER="eppn subject-id pairwise-id persistent-id"
+        metadataAttributePrefix="Meta-"
+        cipherSuites="DEFAULT:!EXP:!LOW:!aNULL:!eNULL:!DES:!IDEA:!SEED:!RC4:!3DES:!kRSA:!SSLv2:!SSLv3:!TLSv1:!TLSv1.1">
+
+        <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
+            redirectLimit="exact"
+            checkAddress="false" handlerSSL="true" cookieProps="https" sameSiteFallback="true">
+
+            <SSO discoveryProtocol="SAMLDS" discoveryURL="https://service.seamlessaccess.org/ds/"> SAML2 </SSO>
+
+            <Logout>SAML2 Local</Logout>
+            <LogoutInitiator type="Admin" Location="/Logout/Admin" acl="127.0.0.1 ::1" />
+            <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
+            <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1"/>
+            <Handler type="Session" Location="/Session" showAttributeValues="false"/>
+            <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
+
+            <!-- Seamless Access -->
+            <SessionInitiator type="Chaining" Location="/DS/seamless-access" id="seamless-access">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://service.seamlessaccess.org/ds/"/>
+            </SessionInitiator>
+            <!-- Seamless Access beta -->
+            <SessionInitiator type="Chaining" Location="/DS/thiss.io" id="seamless-access-beta">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/"/>
+            </SessionInitiator>
+            <!-- SWAMID QA -->
+            <SessionInitiator type="Chaining" Location="/DS/swamid-qa" id="swamid-qa">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.qa.swamid.se/ds/"/>
+            </SessionInitiator>
+            <!-- FIDUS -->
+            <SessionInitiator type="Chaining" Location="/DS/fidus" id="fidus">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.fidus.skolverket.se/ds/"/>
+            </SessionInitiator>
+        </Sessions>
+
+        <Errors supportContact="noc@sunet.se"
+            helpLocation="/about.html"
+            styleSheet="/shibboleth-sp/main.css"/>
+
+        <MetadataProvider type="MDQ" id="mdq" ignoreTransport="true" cacheDirectory="mdq"
+		    baseUrl="https://mds.swamid.se/">
+            <MetadataFilter type="Signature" certificate="md-signer2.crt"/>
+            <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
+        </MetadataProvider>
+
+        <MetadataProvider type="XML" validate="true"
+            url="http://fed.openathens.net/oafed/metadata"
+            backingFilePath="metadata/openathens.xml" maxRefreshDelay="7200">
+            <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
+	    <MetadataFilter type="Signature" certificate="certs/openathens.crt" verifyBackup="false"/>
+        </MetadataProvider>
+
+        <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>
+
+        <!-- Extracts support information for IdP from its metadata. -->
+        <AttributeExtractor type="Metadata" errorURL="errorURL" DisplayName="displayName"
+            InformationURL="informationURL" PrivacyStatementURL="privacyStatementURL"  registrationAuthority="registrationAuthority"
+            OrganizationURL="organizationURL">
+            <ContactPerson id="Support-Administrative"  contactType="administrative" formatter="" />
+            <ContactPerson id="Support-Contact"  contactType="support" formatter="" />
+            <ContactPerson id="Support-Technical"  contactType="technical" formatter="" />
+            <ContactPerson id="Other-Contact"  contactType="other" formatter="" />
+            <Logo id="Small-Logo" height="16" width="16" formatter=""/>
+        </AttributeExtractor>
+
+        <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
+
+        <CredentialResolver type="File" use="signing"
+            key="certs/sp-signing-key.pem" certificate="certs/sp-signing-cert.pem"/>
+        <CredentialResolver type="File" use="encryption"
+            key="certs/sp-encrypt-key.pem" certificate="certs/sp-encrypt-cert.pem"/>
+    </ApplicationDefaults>
+
+    <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
+
+    <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml"/>
+
+</SPConfig>

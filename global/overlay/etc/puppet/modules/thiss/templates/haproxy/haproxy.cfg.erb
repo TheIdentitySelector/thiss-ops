@@ -1,0 +1,55 @@
+global
+    daemon
+    maxconn 256
+
+    log /dev/log local0
+
+    user haproxy
+    group haproxy
+
+    stats socket /var/run/haproxy-control/stats mode 600
+
+    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+    ssl-default-bind-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
+    tune.ssl.default-dh-param 2048
+
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+
+    spread-checks 20
+
+defaults
+    timeout connect 4s
+    timeout client 17s
+    timeout server 17s
+    timeout check 5s
+    timeout http-request 5s
+
+    log global
+
+    mode http
+
+    option httplog
+    option dontlognull
+    option redispatch
+    option forwardfor
+
+    balance roundrobin
+
+frontend stats
+    bind *:8404
+    stats enable
+    stats uri /stats
+    stats refresh 10s
+
+frontend haproxy_seamlessaccess
+    bind *:443 ssl crt <%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>
+    default_backend mdq_servers
+
+backend mdq_servers
+    <% @servers.each do |servers_key, servers_value_hash| -%>
+    <% servers_value_hash['backends'].each do |backend_key, backend_value_hash| -%>
+     server <%= "#{backend_key} #{backend_value_hash['ip']}" %>:80 check
+    <% end -%>
+    <% end -%>
+

@@ -1,3 +1,402 @@
-# Note that the matching is done with re.match()
-'^ns[0-9]?.mnt.se$':
-   nameserver:
+'.+':
+   common:
+   ops:
+   nrpe:
+   sunet::updater:
+      cron: true
+      cosmos_automatic_reboot: true
+   sunet::server:
+      fail2ban: true
+      unattended_upgrades: true
+      disable_ipv6_privacy: true
+      disable_all_local_users: true
+      ssh_allow_from_anywhere: false
+   entropyclient:
+   infra_ca_rp:
+   mailclient:
+      domain: sunet.se
+   sunet::rsyslog:
+   update_ca_certificates:
+   sunet::invent::client:
+      export_endpoint: https://ni-frontend-test.sunet.se
+      invent_retention_days: 1
+
+md-1.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://a-1.thiss.io/metadata.json
+      base_url: https://md.thiss.io
+      post: /usr/sbin/service docker-thiss_mdq restart
+   https:
+   http:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-md-beta'
+      fleetlock_server: https://fl-test.knubbis.sunet.se
+
+md-2.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://a-1.thiss.io/metadata.json
+      base_url: https://md.thiss.io
+      post: /usr/sbin/service docker-thiss_mdq restart
+   https:
+   http:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-md-beta'
+      fleetlock_server: https://fl-test.knubbis.sunet.se
+
+md-lb.thiss.io:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.22.04~jammy'
+      storage_driver: 'overlay2'
+   thiss::haproxy:
+      image_tag: beta
+      location: thiss
+
+a-1.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      docker_dns: 8.8.8.8
+   thiss::pyff_beta:
+      pyff_version: 1.1.4
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
+   md_aggregator:
+   https:
+
+'^static-[0-9]+\.thiss\.io$':
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::static:
+      ds_version: 1.6.7
+      base_url: https://use.thiss.io/
+      mdq_search_url: https://md.thiss.io/entities/
+      domain: use.thiss.io
+      context: thiss.io
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=3601, proxy-revalidate'
+   http:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-beta'
+      fleetlock_server: https://fl-test.knubbis.sunet.se
+
+static.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.22.04~jammy'
+      storage_driver: 'overlay2'
+   thiss::haproxy_static:
+      image_tag: beta
+      location: thiss
+   https:
+
+a-staging-1.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:27.2.0-1~ubuntu.20.04~focal'
+      storage_driver: 'overlay2'
+   thiss::pyff_staging:
+      pyff_version: 2.1.2
+      output: /var/www/html/metadata.json
+      output_trust: /var/www/html/metadata_sp.json
+   thiss::md_publisher_staging:
+      watch: /var/www/html/metadata.json
+      watch_sp: /var/www/html/metadata_sp.json
+   md_aggregator:
+   https:
+
+md-staging-1.thiss.io:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://a-staging-1.thiss.io/metadata.json
+      base_url: https://md-staging.thiss.io
+      post: /usr/sbin/service docker-thiss_mdq restart
+   sunet::lb::register_sites:
+      sites:
+         'md-staging.thiss.io':
+            frontends:
+               - 'tug-lb-1.sunet.se'
+               - 'sthb-lb-1.sunet.se'
+            port: '80'
+   https:
+   http:
+
+'^\S+ntx\S+\.seamlessaccess\.org$':
+   thiss::firewall_rules:
+      location: ntx
+
+'^\S+se-east\S+\.seamlessaccess\.org$':
+   sunet_iaas_cloud:
+   thiss::firewall_rules:
+      location: se-east
+
+'^\S+aws1\S+\.seamlessaccess\.org$':
+   sunet_iaas_cloud:
+   thiss::firewall_rules:
+      location: aws1
+
+'^\S+aws2\S+\.seamlessaccess\.org$':
+   sunet_iaas_cloud:
+   thiss::firewall_rules:
+      location: aws2
+
+'^md-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
+      base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-md-ntx'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+'^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
+      base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-md-east'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+'^md-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
+      base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-md-aws1'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+'^md-[0-9]\.aws2\.geant\.eu\.seamlessaccess.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::mdq:
+      version: 1.3.2
+      src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
+      base_url: https://md.seamlessaccess.org
+      post: /usr/sbin/service docker-thiss_mdq restart
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-md-aws2'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+meta.ntx.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::pyff:
+      pyff_version: 1.1.4
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
+   md_aggregator:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-meta'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+meta.se-east.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::pyff:
+      pyff_version: 1.1.4
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
+   md_aggregator:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-meta'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+meta.aws1.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      manage_dockerhost_unbound: false
+      docker_dns: 8.8.8.8
+   thiss::pyff:
+      pyff_version: 1.1.4
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
+   md_aggregator:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-meta'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+meta.aws2.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      manage_dockerhost_unbound: false
+      docker_dns: 8.8.8.8
+   thiss::pyff:
+      pyff_version: 1.1.4
+      output: /var/www/html/metadata.json
+   thiss::md_publisher:
+      watch: /var/www/html/metadata.json
+   md_aggregator:
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-meta'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+md.ntx.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:24.0.7-1~ubuntu.22.04~jammy'
+      storage_driver: 'overlay2'
+   thiss::haproxy:
+      location: ntx
+      image_tag: 20230614-prod
+
+md.se-east.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::haproxy:
+      location: se-east
+      image_tag: 20230614-prod
+
+md.aws1.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::haproxy:
+      location: aws1
+      image_tag: 20230614-prod
+
+md.aws2.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::haproxy:
+      location: aws2
+      image_tag: 20230614-prod
+
+'^static-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::static_prod:
+      ds_version: 1.6.7
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+   sunet::server:
+      encrypted_swap: false
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-ntx'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+static.ntx.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:24.0.7-1~ubuntu.22.04~jammy'
+      storage_driver: 'overlay2'
+   thiss::haproxy_static:
+      image_tag: 20230614-prod
+      location: ntx
+   sunet::server:
+      encrypted_swap: false
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-ha'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+'^static-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::static_prod:
+      ds_version: 1.6.7
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-east'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+static.se-east.sunet.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::haproxy_static:
+      image_tag: 20230614-prod
+      location: se-east
+   sunet::server:
+      encrypted_swap: false
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-ha'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+'^static-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::static_prod:
+      ds_version: 1.6.7
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-aws1'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+static.aws1.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::haproxy_static:
+      image_tag: 20230614-prod
+      location: aws1
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-ha'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+'^static-[0-9]\.aws2\.geant\.eu\.seamlessaccess.org$':
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::static_prod:
+      ds_version: 1.6.7
+      base_url: https://service.seamlessaccess.org/
+      mdq_search_url: https://md.seamlessaccess.org/entities/
+      domain: service.seamlessaccess.org
+      context: seamlessaccess.org
+      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-aws2'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+static.aws2.geant.eu.seamlessaccess.org:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::haproxy_static:
+      image_tag: 20230614-prod
+      location: aws2
+   thiss::fleetlock_reboot:
+      fleetlock_group: 'seamless-static-ha'
+      fleetlock_server: https://fl-prod.knubbis.sunet.se
+
+monitor.ntx.sunet.eu.seamlessaccess.org:
+   nagios_monitor:
+
+sp-test.seamlessaccess.org:
+   sunet_iaas_cloud:
+   thiss::dockerhost:
+      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   sunet::dehydrated::client:
+      domain: sp-test.seamlessaccess.org
+      ssl_links: true
+   thiss::demo_sp:
+   https:
+   http:

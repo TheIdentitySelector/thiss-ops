@@ -1,1 +1,3 @@
 *.pyc
+fabfile/*.pyc
+*.DS_Store

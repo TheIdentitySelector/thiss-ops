@@ -1,0 +1,12 @@
+#!/bin/bash
+
+service="sunet-haproxy_seamlessaccess.service"
+
+if systemctl is-active --quiet $service; then
+    echo "OK - $service is running."
+    exit 0
+else
+    echo "CRITICAL - $service is not running."
+    exit 2
+fi
+

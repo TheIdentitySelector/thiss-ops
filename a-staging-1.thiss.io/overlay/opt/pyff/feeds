@@ -1,0 +1,4 @@
+https://mds.edugain.org/edugain-v2.xml metadata/eduGAIN.xml cert/edugain-v2.pem
+https://mds.swamid.se/md/swamid-registered.xml metadata/swamid-registered.xml cert/swamid-v2.pem
+https://md.incommon.org/InCommon/InCommon-metadata.xml metadata/incommon.xml cert/incommon.pem
+https://fed.openathens.net/oafed/metadata metadata/openathens.xml cert/openathens.pem

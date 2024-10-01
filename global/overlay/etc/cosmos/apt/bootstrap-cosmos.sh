@@ -1,6 +1,7 @@
 #!/bin/sh
 
-set -e
+#set -e 
+# not all breakage is un-recoverable...
 
 cmd_hostname="$1"
 if test -z "$cmd_hostname"; then

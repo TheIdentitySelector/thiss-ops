@@ -1,0 +1,8 @@
+# Generic service definition template - This is NOT a real service, just a template!
+
+define service{
+        name                            monitor-service         ; The 'name' of this service template
+        notification_options            w,u,c,r,f               ; Send notifications about warning, unknown, critical, and recovery events
+        notification_interval           0
+        register                        0       ; DONT REGISTER THIS DEFINITION - ITS NOT A REAL HOST, JUST A TEMPLATE!
+        }
