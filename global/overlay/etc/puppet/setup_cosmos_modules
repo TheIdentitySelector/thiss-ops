@@ -155,9 +155,9 @@ def main():
             "tag": "sunet-2*",
         },
         "pyff": {
-            "repo": "https://github.com/samlbits/puppet-pyff.git",
+            "repo": "https://github.com/SUNET/puppet-pyff.git",
             "upgrade": "yes",
-            "tag": "puppet-pyff-*",
+            "tag": "sunet-2*",
         },
         "dhcp": {
             "repo": "https://github.com/SUNET/puppetlabs-dhcp.git",
@@ -165,9 +165,9 @@ def main():
             "tag": "sunet_dev-2*",
         },
         "varnish": {
-            "repo": "https://github.com/samlbits/puppet-varnish.git",
+            "repo": "https://github.com/SUNET/puppet-varnish.git",
             "upgrade": "yes",
-            "tag": "puppet-varnish-*",
+            "tag": "sunet-2*",
         },
         "apparmor": {
             "repo": "https://github.com/SUNET/puppet-apparmor.git",
