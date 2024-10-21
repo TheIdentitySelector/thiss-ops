@@ -13,12 +13,12 @@ function usage() {
    echo "  <host> can be an IP number, or something that resolves to one"
 }
 
-while getopts "bhnp:" this; do
+while getopts "bhn:p:" this; do
    case "${this}" in
       h) usage; exit 0;;
       b) cmd_do_bootstrap="yes" ;;
-      n) cmd_fqdn="${OPTARG}" ; shift ;;
-      p) cmd_proxy="${OPTARG}" ; shift ;;
+      n) cmd_fqdn="${OPTARG}" ;;
+      p) cmd_proxy="${OPTARG}" ;;
       *) echo "Unknown option ${this}"; echo ""; usage; exit 1;;
    esac
 done
