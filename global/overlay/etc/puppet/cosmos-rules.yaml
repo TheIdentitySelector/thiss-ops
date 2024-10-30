@@ -128,8 +128,8 @@ md-staging-1.thiss.io:
       sites:
          'md-staging.thiss.io':
             frontends:
-               - 'tug-lb-1.sunet.se'
-               - 'sthb-lb-1.sunet.se'
+               - 'lb-tug-test-1.sunet.se'
+               - 'lb-sthb-test-1.sunet.se'
             port: '80'
    https:
    http:
