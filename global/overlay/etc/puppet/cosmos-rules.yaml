@@ -25,7 +25,7 @@ md-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:27.2.0-1~ubuntu.20.04~focal'
-      storage_driver: 'overlay2
+      storage_driver: 'overlay2'
    thiss::mdq_staging:
       version: 1.5.1
       src: https://a-1.thiss.io/metadata.json
@@ -42,7 +42,7 @@ md-2.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
       version: '5:27.2.0-1~ubuntu.20.04~focal'
-      storage_driver: 'overlay2
+      storage_driver: 'overlay2'
    thiss::mdq_staging:
       version: 1.5.1
       src: https://a-1.thiss.io/metadata.json
