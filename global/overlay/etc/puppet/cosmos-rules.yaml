@@ -62,13 +62,15 @@ md-lb.thiss.io:
 a-1.thiss.io:
    sunet_iaas_cloud:
    thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
-      docker_dns: 8.8.8.8
+      version: '5:27.2.0-1~ubuntu.20.04~focal'
+      storage_driver: 'overlay2'
    thiss::pyff_beta:
-      pyff_version: 1.1.4
+      pyff_version: 2.1.2
       output: /var/www/html/metadata.json
-   thiss::md_publisher:
+      output_trust: /var/www/html/metadata_sp.json
+   thiss::md_publisher_staging:
       watch: /var/www/html/metadata.json
+      watch_sp: /var/www/html/metadata_sp.json
    md_aggregator:
    https:
 
