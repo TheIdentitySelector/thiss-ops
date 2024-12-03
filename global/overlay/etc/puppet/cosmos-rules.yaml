@@ -26,7 +26,7 @@ md-1.thiss.io:
    thiss::dockerhost:
       version: '5:27.2.0-1~ubuntu.20.04~focal'
       storage_driver: 'overlay2'
-   thiss::mdq_staging:
+   thiss::mdq_beta:
       version: 1.5.3
       src: https://a-1.thiss.io/metadata.json
       src_trust: https://a-1.thiss.io/metadata_sp.json
@@ -43,7 +43,7 @@ md-2.thiss.io:
    thiss::dockerhost:
       version: '5:27.2.0-1~ubuntu.20.04~focal'
       storage_driver: 'overlay2'
-   thiss::mdq_staging:
+   thiss::mdq_beta:
       version: 1.5.3
       src: https://a-1.thiss.io/metadata.json
       src_trust: https://a-1.thiss.io/metadata_sp.json
