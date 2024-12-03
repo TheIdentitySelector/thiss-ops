@@ -16,12 +16,17 @@ if [ $? -eq 0 ]; then
    cmp -s $tmpf <%= @dst %>
    test $? -ne 0 && mv $tmpf <%= @dst %> && sleep $sleep && <%= @post %>
    touch /etc/thiss/metadata.json
+   rm -f $tmpf
+
+else
+   rm -f $tmpf
+   echo "/etc/thiss/metadata.json is empty"
+   exit 1
 fi
-rm -f $tmpf
 
 #fetch metadata_sp.json
 tmpf_trust=`mktemp`
-wget -qO$tmpf_trust <%= @src_trust %> && jq -e '.[].title' $tmpf_trust >/dev/null 2>&1
+wget -qO$tmpf_trust <%= @src_trust %> && jq -e '.[].entityID' $tmpf_trust >/dev/null 2>&1
 
 if [ $? -eq 0 ]; then
    cmp -s $tmpf_trust <%= @dst_trust %>
