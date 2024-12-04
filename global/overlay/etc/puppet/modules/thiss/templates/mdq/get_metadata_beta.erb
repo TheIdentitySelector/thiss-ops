@@ -32,5 +32,10 @@ if [ $? -eq 0 ]; then
    cmp -s $tmpf_trust <%= @dst_trust %>
    test $? -ne 0 && mv $tmpf_trust <%= @dst_trust %> && sleep $sleep && <%= @post %>
    touch /etc/thiss/metadata_sp.json
+   rm -f $tmpf_trust
+
+else
+   rm -f $tmpf_trust
+   echo "/etc/thiss/metadata_sp.json is empty"
+   exit 1
 fi
-rm -f $tmpf_trust
