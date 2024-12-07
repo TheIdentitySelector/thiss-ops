@@ -32,6 +32,30 @@
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/"/>
             </SessionInitiator>
+	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-assurancecertification" id="seamless-access-beta1">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=strict-assurancecertification"/>
+            </SessionInitiator>
+	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource" id="seamless-access-beta2">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource"/>
+            </SessionInitiator>
+	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-mdsource" id="seamless-access-beta3">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=strict-mdsource"/>
+            </SessionInitiator>
+	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategorysupport-login" id="seamless-access-beta4">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategorysupport-login"/>
+            </SessionInitiator>
+	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-idpselection" id="seamless-access-beta5">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=strict-idpselection"/>
+            </SessionInitiator>
+	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategory" id="seamless-access-beta6">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategory"/>
+            </SessionInitiator>
             <!-- SWAMID QA -->
             <SessionInitiator type="Chaining" Location="/DS/swamid-qa" id="swamid-qa">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
