@@ -54,7 +54,7 @@
             </SessionInitiator>
 	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategory" id="seamless-access-beta6">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
-                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategory"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategory-"/>
             </SessionInitiator>
             <!-- SWAMID QA -->
             <SessionInitiator type="Chaining" Location="/DS/swamid-qa" id="swamid-qa">
