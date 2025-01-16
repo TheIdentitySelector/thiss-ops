@@ -12,6 +12,7 @@ readonly FLEETLOCK_TOOL=/usr/local/bin/sunet-fleetlock
 readonly FLEETLOCK_UNLOCK_SERVICE=run-cosmos-fleetlock-unlocker.service
 readonly HEALTHCHECK_TOOL=/usr/local/bin/sunet-machine-healthy
 readonly HEALTHCHECK_DISABLE_FILE=/etc/run-cosmos-healthcheck-disable
+fleetlock_lock_timeout=100
 
 lock() {
     local prefix=$1
