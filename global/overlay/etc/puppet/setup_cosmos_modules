@@ -203,8 +203,23 @@ def main():
 
     # When/if we want we can do stuff to modules here
     if OS_INFO:
-        if OS_INFO["VERSION_CODENAME"] == "bullseye":
-            pass
+        # Provided by Debian/dpkg
+        # https://github.com/SUNET/multiverse/blob/main/global/pre-tasks.d/030puppet
+        # FIXME Futureproof to handle debian bookwork or newer, and ubuntu24 and newer
+        if (OS_INFO["VERSION_CODENAME"] == "bookworm") or (OS_INFO["VERSION_CODENAME"] == "noble"):
+            del modules["augeas"]
+            del modules["concat"]
+            del modules["stdlib"]
+            del modules["vcsrepo"]
+            del modules["cosmos"]
+            del modules["xinetd"]
+            del modules["python"]
+            del modules["hiera-gpg"]
+            del modules["pound"]
+            del modules["pyff"]
+            del modules["dhcp"]
+            del modules["varnish"]
+            del modules["sysctl"]
 
     if host_info:
         if host_info["environment"] == "beta":
