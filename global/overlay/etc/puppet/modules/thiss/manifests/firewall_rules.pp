@@ -7,7 +7,7 @@ class thiss::firewall_rules($location=undef){
   $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
 
   #metadata aggregator expose port 443 to mdq
-  if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
+  $facts['networking']['fqdn'] =~ /^meta\.\S+\.seamlessaccess\.org$/ {
     $md_servers.each |$md_servers_key, $md_servers_value_hash|{
       $md_servers_value_hash['backends'].each |$backend_key, $backend_value_hash|{
         sunet::misc::ufw_allow { "allow_https_${backend_value_hash['ip']}":
