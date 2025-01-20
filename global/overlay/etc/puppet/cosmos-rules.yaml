@@ -337,9 +337,6 @@ static.ntx.sunet.eu.seamlessaccess.org:
 
 static.se-east.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
-   thiss::haproxy_static:
-      image_tag: 20230614-prod
-      location: se-east
    sunet::server:
       encrypted_swap: false
    thiss::fleetlock_reboot:

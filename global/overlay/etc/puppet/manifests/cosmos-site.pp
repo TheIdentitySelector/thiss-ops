@@ -127,7 +127,7 @@ class github_client_credential {
 class ops {
   # SSH config, create SSH authorized keys from Hiera
   $ssh_authorized_keys = hiera_hash('ssh_authorized_keys', undef)
-  if is_hash($ssh_authorized_keys) {
+  if $ssh_authorized_keys =~ Hash {
     create_resources('ssh_authorized_key', $ssh_authorized_keys)
   }
 
