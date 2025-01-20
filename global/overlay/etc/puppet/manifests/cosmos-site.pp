@@ -584,31 +584,7 @@ class nagios_monitor {
   }
 }
 
-class redis_cluster_node {
-   file { '/opt/redis': ensure => directory }
-   sysctl { 'vm.overcommit_memory': value => '1' }
-   sunet::redis::server {'redis-master':
-      allow_clients => hiera_array('redis_client_ips', []),
-      cluster_nodes => hiera_array('redis_sentinel_ips', []),
-   }
-   sunet::redis::server {'redis-sentinel':
-      port            => '26379',
-      sentinel_config => 'yes',
-      allow_clients   => hiera_array('redis_client_ips', []),
-      cluster_nodes   => hiera_array('redis_sentinel_ips', []),
-   }
-}
-
-class redis_frontend_node ($hostname=undef,$ca="infra") {
-   file { '/opt/redis': ensure => directory }
-   sunet::redis::haproxy {'redis-haproxy':
-      cluster_nodes => hiera_array('redis_sentinel_ips', []),
-      client_ca     => "/etc/ssl/certs/${ca}.crt",
-      certificate   => "/etc/ssl/private/${::fqdn}_${ca}.pem"
-   }
-}
-
-if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
+if $::facts['os']['fqdn'] =~ /^meta\.\S+\.seamlessaccess\.org$/ {
     file_line { 'cosmos_conf_meta_common':
       path => '/etc/cosmos/cosmos.conf',
       line => 'COSMOS_REPO_MODELS="$COSMOS_REPO/meta-common/:$COSMOS_REPO_MODELS"',
