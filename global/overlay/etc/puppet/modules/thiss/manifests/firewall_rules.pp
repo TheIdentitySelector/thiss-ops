@@ -39,7 +39,7 @@ class thiss::firewall_rules($location=undef){
     }
   }
   #haproxy exposes 8404 to nagios
-  if $$facts['networking']['fqdn'] =~ /^md\.\S+\.seamlessaccess\.org$/ {
+  if $facts['networking']['fqdn'] =~ /^md\.\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_haproxy_md_stats':
       from => $nagios_ip_v4,
       port => '8404',
