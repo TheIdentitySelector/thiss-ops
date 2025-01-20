@@ -584,7 +584,7 @@ class nagios_monitor {
   }
 }
 
-if $::facts['os']['fqdn'] =~ /^meta\.\S+\.seamlessaccess\.org$/ {
+if $facts['networking']['fqdn'] =~ /^meta\.\S+\.seamlessaccess\.org$/ {
     file_line { 'cosmos_conf_meta_common':
       path => '/etc/cosmos/cosmos.conf',
       line => 'COSMOS_REPO_MODELS="$COSMOS_REPO/meta-common/:$COSMOS_REPO_MODELS"',
