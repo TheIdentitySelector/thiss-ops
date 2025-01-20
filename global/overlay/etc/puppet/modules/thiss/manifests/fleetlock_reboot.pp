@@ -30,13 +30,13 @@ password = ${password}"
       ensure => directory,
      }
 
-  if $facts['fqdn'] =~ /^static\./ {
+  if $facts['networking']['fqdn'] =~ /^static\./ {
     file { '/etc/sunet-machine-healthy/health-checks.d/check_haproxy.check':
       ensure  => file,
       content => template("thiss/fleetlock_reboot/check_haproxy.check.erb"),
       mode    => '0744',
     }
-  } elsif $facts['fqdn'] !~ /^meta\./ {
+  } elsif $facts['networking']['fqdn'] !~ /^meta\./ {
     file { '/etc/sunet-machine-healthy/health-checks.d/check_web.check':
       ensure  => file,
       content => template("thiss/fleetlock_reboot/check_web.check.erb"),
