@@ -161,14 +161,9 @@ class ops {
 class nrpe {
   require apt
   class {'sunet::nagios': }
-  if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '12.04') {
-    class {'apt::backports': }
-  }
   package {'nagios-plugins-contrib': ensure => latest}
-  if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease < '18.04') {
-    package {'nagios-plugins-extra': ensure => latest}
-  }
-  if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '22.04') >= 0 ){
+
+  if ($facts['os']['name']  == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '22.04') >= 0 ){
     $mem_w = '90'
     $mem_c = '95'
   } else {
