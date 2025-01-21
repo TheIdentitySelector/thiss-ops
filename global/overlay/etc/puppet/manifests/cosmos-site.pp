@@ -140,12 +140,12 @@ class ops {
   }
 
   # OS hardening
-  if $::hostname =~ /kvm/ {
+  if $facts['networking']['fqdn'] =~ /kvm/ {
     class {'bastion':
       fstab_fix_shm        => false,
       sysctl_net_hardening => false,
     }
-  } elsif $::hostname =~ /random/ {  # pollen requires exec on /tmp
+  } elsif $facts['networking']['fqdn']  =~ /random/ {  # pollen requires exec on /tmp
     class {'bastion':
       fixperms_enable      => false,
       fixperms_paranoia    => false,

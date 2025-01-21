@@ -208,7 +208,6 @@ def main():
         if OS_INFO["VERSION_CODENAME"] == "noble":
             del modules["apt"]
             del modules["augeas"]
-            del modules["bastion"]
             del modules["concat"]
             del modules["cosmos"]
             del modules["dhcp"]
