@@ -214,7 +214,7 @@ def main():
             del modules["docker"]
             del modules["hiera-gpg"]
             del modules["pound"]
-	    del modules["network"]
+            del modules["network"]
             del modules["pyff"]
             del modules["python"]
             del modules["stdlib"]
