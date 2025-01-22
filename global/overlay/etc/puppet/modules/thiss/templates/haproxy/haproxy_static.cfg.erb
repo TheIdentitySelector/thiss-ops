@@ -43,7 +43,7 @@ frontend stats
     stats refresh 10s
 
 frontend haproxy_seamlessaccess
-    bind *:443 ssl crt <%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>
+    bind *:443 ssl crt <%= @tls_certificates [@networking['fqdn']][ 'haproxy' ] %>
     default_backend static_servers
 
 backend static_servers
