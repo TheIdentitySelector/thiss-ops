@@ -8,13 +8,20 @@ output=$2
 
 if [ -r /opt/pyff/feeds ]; then
     grep -v "#" /opt/pyff/feeds | while read url file cert; do
-	checkfile=$(mktemp)
+        checkfile=$(mktemp)
 
-	if [ -n "$cert" ]; then
-	    wget -q -O $checkfile $url && xmlsec1 --verify --pubkey-cert-pem /opt/pyff/$cert --id-attr:ID  urn:oasis:names:tc:SAML:2.0:metadata:EntitiesDescriptor $checkfile && mv $checkfile /opt/pyff/$file && touch /opt/pyff/$file
-	else
-	    wget -q -O $checkfile $url && mv $checkfile /opt/pyff/$file
-	fi
+
+        if [ -n "$cert" ]; then
+                verify=$(wget -q -O $checkfile $url && xmlsec1 --verify --pubkey-cert-pem /opt/pyff/$cert --id-attr:ID  urn:oasis:names:tc:SAML:2.0:metadata:EntitiesDescriptor $checkfile)
+                verify_result=$?
+            if [[ $verify_result -ne 0 ]]; then
+               rm $checkfile
+            else
+               mv $checkfile /opt/pyff/$file && touch /opt/pyff/$file
+            fi
+        else
+            wget -q -O $checkfile $url && mv $checkfile /opt/pyff/$file
+        fi
     done
 fi
 
