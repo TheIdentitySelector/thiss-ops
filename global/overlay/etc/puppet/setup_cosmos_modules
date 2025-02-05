@@ -203,8 +203,26 @@ def main():
 
     # When/if we want we can do stuff to modules here
     if OS_INFO:
-        if OS_INFO["VERSION_CODENAME"] == "bullseye":
-            pass
+        # Provided by Debian/dpkg
+        # https://github.com/SUNET/multiverse/blob/main/global/pre-tasks.d/030puppet
+        if OS_INFO["VERSION_CODENAME"] == "noble":
+            del modules["apt"]
+            del modules["augeas"]
+            del modules["concat"]
+            del modules["cosmos"]
+            del modules["dhcp"]
+            del modules["docker"]
+            del modules["hiera-gpg"]
+            del modules["pound"]
+            del modules["network"]
+            del modules["pyff"]
+            del modules["python"]
+            del modules["stdlib"]
+            del modules["sysctl"]
+            del modules["ufw"]
+            del modules["varnish"]
+            del modules["vcsrepo"]
+            del modules["xinetd"]
 
     if host_info:
         if host_info["environment"] == "beta":

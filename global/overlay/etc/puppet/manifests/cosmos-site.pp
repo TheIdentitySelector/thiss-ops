@@ -127,7 +127,7 @@ class github_client_credential {
 class ops {
   # SSH config, create SSH authorized keys from Hiera
   $ssh_authorized_keys = hiera_hash('ssh_authorized_keys', undef)
-  if is_hash($ssh_authorized_keys) {
+  if $ssh_authorized_keys =~ Hash {
     create_resources('ssh_authorized_key', $ssh_authorized_keys)
   }
 
@@ -140,12 +140,12 @@ class ops {
   }
 
   # OS hardening
-  if $::hostname =~ /kvm/ {
+  if $facts['networking']['fqdn'] =~ /kvm/ {
     class {'bastion':
       fstab_fix_shm        => false,
       sysctl_net_hardening => false,
     }
-  } elsif $::hostname =~ /random/ {  # pollen requires exec on /tmp
+  } elsif $facts['networking']['fqdn']  =~ /random/ {  # pollen requires exec on /tmp
     class {'bastion':
       fixperms_enable      => false,
       fixperms_paranoia    => false,
@@ -161,14 +161,9 @@ class ops {
 class nrpe {
   require apt
   class {'sunet::nagios': }
-  if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '12.04') {
-    class {'apt::backports': }
-  }
   package {'nagios-plugins-contrib': ensure => latest}
-  if ($::operatingsystem == 'Ubuntu' and $::operatingsystemrelease < '18.04') {
-    package {'nagios-plugins-extra': ensure => latest}
-  }
-  if ($::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '22.04') >= 0 ){
+
+  if ($facts['os']['name']  == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '22.04') >= 0 ){
     $mem_w = '90'
     $mem_c = '95'
   } else {
@@ -584,31 +579,7 @@ class nagios_monitor {
   }
 }
 
-class redis_cluster_node {
-   file { '/opt/redis': ensure => directory }
-   sysctl { 'vm.overcommit_memory': value => '1' }
-   sunet::redis::server {'redis-master':
-      allow_clients => hiera_array('redis_client_ips', []),
-      cluster_nodes => hiera_array('redis_sentinel_ips', []),
-   }
-   sunet::redis::server {'redis-sentinel':
-      port            => '26379',
-      sentinel_config => 'yes',
-      allow_clients   => hiera_array('redis_client_ips', []),
-      cluster_nodes   => hiera_array('redis_sentinel_ips', []),
-   }
-}
-
-class redis_frontend_node ($hostname=undef,$ca="infra") {
-   file { '/opt/redis': ensure => directory }
-   sunet::redis::haproxy {'redis-haproxy':
-      cluster_nodes => hiera_array('redis_sentinel_ips', []),
-      client_ca     => "/etc/ssl/certs/${ca}.crt",
-      certificate   => "/etc/ssl/private/${::fqdn}_${ca}.pem"
-   }
-}
-
-if $::fqdn =~ /^meta\.\S+\.seamlessaccess\.org$/ {
+if $facts['networking']['fqdn'] =~ /^meta\.\S+\.seamlessaccess\.org$/ {
     file_line { 'cosmos_conf_meta_common':
       path => '/etc/cosmos/cosmos.conf',
       line => 'COSMOS_REPO_MODELS="$COSMOS_REPO/meta-common/:$COSMOS_REPO_MODELS"',

@@ -2,13 +2,13 @@ class thiss::haproxy_static($location=undef,$image_tag=undef){
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
 
-  $infra_cert = $::tls_certificates[$::fqdn]['infra_bundle']
-  $infra_key = $::tls_certificates[$::fqdn]['infra_key']
-  ensure_resource(sunet::misc::certbundle, "${::fqdn}_haproxy", {
+  $infra_cert = $::tls_certificates[$facts['networking']['fqdn']]['infra_bundle']
+  $infra_key = $::tls_certificates[$facts['networking']['fqdn']]['infra_key']
+  ensure_resource(sunet::misc::certbundle, "${facts['networking']['fqdn']}_haproxy", {
     group  => 'haproxy',
     bundle => ["cert=${infra_cert}",
                "key=${infra_key}",
-               "out=/etc/ssl/private/${::fqdn}_haproxy.crt",
+               "out=/etc/ssl/private/${facts['networking']['fqdn']}_haproxy.crt",
                ],
   })
 
@@ -23,7 +23,7 @@ class thiss::haproxy_static($location=undef,$image_tag=undef){
       mode         => '0640'
     }
 
-  if $::sunet_nftables_opt_in == 'yes' and ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '20.04') == 0 ){
+  if $::sunet_nftables_opt_in == 'yes' and ( $facts['os']['name']  == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '20.04') == 0 ){
     sunet::nftables::docker_expose { 'haproxy_older_ubuntu' :
       allow_clients => 'any',
       port          => '443',
@@ -33,7 +33,7 @@ class thiss::haproxy_static($location=undef,$image_tag=undef){
       port          => '8404',
     }
 }
-if ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '22.04') >= 0 ) {
+if ($facts['os']['name']  == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '22.04') >= 0 ) {
     sunet::nftables::docker_expose { 'haproxy' :
       allow_clients => 'any',
       port          => '443',
