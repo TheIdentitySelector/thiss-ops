@@ -46,7 +46,7 @@
             </SessionInitiator>
 	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategorysupport-login" id="seamless-access-beta4">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
-                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategorysupport-login"/>
+                <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategorysupport"/>
             </SessionInitiator>
 	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-idpselection" id="seamless-access-beta5">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
