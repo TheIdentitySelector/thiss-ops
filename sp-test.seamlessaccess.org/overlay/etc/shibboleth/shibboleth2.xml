@@ -32,29 +32,58 @@
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/"/>
             </SessionInitiator>
-	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-assurancecertification" id="seamless-access-beta1">
+            <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-assurancecertification" id="seamless-access-beta1">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=strict-assurancecertification"/>
             </SessionInitiator>
-	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource" id="seamless-access-beta2">
+            <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource" id="seamless-access-beta2">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource"/>
             </SessionInitiator>
-	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-mdsource" id="seamless-access-beta3">
+            <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-mdsource" id="seamless-access-beta3">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=strict-mdsource"/>
             </SessionInitiator>
-	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategorysupport-login" id="seamless-access-beta4">
+            <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategorysupport" id="seamless-access-beta4">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategorysupport"/>
             </SessionInitiator>
-	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-idpselection" id="seamless-access-beta5">
+            <SessionInitiator type="Chaining" Location="/DS/thiss.io/strict-idpselection" id="seamless-access-beta5">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=strict-idpselection"/>
             </SessionInitiator>
-	    <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategory" id="seamless-access-beta6">
+            <SessionInitiator type="Chaining" Location="/DS/thiss.io/nonstrict-mdsource-entitycategory" id="seamless-access-beta6">
                 <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
                 <SessionInitiator type="SAMLDS" URL="https://use.thiss.io/ds/?trustProfile=nonstrict-mdsource-entitycategory-"/>
+            </SessionInitiator>
+            <!-- SWAMID LAB -->
+            <SessionInitiator type="Chaining" Location="/DS/swamid.lab" id="swamid-lab">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.lab.swamid.se/ds/"/>
+            </SessionInitiator>
+            <SessionInitiator type="Chaining" Location="/DS/swamid.lab/strict-assurancecertification" id="swamid-lab1">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.lab.swamid.se/ds/?trustProfile=strict-assurancecertification"/>
+            </SessionInitiator>
+            <SessionInitiator type="Chaining" Location="/DS/swamid.lab/nonstrict-mdsource" id="swamid-lab2">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.lab.swamid.se/ds/?trustProfile=nonstrict-mdsource"/>
+            </SessionInitiator>
+            <SessionInitiator type="Chaining" Location="/DS/swamid.lab/strict-mdsource" id="swamid-lab3">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.lab.swamid.se/ds/?trustProfile=strict-mdsource"/>
+            </SessionInitiator>
+            <SessionInitiator type="Chaining" Location="/DS/swamid.lab/nonstrict-mdsource-entitycategorysupport" id="swamid-lab4">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.lab.swamid.se/ds/?trustProfile=nonstrict-mdsource-entitycategorysupport"/>
+            </SessionInitiator>
+            <SessionInitiator type="Chaining" Location="/DS/swamid.lab/strict-idpselection" id="swamid-lab5">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.lab.swamid.se/ds/?trustProfile=strict-idpselection"/>
+            </SessionInitiator>
+            <SessionInitiator type="Chaining" Location="/DS/swamid.lab/nonstrict-mdsource-entitycategory" id="swamid-lab6">
+                <SessionInitiator type="SAML2" acsIndex="1" template="bindingTemplate.html"/>
+                <SessionInitiator type="SAMLDS" URL="https://ds.lab.swamid.se/ds/?trustProfile=nonstrict-mdsource-entitycategory-"/>
             </SessionInitiator>
             <!-- SWAMID QA -->
             <SessionInitiator type="Chaining" Location="/DS/swamid-qa" id="swamid-qa">
@@ -74,7 +103,7 @@
             styleSheet="/shibboleth-sp/main.css"/>
 
         <MetadataProvider type="MDQ" id="mdq" ignoreTransport="true" cacheDirectory="mdq"
-		    baseUrl="https://mds.swamid.se/">
+            baseUrl="https://mds.swamid.se/">
             <MetadataFilter type="Signature" certificate="md-signer2.crt"/>
             <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
         </MetadataProvider>
@@ -83,7 +112,7 @@
             url="http://fed.openathens.net/oafed/metadata"
             backingFilePath="metadata/openathens.xml" maxRefreshDelay="7200">
             <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
-	    <MetadataFilter type="Signature" certificate="certs/openathens.crt" verifyBackup="false"/>
+            <MetadataFilter type="Signature" certificate="certs/openathens.crt" verifyBackup="false"/>
         </MetadataProvider>
 
         <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>
