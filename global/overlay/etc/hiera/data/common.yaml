@@ -79,7 +79,7 @@ static_se-east:
    static_servers:
      backends:
        'static-1.se-east.sunet.eu.seamlessaccess.org':
-          ip: '89.47.185.143'
+          ip: '89.47.184.205'
        'static-2.se-east.sunet.eu.seamlessaccess.org':
           ip: '89.47.185.138'
 haproxy_static_se-east:
