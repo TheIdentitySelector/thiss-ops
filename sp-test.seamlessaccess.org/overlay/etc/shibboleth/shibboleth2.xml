@@ -69,6 +69,7 @@
         </Sessions>
 
         <Errors supportContact="noc@sunet.se"
+            redirectErrors="https://demo.beta.seamlessaccess.org/error.php"
             helpLocation="/about.html"
             styleSheet="/shibboleth-sp/main.css"/>
 
