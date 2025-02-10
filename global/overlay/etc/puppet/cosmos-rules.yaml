@@ -27,7 +27,7 @@ md-1.thiss.io:
       version: '5:27.2.0-1~ubuntu.20.04~focal'
       storage_driver: 'overlay2'
    thiss::mdq_beta:
-      version: 1.5.6
+      version: 1.5.8
       src: https://a-1.thiss.io/metadata.json
       src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.thiss.io
@@ -44,7 +44,7 @@ md-2.thiss.io:
       version: '5:27.2.0-1~ubuntu.20.04~focal'
       storage_driver: 'overlay2'
    thiss::mdq_beta:
-      version: 1.5.6
+      version: 1.5.8
       src: https://a-1.thiss.io/metadata.json
       src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.thiss.io
@@ -125,7 +125,7 @@ md-staging-1.thiss.io:
       version: '5:27.2.0-1~ubuntu.20.04~focal'
       storage_driver: 'overlay2'
    thiss::mdq_staging:
-      version: 1.5.6
+      version: 1.5.8
       src: https://a-staging-1.thiss.io/metadata.json
       src_trust: https://a-staging-1.thiss.io/metadata_sp.json
       base_url: https://md-staging.thiss.io
