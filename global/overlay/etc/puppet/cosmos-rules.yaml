@@ -83,7 +83,7 @@ a-1.thiss.io:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static:
-      ds_version: 2.1.32
+      ds_version: 2.1.37
       base_url: https://use.thiss.io/
       mdq_search_url: https://md.thiss.io/entities/
       domain: use.thiss.io
