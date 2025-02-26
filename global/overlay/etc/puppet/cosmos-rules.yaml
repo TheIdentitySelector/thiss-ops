@@ -301,7 +301,7 @@ md.aws2.geant.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
    sunet::server:
       encrypted_swap: false
    thiss::fleetlock_reboot:
@@ -331,7 +331,7 @@ static-1.se-east.sunet.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
    thiss::fleetlock_reboot:
       fleetlock_group: 'seamless-static-east'
       fleetlock_server: https://fl-prod.knubbis.sunet.se
@@ -345,7 +345,7 @@ static-1.se-east.sunet.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
    thiss::fleetlock_reboot:
       fleetlock_group: 'seamless-static-east'
       fleetlock_server: https://fl-prod.knubbis.sunet.se
@@ -370,7 +370,7 @@ static.se-east.sunet.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
    thiss::fleetlock_reboot:
       fleetlock_group: 'seamless-static-aws1'
       fleetlock_server: https://fl-prod.knubbis.sunet.se
@@ -394,7 +394,7 @@ static.aws1.geant.eu.seamlessaccess.org:
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=36000, must-revalidate, s-maxage=604800, proxy-revalidate'
+      cache_control: 'public, max-age=0, must-revalidate, s-maxage=604800, proxy-revalidate'
    thiss::fleetlock_reboot:
       fleetlock_group: 'seamless-static-aws2'
       fleetlock_server: https://fl-prod.knubbis.sunet.se
