@@ -1,6 +1,7 @@
 class thiss::mdq($version="latest",
                  $src=undef,
                  $dst="/etc/thiss/metadata.json",
+                 $dst_trust="/etc/thiss/metadata_sp.json",
                  $post="/bin/true",
                  $base_url=undef)
 {
@@ -10,6 +11,12 @@ class thiss::mdq($version="latest",
    ensure_resource('file','/etc/thiss/', { ensure => directory } )
 
    file {$dst:
+      ensure   => 'present',
+      replace  => 'no',
+      content  => "[]",
+      mode     => '0644'
+   } ->
+   file {$dst_trust:
       ensure   => 'present',
       replace  => 'no',
       content  => "[]",
@@ -32,7 +39,7 @@ class thiss::mdq($version="latest",
       hostname => "${::fqdn}",
       image    => "docker.sunet.se/thiss-mdq",
       imagetag => $version,
-      env      => ["METADATA=/etc/thiss/metadata.json","${final_base_url}"],
+      env      => ["METADATA=/etc/thiss/metadata.json","TRUSTINFO=/etc/thiss/metadata_sp.json","${final_base_url}"],
       volumes  => ['/etc/thiss:/etc/thiss'],
       ports    => ['80:3000'],
       extra_parameters => ["--log-driver=syslog"]

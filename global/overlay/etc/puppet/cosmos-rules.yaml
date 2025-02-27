@@ -161,10 +161,12 @@ md-staging-1.thiss.io:
 
 '^md-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      version: '5:27.2.0-1~ubuntu.20.04~focal'
+      storage_driver: 'overlay2'
    thiss::mdq:
-      version: 1.3.2
+      version: 1.5.8
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
+      src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
@@ -173,10 +175,12 @@ md-staging-1.thiss.io:
 
 '^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      version: '5:27.2.0-1~ubuntu.20.04~focal'
+      storage_driver: 'overlay2'
    thiss::mdq:
-      version: 1.3.2
+      version: 1.5.8
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
+      src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
@@ -185,10 +189,12 @@ md-staging-1.thiss.io:
 
 '^md-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
    thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      version: '5:27.2.0-1~ubuntu.20.04~focal'
+      storage_driver: 'overlay2'
    thiss::mdq:
-      version: 1.3.2
+      version: 1.5.8
       src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
+      src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
@@ -197,10 +203,12 @@ md-staging-1.thiss.io:
 
 '^md-[0-9]\.aws2\.geant\.eu\.seamlessaccess.org$':
    thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+      version: '5:27.2.0-1~ubuntu.20.04~focal'
+      storage_driver: 'overlay2'
    thiss::mdq:
-      version: 1.3.2
+      version: 1.5.8
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
+      src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
