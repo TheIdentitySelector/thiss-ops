@@ -214,6 +214,7 @@ meta.ntx.sunet.eu.seamlessaccess.org:
    thiss::pyff:
       pyff_version: 2.1.3
       output: /var/www/html/metadata.json
+      output_trust: /var/www/html/metadata_sp.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
@@ -228,6 +229,7 @@ meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::pyff:
       pyff_version: 2.1.3
       output: /var/www/html/metadata.json
+      output_trust: /var/www/html/metadata_sp.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
@@ -244,6 +246,7 @@ meta.aws1.geant.eu.seamlessaccess.org:
    thiss::pyff:
       pyff_version: 2.1.3
       output: /var/www/html/metadata.json
+      output_trust: /var/www/html/metadata_sp.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
@@ -260,6 +263,7 @@ meta.aws2.geant.eu.seamlessaccess.org:
    thiss::pyff:
       pyff_version: 2.1.3
       output: /var/www/html/metadata.json
+      output_trust: /var/www/html/metadata_sp.json
    thiss::md_publisher:
       watch: /var/www/html/metadata.json
    md_aggregator:
