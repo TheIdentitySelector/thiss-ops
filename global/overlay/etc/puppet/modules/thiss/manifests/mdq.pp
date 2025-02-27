@@ -1,5 +1,6 @@
 class thiss::mdq($version="latest",
                  $src=undef,
+                 $src_trust=undef,
                  $dst="/etc/thiss/metadata.json",
                  $dst_trust="/etc/thiss/metadata_sp.json",
                  $post="/bin/true",
