@@ -166,7 +166,7 @@ md-staging-1.thiss.io:
    thiss::mdq:
       version: 1.5.8
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
-      src_trust: https://a-1.thiss.io/metadata_sp.json
+      src_trust: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
@@ -180,7 +180,7 @@ md-staging-1.thiss.io:
    thiss::mdq:
       version: 1.5.8
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
-      src_trust: https://a-1.thiss.io/metadata_sp.json
+      src_trust: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
@@ -194,7 +194,7 @@ md-staging-1.thiss.io:
    thiss::mdq:
       version: 1.5.8
       src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
-      src_trust: https://a-1.thiss.io/metadata_sp.json
+      src_trust: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
@@ -208,7 +208,7 @@ md-staging-1.thiss.io:
    thiss::mdq:
       version: 1.5.8
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
-      src_trust: https://a-1.thiss.io/metadata_sp.json
+      src_trust: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
    thiss::fleetlock_reboot:
