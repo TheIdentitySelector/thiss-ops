@@ -1,4 +1,4 @@
-class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html") {
+class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html", $watch_sp="/var/www/html/entities/index.html) {
    $_keyname = $keyname ? {
       undef   => "${::fqdn}_infra",
       default => $keyname
@@ -31,6 +31,11 @@ class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $w
    service {'lighttpd': ensure => running } ->
    sunet::nagios::nrpe_check_fileage {"metadata_aggregate":
       filename => $watch,
+      warning_age => '2100',
+      critical_age => '86400'
+   }
+   sunet::nagios::nrpe_check_fileage {"metadata_sp_aggregate":
+      filename => $watch_sp,
       warning_age => '2100',
       critical_age => '86400'
    }

@@ -1,9 +1,12 @@
 #!/bin/bash
 #
 
+
 pipeline=$1
+pipeline_trust=$2
 pdir=`dirname $pipeline`
-output=$2
+output=$3
+output_trust=$4
 
 
 if [ -r /opt/pyff/feeds ]; then
@@ -26,4 +29,7 @@ if [ -r /opt/pyff/feeds ]; then
 fi
 
 
-docker run -v "${pipeline}:${pipeline}:ro" -v "/opt/pyff:/opt/pyff" <%= @image_tag %> pyff --loglevel=INFO ${pipeline} && cat $pdir/metadata.json > $output
+
+docker run --rm -v "${pipeline}:${pipeline}:ro" -v "/opt/pyff:/opt/pyff" <%= @image_tag %> pyff --loglevel=INFO --local_copy_dir=None ${pipeline} && cat $pdir/metadata.json > $output
+
+docker run --rm -v "${pipeline_trust}:${pipeline_trust}:ro" -v "/opt/pyff:/opt/pyff" <%= @image_tag %> pyff --loglevel=INFO  --local_copy_dir=None ${pipeline_trust} && cat $pdir/metadata_sp.json > $output_trust
