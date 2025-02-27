@@ -441,7 +441,7 @@ class nagios_monitor {
     description    => 'metadata aggregate age',
     contact_groups => ['alerts']
   }
-  nagioscfg::service {'metadata_aggregate_age':
+  nagioscfg::service {'metadata_sp_aggregate_age':
     hostgroup_name => ['md_aggregator'],
     use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_fileage_metadata_sp_aggregate',
