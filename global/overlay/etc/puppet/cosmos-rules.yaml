@@ -316,7 +316,7 @@ md.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static_prod:
-      ds_version: 2.1.38
+      ds_version: 1.6.7
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
@@ -346,7 +346,7 @@ static-1.se-east.sunet.eu.seamlessaccess.org:
    sunet::server:
       encrypted_swap: false
    thiss::static_prod:
-      ds_version: 2.1.38
+      ds_version: 1.6.7
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
@@ -360,7 +360,7 @@ static-1.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static_prod:
-      ds_version: 2.1.38
+      ds_version: 1.6.7
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
@@ -385,7 +385,7 @@ static.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static_prod:
-      ds_version: 2.1.38
+      ds_version: 1.6.7
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
@@ -409,7 +409,7 @@ static.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static_prod:
-      ds_version: 2.1.38
+      ds_version: 1.6.7
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
