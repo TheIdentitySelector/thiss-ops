@@ -1,4 +1,4 @@
-class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html", $watch_sp="/var/www/html/entities/index.html) {
+class thiss::md_publisher($keyname=undef, String $dir="/var/www/html", String $watch = "/var/www/html/entities/index.html", $watch_sp="/var/www/html/entities/index.html") {
    $_keyname = $keyname ? {
       undef   => "${::fqdn}_infra",
       default => $keyname
