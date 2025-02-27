@@ -445,7 +445,7 @@ class nagios_monitor {
     hostgroup_name => ['md_aggregator'],
     use            => 'monitor-service',
     check_command  => 'check_nrpe_1arg!check_fileage_metadata_sp_aggregate',
-    description    => 'metadata aggregate age',
+    description    => 'SP trust metadata aggregate age',
     contact_groups => ['alerts']
   }
   $md_files = ['eduGAIN.xml', 'incommon.xml', 'openathens.xml', 'swamid-registered.xml']
