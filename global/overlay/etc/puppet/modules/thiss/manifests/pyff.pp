@@ -1,4 +1,4 @@
-class thiss::pyff($pyff_version="thiss",$output="/etc/thiss/metadata.json,$output_trust="/etc/thiss/metadata_sp.json") {
+class thiss::pyff($pyff_version="thiss",$output="/etc/thiss/metadata.json",$output_trust="/etc/thiss/metadata_sp.json") {
   $image_tag = "docker.sunet.se/pyff:${pyff_version}"
   $pipeline = hiera("pyff_pipeline")
   $pipeline_trust = hiera("pyff_pipeline_trust")
