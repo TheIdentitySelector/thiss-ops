@@ -129,6 +129,13 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
+  'mariah+829E8B1D':
+    ensure: 'present'
+    name:   'mariah+829E8B1D@sunet.se'
+    key:    "AAAAB3NzaC1yc2EAAAADAQABAAACAQCuyRrie/zbg3spMb7ZLDXScYjuZ64CH4tOh1a99IR2ZYDoHzE0TTZLEG4EZps15d1r2Xg7sxbb76zdyIc/OuARfQXU0rjfw8BRAEj9TKbSVh6dyodKdNTorH6IeGuvrXk0w5TuDk8142XOkr+XppHQYjpVx5PK54ykhELJC0Xjs7OonEZ0/pxHouAK6Zrc+vATP4jedqxolILjfDgv0DDM9/6bNzlM3U96l82nFfTP96hWhvTlHdpd3FwxLhjVtz2cLbGwjjxQkFbhwkF6eUnMhKPalcktP0frnZp587XCMKqmDZIbB+ZSLpR8D4IUo1v+wl7mVwQfdB9XPAiRhvzsQ0xZjExl0sK25EFChPkfUVFI69/DwZ/7ES6E7PUYvu15jTXPD2uT2zA3ssi7i5eova280C5MDKA/TGN4rdcdwoKFrHb4yy6eAgDG7gfl2TGDLxPmT5dRsVCn18XCH1KVtnN4H5i1xU650NLKSdPgPpXtEAgrBn9qr+3HacpP9ZpE0DuCzDEOPyBV6HzK8+nYreCCn24zVWzVNgY1cU7Na7np7QOsdg0wZJXCma5IkeobOb33QOJZagAXFQViJcbgb+AKYSCr9hi5u6UBaMbecExBW18ECkYAO2Af57yeZb9nCrf8afWiw4iNn/f4L2l7DwVuviTzin+5I0Nkj7QT5w=="
+    type:   'ssh-rsa'
+    user:   'root'
+
   'berra+96E0A9D4':
     ensure: 'absent'
     name:   'berra+96E0A9D4@nordu.net'
