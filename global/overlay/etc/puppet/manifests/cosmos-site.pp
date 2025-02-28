@@ -480,6 +480,9 @@ class nagios_monitor {
   nagioscfg::command {'check_metadata_age':
     command_line   => "/usr/lib/nagios/plugins/check_md_sa.sh '\$ARG1\$'"
   }
+  nagioscfg::command {'check_metadata_sp_age':
+    command_line   => "/usr/lib/nagios/plugins/check_md_sp_sa.sh '\$ARG1\$'"
+  }
   nagioscfg::command {'check_haproxy_backend':
     command_line   => "/usr/lib/nagios/plugins/check_haproxy.rb -u '\$ARG1\$'"
   }
@@ -563,6 +566,13 @@ class nagios_monitor {
       description    => "check metadata for ${url}",
       contact_groups => ['alerts'],
     }
+    nagioscfg::service {"check_metadata_sp_age_${url}":
+      host_name      => ["${url}"],
+      use            => 'monitor-service',
+      check_command  => "check_metadata_sp_age!https://${url}",
+      description    => "check SP trust metadata for ${url}",
+      contact_groups => ['alerts'],
+    }
   }
   $md_hosts = ['md-1.ntx.sunet.eu.seamlessaccess.org', 'md-1.se-east.sunet.eu.seamlessaccess.org', 'md-1.aws1.geant.eu.seamlessaccess.org', 'md-1.aws2.geant.eu.seamlessaccess.org','md-2.ntx.sunet.eu.seamlessaccess.org', 'md-2.se-east.sunet.eu.seamlessaccess.org', 'md-2.aws1.geant.eu.seamlessaccess.org', 'md-2.aws2.geant.eu.seamlessaccess.org', 'md-1.thiss.io', 'md-2.thiss.io']
   $md_hosts.each |$host|{
@@ -571,6 +581,13 @@ class nagios_monitor {
       use            => 'monitor-service',
       check_command  => "check_metadata_age!http://${host}",
       description    => "check metadata for ${host}",
+      contact_groups => ['alerts'],
+    }
+    nagioscfg::service {"check_metadata_sp_age_${host}":
+      host_name      => ["${host}"],
+      use            => 'monitor-service',
+      check_command  => "check_metadata_sp_age!http://${host}",
+      description    => "check SP trust metadata for ${host}",
       contact_groups => ['alerts'],
     }
   }
