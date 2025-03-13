@@ -5,6 +5,7 @@ class thiss::firewall_rules($location=undef){
   $haproxy_md_ip = hiera_array("haproxy_md_${location}",[])
   $haproxy_static_ip = hiera_array("haproxy_static_${location}",[])
   $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
+  $sunet_vpn = hiera_array('sunet_vpn',[])
 
   #metadata aggregator expose port 443 to mdq
   if $facts['networking']['fqdn'] =~ /^meta\.\S+\.seamlessaccess\.org$/ {
