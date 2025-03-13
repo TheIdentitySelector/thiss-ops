@@ -62,7 +62,7 @@ class thiss::firewall_rules($location=undef){
   #static exposes 8404 to nagios
   if $facts['networking']['fqdn'] =~ /^static\.\S+\.seamlessaccess\.org$/ {
     sunet::misc::ufw_allow { 'allow_haproxy_static_stats':
-      from => $nagios_ip_v4,
+      from => $nagios_ip_v4 + $sunet_vpn,
       port => '8404',
     }
   }

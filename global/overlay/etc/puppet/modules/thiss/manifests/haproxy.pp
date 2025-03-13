@@ -29,7 +29,7 @@ if $::sunet_nftables_opt_in == 'yes' and ( $::operatingsystem == 'Ubuntu' and ve
       port          => '443',
     }
     sunet::nftables::docker_expose { 'haproxy-stats_older_ubuntu' :
-      allow_clients => ['130.242.121.23/32', '192.36.171.83/32', '130.242.121.23'],
+      allow_clients => ['130.242.121.23/32', '192.36.171.83/32'],
       port          => '8404',
     }
 }
@@ -40,7 +40,7 @@ if ( $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '2
       iif           => "${interface_default}",
     }
     sunet::nftables::docker_expose { 'haproxy-stats' :
-      allow_clients => ['130.242.121.23/32', '192.36.171.83/32', '130.242.121.23/32'],
+      allow_clients => ['130.242.121.23/32', '192.36.171.83/32'],
       port          => '8404',
       iif           => "${interface_default}",
     }

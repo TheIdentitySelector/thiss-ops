@@ -7,6 +7,8 @@ syslog_servers:
    - syslog.sunet.se
 nagios_ip_v4:
    - 192.36.171.83
+sunet_vpn:
+   - 130.242.121.23
 nrpe_clients:
    - 127.0.0.1
    - 127.0.1.1
