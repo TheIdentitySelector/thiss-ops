@@ -2,7 +2,7 @@
 services:
 
   thiss-js:
-    image: 'docker.sunet.se/thiss-js:<%= @ds_version %>'
+    image: 'docker.sunet.se/thiss-js:<%= @ds_version_prod %>'
     restart: always
     ports:
      - 80:80
@@ -22,7 +22,7 @@ services:
 <% end -%>
       - COMPONENT_URL=<%= @component_url %>/cta/
       - PERSISTENCE_URL=<%= @persistence_url %>/ps/
-      - CACHE_CONTROL=<%= @cache_control %>
+      - CACHE_CONTROL=<%= @cache_control_prod %>
       - WHITELIST=<%= @whitelist %>
     logging:
       driver: syslog

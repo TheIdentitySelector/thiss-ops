@@ -1,10 +1,8 @@
-class thiss::static_prod($ds_version="latest",
-                      $base_url=undef,
+class thiss::static_prod($base_url=undef,
                       $mdq_search_url=undef,
                       $domain=undef,
                       $context=undef,
-                      $mdq_hostport=undef,
-                      $cache_control=undef) {
+                      $mdq_hostport=undef) {
 
   $final_mdq_search_url = $mdq_search_url ? {
     undef   => chop($base_url)/entities,
@@ -13,6 +11,8 @@ class thiss::static_prod($ds_version="latest",
   $component_url=chop($base_url)
   $persistence_url=chop($base_url)
   $whitelist = hiera ('whitelist')
+  $ds_version_prod = hiera ('ds_version_prod')
+  $cache_control_prod = hiera ('cache_control_prod')
 
   sunet::snippets::somaxconn { "ds_nginx": maxconn => 4096 }
 
@@ -34,7 +34,7 @@ class thiss::static_prod($ds_version="latest",
       sunet::docker_run { "thiss_js":
         hostname => $facts['networking']['fqdn'],
         image    => "docker.sunet.se/thiss-js",
-        imagetag => $ds_version,
+        imagetag => $ds_version_prod,
         env      => ["BASE_URL=$base_url",
                      "MDQ_URL=$final_mdq_search_url",
                      "SEARCH_URL=$final_mdq_search_url",
@@ -44,7 +44,7 @@ class thiss::static_prod($ds_version="latest",
                      "MDQ_HOSTPORT=$mdq_hostport",
                      "COMPONENT_URL=$component_url/cta/",
                      "PERSISTENCE_URL=$persistence_url/ps/",
-                     "CACHE_CONTROL=\"$cache_control\"",
+                     "CACHE_CONTROL=\"$cache_control_prod\"",
                      "WHITELIST=$whitelist"],
         volumes  => ["/etc/ssl:/etc/ssl"],
         ports    => ["80:80"],
@@ -55,7 +55,7 @@ class thiss::static_prod($ds_version="latest",
       sunet::docker_run { "thiss_js":
         hostname => $facts['networking']['fqdn'],
         image    => "docker.sunet.se/thiss-js",
-        imagetag => $ds_version,
+        imagetag => $ds_version_prod,
         env      => ["BASE_URL=$base_url",
                      "MDQ_URL=$final_mdq_search_url",
                      "SEARCH_URL=$final_mdq_search_url",
@@ -64,7 +64,7 @@ class thiss::static_prod($ds_version="latest",
                      "DEFAULT_CONTEXT=$context",
                      "COMPONENT_URL=$component_url/cta/",
                      "PERSISTENCE_URL=$persistence_url/ps/",
-                     "CACHE_CONTROL=\"$cache_control\"",
+                     "CACHE_CONTROL=\"$cache_control_prod\"",
                      "WHITELIST=$whitelist"],
         volumes  => ["/etc/ssl:/etc/ssl"],
         ports    => ["80:80"],

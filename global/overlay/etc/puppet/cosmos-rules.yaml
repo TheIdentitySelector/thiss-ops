@@ -83,12 +83,10 @@ a-1.thiss.io:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static:
-      ds_version: 2.1.51
       base_url: https://use.thiss.io/
       mdq_search_url: https://md.thiss.io/entities/
       domain: use.thiss.io
       context: thiss.io
-      cache_control: 'public, max-age=3600, must-revalidate, s-maxage=3600, proxy-revalidate'
    http:
    thiss::fleetlock_reboot:
       fleetlock_group: 'seamless-static-beta'
@@ -316,12 +314,10 @@ md.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
       version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::static_prod:
-      ds_version: 2.1.51
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-      cache_control: 'public, max-age=3600, must-revalidate, s-maxage=3600, proxy-revalidate'
    sunet::server:
       encrypted_swap: false
    thiss::fleetlock_reboot:
