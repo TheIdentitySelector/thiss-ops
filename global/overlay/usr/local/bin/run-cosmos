@@ -3,6 +3,8 @@
 # Simplify running cosmos, with serialization if flock is available.
 #
 
+set -e
+
 readonly PROGNAME=$(basename "$0")
 readonly LOCKFILE_DIR=/tmp
 readonly LOCK_FD=200
@@ -122,6 +124,14 @@ machine_is_healthy() {
 }
 
 main () {
+    if [[ $1 == '--random-sleep' ]]; then
+        shift
+        sleep=$((RANDOM % 300))
+
+        echo "$0: Sleeping for ${sleep} seconds before attempting to run cosmos"
+        sleep $sleep
+    fi
+
     lock "$PROGNAME" || eexit "Only one instance of $PROGNAME can run at one time."
     fleetlock_lock || eexit "Unable to acquire fleetlock lock."
     cosmos "$@" update
