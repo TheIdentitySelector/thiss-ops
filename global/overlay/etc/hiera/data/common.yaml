@@ -119,7 +119,7 @@ whitelist: 'springernature.com,springer.com,nature.com,acs.org,getft.io,seamless
 
 
 ds_version_beta: '2.1.52'
-cache_control_beta: 'public, max-age=0, must-revalidate, s-maxage=172800, proxy-revalidate'
+cache_control_beta: 'public, max-age=36000, must-revalidate, s-maxage=172800, proxy-revalidate'
 
 ds_version_prod: '2.1.51'
 cache_control_prod: 'public, max-age=36000, must-revalidate, s-maxage=172800, proxy-revalidate'
