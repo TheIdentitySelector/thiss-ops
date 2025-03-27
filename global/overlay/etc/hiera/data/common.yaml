@@ -118,7 +118,7 @@ static_thiss:
 whitelist: 'springernature.com,springer.com,nature.com,acs.org,getft.io,seamlessaccess.org,sunet.se,swamid.se,literatumonline.com,sciencedirect.com,safire.ac.za,inacademia.org,getfulltextresearch.com,wiley.com,embopress.org,uma.se,tandfonline.com,openathens.net,liblynx.com,scitation.org,elsevier.com,sagepub.com,emerald.com,jamanetwork.com,silverchair.com,thehistorymakers.org,mendeley.com,scopus.com,cambridge.org,magonlinelibrary.com,degruyter.com,ieee.org,brill-dev.pubfactory.com,test.brill.com,kweli.tv,lyellcollection.org,aiaa.org,boneandjoint.org.uk,edu.medici.tv,brill.com,worldscientific.com,oup.com,ams.org,bwb.co.nz,haynesmanualsallaccess.com,neurosurgicalatlas.com,science.org,aaas.org,britishonlinearchives.com,ciaonet.org,elgaronline.com,china.elgaronline.com,advancedintros.com,qwest.tv,microform.digital,haynesmanualsallaccess.com,viewpoint.eiu.com,pubs.ams.org,mathscinet.ams.org,ihr-report.org,royalsocietypublishing.org'
 
 
-ds_version_beta: '2.1.51'
+ds_version_beta: '2.1.52'
 cache_control_beta: 'public, no-store, max-age=0, must-revalidate, s-maxage=0, proxy-revalidate'
 
 ds_version_prod: '2.1.51'
