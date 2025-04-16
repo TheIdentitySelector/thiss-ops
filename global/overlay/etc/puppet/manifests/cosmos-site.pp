@@ -182,8 +182,14 @@ class nrpe {
   sunet::nagios::nrpe_command {'check_entropy':
     command_line => '/usr/lib/nagios/plugins/check_entropy -w 200'
   }
-  sunet::nagios::nrpe_command {'check_ntp_time':
-    command_line => '/usr/lib/nagios/plugins/check_ntp_time -H localhost'
+  if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '22.04') > 0 ){
+    sunet::nagios::nrpe_command {'check_ntp_time':
+      command_line => '/usr/lib/nagios/plugins/check_ntp_time -H ntp.se'
+    }
+  } else {
+      sunet::nagios::nrpe_command {'check_ntp_time':
+        command_line => '/usr/lib/nagios/plugins/check_ntp_time -H localhost'
+      }
   }
   sunet::nagios::nrpe_command {'check_scriptherder':
     command_line => '/usr/local/bin/scriptherder --mode check'
