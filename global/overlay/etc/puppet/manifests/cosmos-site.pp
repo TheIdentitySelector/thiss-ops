@@ -63,9 +63,12 @@ class dhcp6_client {
 class md_aggregator {}
 
 class entropyclient {
-   include sunet::simple_entropy
-   sunet::ucrandom {'random.nordu.net': ensure => absent }
-   sunet::nagios::nrpe_check_process { 'haveged': }
+   # Entropy is not needed on modern kernels
+   if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '22.04') <= 0 ){
+      include sunet::simple_entropy
+      sunet::ucrandom {'random.nordu.net': ensure => absent }
+      sunet::nagios::nrpe_check_process { 'haveged': }
+   }
 }
 
 class openstack_dockerhost {
