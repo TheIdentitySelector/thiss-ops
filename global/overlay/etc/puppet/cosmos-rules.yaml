@@ -119,7 +119,7 @@ a-staging-1.thiss.io:
 
 a-staging-2.thiss.io:
    sunet_iaas_cloud:
-   sunet::dockerhost:
+   sunet::dockerhost2:
    thiss::pyff_staging:
       pyff_version: 2.1.3
       output: /var/www/html/metadata.json

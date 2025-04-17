@@ -206,6 +206,7 @@ def main():
         # Provided by Debian/dpkg
         # https://github.com/SUNET/multiverse/blob/main/global/pre-tasks.d/030puppet
         if OS_INFO["VERSION_CODENAME"] == "noble":
+            del modules["apparmor"]
             del modules["apt"]
             del modules["augeas"]
             del modules["concat"]
