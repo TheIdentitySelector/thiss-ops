@@ -35,8 +35,12 @@ class common {
     ensure_resource ('class','sunet::nftables::init', { })
   }
 
+  # Only import appaprmor for ubuntu22 and older
+  if ($facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '22.04') <= 0 ){
+   include apparmor
+  }
+
   include apt
-  include apparmor
   package { 'needrestart': ensure => installed}
   }
 
