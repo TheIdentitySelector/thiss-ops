@@ -5,5 +5,8 @@ services:
     volumes:
       - '/etc/ssl:/etc/ssl'
       - '/var/www/html:/var/www/html'
+    environment:
+      - "PUBLISHER_CERT=/etc/ssl/certs/<%= @keyname %>.crt"
+      - "PUBLISHER_KEY=/etc/ssl/private/<%= @keyname %>infra.key"
     ports:
       - "443:443"

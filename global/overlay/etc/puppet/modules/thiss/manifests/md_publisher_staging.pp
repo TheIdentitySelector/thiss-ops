@@ -1,8 +1,14 @@
 class thiss::md_publisher_staging(
+   String $keyname=undef,
    String $dir="/var/www/html",
    String $watch="/var/www/html/entities/index.html",
-   $watch_sp="/var/www/html/entities/index.html",
-   $imagetag='',) {
+   String $watch_sp="/var/www/html/entities/index.html",
+   String $imagetag='',) {
+
+   $_keyname = $keyname ? {
+      undef   => "${::fqdn}_infra",
+      default => $keyname
+   }
 
    # this allows fileage check to work wo sudo
    file { '/var/www': ensure => directory, mode => '0755' } ->
