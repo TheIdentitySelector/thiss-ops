@@ -5,10 +5,19 @@ class thiss::pyff_staging($pyff_version="thiss",$output="/etc/thiss/metadata.jso
 
   package {'xmlsec1': ensure => present}
 
-  docker::image { "${image_tag}" :
-    image   => $image_tag,
-    require => Class['sunet::dockerhost'],
+  # docker::image { "${image_tag}" :
+  #   image   => $image_tag,
+  #   require => Class['sunet::dockerhost'],
+  # } ->
+
+  $image_find = "docker images |grep docker.sunet.se/pyff |grep 2.1.3"
+
+  exec { 'pull_docker_images':
+    command      => "docker pull ${image_tag}",
+    unless       => $image_find,
+    require      => Class['sunet::dockerhost2'],
   } ->
+
   file {["/etc/thiss","/opt/pyff","/opt/pyff/metadata"]: ensure => directory } ->
   file {"/usr/local/sbin/run-pyff":
      content => template("thiss/pyff/run-pyff-staging.erb"),

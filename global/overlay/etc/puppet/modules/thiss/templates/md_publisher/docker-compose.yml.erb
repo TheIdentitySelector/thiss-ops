@@ -1,0 +1,9 @@
+---
+services:
+  mdq:
+    image: docker.sunet.se/swamid/mdq-publisher:<%= @imagetag %>
+    volumes:
+      - '/etc/ssl:/etc/ssl'
+      - '/var/www/html:/var/www/html'
+    ports:
+      - "443:443"
