@@ -1,7 +1,7 @@
 class thiss::md_publisher_staging(
    String $dir="/var/www/html",
    String $watch="/var/www/html/entities/index.html",
-   $watch_sp="/var/www/html/entities/index.html"
+   $watch_sp="/var/www/html/entities/index.html",
    $imagetag='',) {
 
    # this allows fileage check to work wo sudo
