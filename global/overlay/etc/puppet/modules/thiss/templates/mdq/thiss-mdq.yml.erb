@@ -1,0 +1,14 @@
+---
+services:
+  thiss-mdq:
+    image: docker.sunet.se/thiss-mdq:<%= @version %>
+    volumes:
+      - '/etc/thiss:/etc/thiss'
+    environment:
+      - "METADATA=<%= @dst %>"
+      - "TRUSTINFO=<%= @dst_trust %>
+    ports:
+      - "80:3000"
+    logging:
+      driver: syslog
+    hostname: <%= @networking['fqdn']%>

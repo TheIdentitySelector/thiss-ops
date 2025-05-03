@@ -1,14 +1,10 @@
 class thiss::md_publisher_staging(
-   String $keyname=undef,
+   String $publisher_cert="/etc/ssl/certs/${facts['networking']['fqdn']}_infra.crt",
+   String $publisher_key="/etc/ssl/private/${facts['networking']['fqdn']}_infra.key",
    String $dir="/var/www/html",
    String $watch="/var/www/html/entities/index.html",
    String $watch_sp="/var/www/html/entities/index.html",
    String $imagetag='',) {
-
-   $_keyname = $keyname ? {
-      undef   => "${::fqdn}_infra",
-      default => $keyname
-   }
 
    # this allows fileage check to work wo sudo
    file { '/var/www': ensure => directory, mode => '0755' } ->
@@ -16,9 +12,9 @@ class thiss::md_publisher_staging(
 
    if $imagetag {
 
-      sunet::docker_compose { 'mdq_publisher':
-        content          => template('thiss/mdq_publisher/docker-compose.yml.erb'),
-        service_name     => 'mdq_publisher',
+      sunet::docker_compose { 'md_publisher':
+        content          => template('thiss/md_publisher/docker-compose.yml.erb'),
+        service_name     => 'md_publisher',
         compose_dir      => '/opt/',
         compose_filename => 'docker-compose.yml',
         description      => 'Metadata Query Protocol Publisher',
