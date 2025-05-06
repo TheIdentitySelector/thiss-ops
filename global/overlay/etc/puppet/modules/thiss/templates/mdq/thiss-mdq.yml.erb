@@ -6,7 +6,7 @@ services:
       - '/etc/thiss:/etc/thiss'
     environment:
       - "METADATA=<%= @dst %>"
-      - "TRUSTINFO=<%= @dst_trust %>
+      - "TRUSTINFO=<%= @dst_trust %>"
     ports:
       - "80:3000"
     logging:
