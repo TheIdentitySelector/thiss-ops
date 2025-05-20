@@ -142,10 +142,6 @@ md-staging-2.thiss.io:
    sunet_iaas_cloud:
    thiss::firewall_rules:
       location: se-east
-### Temporary due to update bug in SS
-   sunet::updater:
-      cron: false
-      cosmos_automatic_reboot: false
 
 '^\S+aws1\S+\.seamlessaccess\.org$':
    sunet_iaas_cloud:
@@ -349,6 +345,10 @@ static-1.se-east.sunet.eu.seamlessaccess.org:
    thiss::fleetlock_reboot:
       fleetlock_group: 'seamless-static-east'
       fleetlock_server: https://fl-prod.knubbis.sunet.se
+### Temporary due to update bug in SS
+   sunet::updater:
+      cron: false
+      cosmos_automatic_reboot: false
 
 '^static-[2-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
