@@ -265,10 +265,16 @@ pyff_pipeline_beta:
         - /opt/pyff/metadata/incommon.xml cert/incommon.pem
         - /opt/pyff/metadata/swamid-registered.xml 40:A3:68:47:50:F3:86:43:36:0C:79:75:0F:87:0D:38:8C:F8:3E:44
         - /opt/pyff/metadata/eduGAIN.xml 5A:D7:3F:8A:C1:0C:74:56:41:77:45:45:EB:92:76:1F:3D:0D:E6:7C
-    - select:
-    - discojson:
-    - print:
-        output: "/opt/pyff/metadata.json"
+    - fork:
+        - select:
+        - discojson:
+        - print:
+            output: "/opt/pyff/metadata.json"
+    - fork:
+        - select:
+        - discojson_sp:
+        - print:
+            output: "/opt/pyff/metadata_sp.json"
 
 pyff_pipeline_trust:
     - load:

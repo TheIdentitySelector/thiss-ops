@@ -9,7 +9,7 @@ class thiss::pyff_staging($pyff_version="thiss",$output="/etc/thiss/metadata.jso
   #   require => Class['sunet::dockerhost'],
   # } ->
 
-  $image_find = "docker images |grep docker.sunet.se/pyff |grep 2.1.3"
+  $image_find = "docker images |grep docker.sunet.se/pyff |grep ${image_tag}"
 
   exec { 'pull_docker_images':
     command      => "docker pull ${image_tag}",
