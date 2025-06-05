@@ -73,6 +73,7 @@ a-1.thiss.io:
    thiss::md_publisher_beta:
       watch: /var/www/html/metadata.json
       watch_sp: /var/www/html/metadata_sp.json
+      imagetag: v2024-04-08-01
    md_aggregator:
    https:
 
