@@ -12,6 +12,7 @@ class thiss::static($base_url=undef,
    $persistence_url=chop($base_url)
    $ds_version_beta = hiera ('ds_version_beta')
    $cache_control_beta = hiera ('cache_control_beta')
+   $saa_complaint_browsers = hiera ('saa_complaint_browsers')
 
    sunet::snippets::somaxconn { "ds_nginx": maxconn => 4096 }
    if $mdq_hostport {
@@ -29,7 +30,8 @@ class thiss::static($base_url=undef,
                    "MDQ_HOSTPORT=$mdq_hostport",
                    "COMPONENT_URL=$component_url/cta/",
                    "PERSISTENCE_URL=$persistence_url/ps/",
-                   "CACHE_CONTROL=\"$cache_control_beta\""],
+                   "CACHE_CONTROL=\"$cache_control_beta\"",
+                   "SAA_COMPLIANT_BROWSERS=\'$saa_complaint_browsers\'"],
       volumes  => ["/etc/ssl:/etc/ssl"],
       ports    => ["443:443"],
       extra_parameters => ["--log-driver=syslog"]
@@ -48,7 +50,8 @@ class thiss::static($base_url=undef,
                    "DEFAULT_CONTEXT=$context",
                    "COMPONENT_URL=$component_url/cta/",
                    "PERSISTENCE_URL=$persistence_url/ps/",
-                   "CACHE_CONTROL=\"$cache_control_beta\""],
+                   "CACHE_CONTROL=\"$cache_control_beta\"",
+                   "SAA_COMPLIANT_BROWSERS=\'$saa_complaint_browsers\'"],
       volumes  => ["/etc/ssl:/etc/ssl"],
       ports    => ["80:80"],
       extra_parameters => ["--log-driver=syslog"]
