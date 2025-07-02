@@ -64,9 +64,9 @@ md_thiss:
    md_servers:
      backends:
        'md-1.thiss.io':
-          ip: '89.47.184.210'
+          ip: '89.47.184.77'
        'md-2.thiss.io':
-          ip: '89.47.184.149'
+          ip: '89.47.185.52'
 
 static_ntx:
    static_servers:

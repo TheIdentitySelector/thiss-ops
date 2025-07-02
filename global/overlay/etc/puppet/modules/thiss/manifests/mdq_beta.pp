@@ -1,4 +1,4 @@
-class thiss::mdq_beta($version="latest",
+class thiss::mdq_beta($version='',
                  $src=undef,
                  $src_trust=undef,
                  $dst="/etc/thiss/metadata.json",
@@ -36,13 +36,13 @@ class thiss::mdq_beta($version="latest",
      warn_criteria => ['exit_status=1','max_age=50h'],
    } ->
 
-   sunet::docker_run { "thiss_mdq":
-      hostname => "${::fqdn}",
-      image    => "docker.sunet.se/thiss-mdq",
-      imagetag => $version,
-      env      => ["METADATA=/etc/thiss/metadata.json","TRUSTINFO=/etc/thiss/metadata_sp.json","${final_base_url}"],
-      volumes  => ['/etc/thiss:/etc/thiss'],
-      ports    => ['80:3000'],
-      extra_parameters => ["--log-driver=syslog"]
+   if $version {
+
+      sunet::docker_compose {'thiss-mdq':
+        service_name => 'thiss-mdq',
+        description  => 'SA metadata query protocol',
+        compose_dir  => '/opt/thiss_mdq/compose',
+        content => template('thiss/mdq/thiss-mdq.yml.erb'),
+      }
    }
 }
