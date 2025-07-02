@@ -32,9 +32,7 @@
       post: /usr/sbin/service docker-thiss_mdq restart
    https:
    http:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-md-beta'
-      fleetlock_server: https://fl-test.knubbis.sunet.se
+   sunet::fleetlock_client:
 
 md-lb.thiss.io:
    thiss::dockerhost:
