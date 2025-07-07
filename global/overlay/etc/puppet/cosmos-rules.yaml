@@ -33,7 +33,7 @@
    https:
    http:
    sunet::fleetlock_client:
-   thiss::fleetlock_helathcheck:
+   thiss::fleetlock_healthcheck:
 
 md-lb.thiss.io:
    thiss::dockerhost:

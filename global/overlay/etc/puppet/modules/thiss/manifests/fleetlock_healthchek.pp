@@ -1,4 +1,4 @@
-class thiss::fleetlock_helathcheck{
+class thiss::fleetlock_healthcheck{
 
   file { '/etc/sunet-machine-healthy':
     ensure => directory,
