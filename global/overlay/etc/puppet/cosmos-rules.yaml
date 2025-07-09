@@ -37,9 +37,9 @@
 
 md-lb.thiss.io:
    sunet::dockerhost2:
-   thiss::haproxy:
-      image_tag: beta
-      location: thiss
+   #thiss::haproxy:
+   #   image_tag: beta
+   #   location: thiss
 
 a-1.thiss.io:
    sunet_iaas_cloud:
