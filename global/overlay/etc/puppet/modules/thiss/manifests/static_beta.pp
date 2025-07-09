@@ -1,4 +1,4 @@
-class thiss::static($base_url=undef,
+class thiss::static_beta($base_url=undef,
                       $mdq_search_url=undef,
                       $domain=undef,
                       $context=undef,
