@@ -64,7 +64,8 @@ a-1.thiss.io:
       domain: use.thiss.io
       context: thiss.io
    http:
-#   sunet::fleetlock_client:
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 static.thiss.io:
    sunet_iaas_cloud:
