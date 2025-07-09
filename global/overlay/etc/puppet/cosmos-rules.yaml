@@ -36,9 +36,7 @@
    thiss::fleetlock_healthcheck:
 
 md-lb.thiss.io:
-   thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.22.04~jammy'
-      storage_driver: 'overlay2'
+   sunet::dockerhost2:
    thiss::haproxy:
       image_tag: beta
       location: thiss
