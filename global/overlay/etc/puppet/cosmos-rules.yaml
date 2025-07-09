@@ -37,9 +37,9 @@
 
 md-lb.thiss.io:
    sunet::dockerhost2:
-   #thiss::haproxy:
-   #   image_tag: beta
-   #   location: thiss
+   thiss::haproxy:
+      image_tag: beta
+      location: thiss
 
 a-1.thiss.io:
    sunet_iaas_cloud:
@@ -57,17 +57,14 @@ a-1.thiss.io:
 
 '^static-[0-9]+\.thiss\.io$':
    sunet_iaas_cloud:
-   thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   thiss::dockerhost2:
    thiss::static:
       base_url: https://use.thiss.io/
       mdq_search_url: https://md.thiss.io/entities/
       domain: use.thiss.io
       context: thiss.io
    http:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-beta'
-      fleetlock_server: https://fl-test.knubbis.sunet.se
+#   sunet::fleetlock_client:
 
 static.thiss.io:
    sunet_iaas_cloud:
