@@ -10,7 +10,7 @@ services:
      - 8404:8404
     volumes:
      - /opt/haproxy/:/etc/haproxy/:ro
-     - <%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>:<%= @tls_certificates[ @fqdn ][ 'haproxy' ] %>:ro
+     - <%= @tls_certificates [@networking['fqdn']][ 'haproxy' ] %>:<%= @tls_certificates[ @networking['fqdn']][ 'haproxy' ] %>:ro
      - /dev/log:/dev/log
      - 'haproxy_control:/var/run/haproxy-control'
 
