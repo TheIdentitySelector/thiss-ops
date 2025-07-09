@@ -58,7 +58,7 @@ a-1.thiss.io:
 '^static-[0-9]+\.thiss\.io$':
    sunet_iaas_cloud:
    sunet::dockerhost2:
-   thiss::static:
+   thiss::static_beta:
       base_url: https://use.thiss.io/
       mdq_search_url: https://md.thiss.io/entities/
       domain: use.thiss.io
