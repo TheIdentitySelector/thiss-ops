@@ -73,4 +73,7 @@ class thiss::static_prod($base_url=undef,
     }
   }
 
+  sunet::nagios::nrpe_command {"check_sa_version":
+    command_line => "/usr/lib/nagios/plugins/check_http -H localhost -u http://localhost/manifest.json -s ${ds_version_prod}"
+  }
 }

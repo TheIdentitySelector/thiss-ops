@@ -615,6 +615,20 @@ class nagios_monitor {
       contact_groups => ['alerts'],
     }
   }
+  nagioscfg::service {"check_sa_version_beta":
+    hostgroup_name => ['thiss::static_beta'],
+    use            => 'monitor-service',
+    check_command  => "check_nrpe_1arg!check_sa_version",
+    description    => 'check thiss-js version in Beta',
+    contact_groups => ['alerts'],
+  }
+  nagioscfg::service {"check_sa_version_prod":
+    hostgroup_name => ['thiss::static_prod'],
+    use            => 'monitor-service',
+    check_command  => "check_nrpe_1arg!check_sa_version",
+    description    => 'check thiss-js version in Beta',
+    contact_groups => ['alerts'],
+  }
 }
 
 if $facts['networking']['fqdn'] =~ /^meta\.\S+\.seamlessaccess\.org$/ {
