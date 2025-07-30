@@ -44,6 +44,7 @@ class thiss::mdq_staging($version='',
         compose_dir  => '/opt/thiss_mdq/compose',
         content => template('thiss/mdq/thiss-mdq.yml.erb'),
       }
+   } else {
+      notice ("No image tag is found, thiss-mdq won't be running!")
    }
-   else notice ("No image tag is found, thiss-mdq won't be running!")
 }
