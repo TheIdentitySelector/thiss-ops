@@ -45,4 +45,5 @@ class thiss::mdq_beta($version='',
         content => template('thiss/mdq/thiss-mdq.yml.erb'),
       }
    }
+   else notice ("No image tag is found, thiss-mdq won't be running!")
 }

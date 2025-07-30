@@ -20,6 +20,7 @@ class thiss::md_publisher_staging(
         description      => 'Metadata Query Protocol Publisher',
       }
    }
+   else notice ("No image tag is found, md_publisher won't be running!")
 
    sunet::nagios::nrpe_check_fileage {"metadata_aggregate":
       filename => $watch,
