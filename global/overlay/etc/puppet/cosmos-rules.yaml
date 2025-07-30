@@ -127,18 +127,15 @@ md-staging-2.thiss.io:
       location: aws2
 
 '^md-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
-   thiss::dockerhost:
-      version: '5:27.2.0-1~ubuntu.20.04~focal'
-      storage_driver: 'overlay2'
-   thiss::mdq:
+   sunet::dockerhost2:
+   thiss::mdq_prod:
       version: 1.5.8
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
       post: /usr/sbin/service docker-thiss_mdq restart
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-md-ntx'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 '^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    thiss::dockerhost:
