@@ -194,7 +194,6 @@ meta.ntx.sunet.eu.seamlessaccess.org:
       imagetag: v2024-04-08-01
    md_aggregator:
    sunet::fleetlock_client:
-   thiss::fleetlock_healthcheck:
 
 meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
