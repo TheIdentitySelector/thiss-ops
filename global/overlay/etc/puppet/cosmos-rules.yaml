@@ -193,9 +193,8 @@ meta.ntx.sunet.eu.seamlessaccess.org:
       watch_sp: /var/www/html/metadata_sp.json
       imagetag: v2024-04-08-01
    md_aggregator:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-meta'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 meta.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
