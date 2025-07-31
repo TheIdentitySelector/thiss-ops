@@ -249,6 +249,8 @@ md.ntx.sunet.eu.seamlessaccess.org:
    thiss::haproxy_md:
       location: ntx
       image_tag: 20230614-prod
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 md.se-east.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:
