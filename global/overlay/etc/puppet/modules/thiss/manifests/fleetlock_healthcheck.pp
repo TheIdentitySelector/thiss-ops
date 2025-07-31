@@ -7,7 +7,7 @@ class thiss::fleetlock_healthcheck{
       ensure => directory,
      }
 
-  if $facts['networking']['fqdn'] =~ /^static\./ {
+  if $facts['networking']['fqdn'] =~ /^static\./ or $facts['networking']['fqdn'] =~ /^md\./ {
     file { '/etc/sunet-machine-healthy/health-checks.d/check_haproxy.check':
       ensure  => file,
       content => template("thiss/fleetlock_reboot/check_haproxy.check.erb"),

@@ -35,7 +35,7 @@ class thiss::haproxy_md($location=undef,$image_tag=undef){
   }
 
   sunet::docker_compose {'haproxy_docker_compose':
-    service_name => 'haproxy_md',
+    service_name => 'haproxy_seamlessaccess',
     description  => 'HAProxy Load Blanacer for thiss-mdq',
     compose_dir  => '/opt/haproxy/compose',
     content => template('thiss/haproxy/haproxy_md.yml.erb'),
