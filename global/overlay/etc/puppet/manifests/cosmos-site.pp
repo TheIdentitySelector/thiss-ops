@@ -488,6 +488,9 @@ class nagios_monitor {
   nagioscfg::command {'check_website':
     command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$' --sni"
   }
+  nagioscfg::command {'check_website_string':
+    command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -S -u '\$ARG1\$'  -s '\$ARG2\$'"
+  }
   nagioscfg::command {'check_website_http':
     command_line   => "/usr/lib/nagios/plugins/check_http -H '\$HOSTNAME\$' -u '\$ARG1\$' -s '\$ARG2\$'"
   }
@@ -533,6 +536,13 @@ class nagios_monitor {
       use            => 'monitor-service',
       check_command  => "check_haproxy_backend!http://${host}:8404/stats",
       description    => "check HAproxy backends for ${host}",
+      contact_groups => ['alerts'],
+    }
+    nagioscfg::service {"check_website_status${host}":
+      host_name      => ["${host}"],
+      use            => 'monitor-service',
+      check_command  => "check_website_string!https://${host}/status!OK",
+      description    => "check status for https://${host}/status",
       contact_groups => ['alerts'],
     }
   }
@@ -602,6 +612,13 @@ class nagios_monitor {
       use            => 'monitor-service',
       check_command  => "check_metadata_sp_age!http://${host}",
       description    => "check SP trust metadata for ${host}",
+      contact_groups => ['alerts'],
+    }
+    nagioscfg::service {"check_website_status${host}":
+      host_name      => ["${host}"],
+      use            => 'monitor-service',
+      check_command  => "check_website_http!http://${host}/status!OK",
+      description    => "check web for ${host}",
       contact_groups => ['alerts'],
     }
   }
