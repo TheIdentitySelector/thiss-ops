@@ -12,17 +12,16 @@ class thiss::haproxy_md($location=undef,$image_tag=undef){
                ],
   })
 
-    ensure_resource('file','/opt/haproxy', { ensure => directory } )
-    ensure_resource('file','/opt/haproxy/compose', { ensure => directory } )
-    $servers = hiera_hash("md_${location}")
+  ensure_resource('file','/opt/haproxy', { ensure => directory } )
+  ensure_resource('file','/opt/haproxy/compose', { ensure => directory } )
+  $servers = hiera_hash("md_${location}")
 
-    file { '/opt/haproxy/haproxy.cfg':
-      content      => template('thiss/haproxy/haproxy_md.cfg.erb'),
-      owner        => root,
-      group        => 'haproxy',
-      mode         => '0640'
-    }
-
+  file { '/opt/haproxy/haproxy.cfg':
+    content      => template('thiss/haproxy/haproxy_md.cfg.erb'),
+    owner        => root,
+    group        => 'haproxy',
+    mode         => '0640'
+  }
 
   sunet::nftables::docker_expose { 'haproxy' :
     allow_clients => 'any',
