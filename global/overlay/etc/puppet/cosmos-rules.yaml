@@ -274,18 +274,14 @@ md.aws2.geant.eu.seamlessaccess.org:
       image_tag: 20230614-prod
 
 '^static-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
-   thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   sunet::dockerhost2:
    thiss::static_prod:
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-   sunet::server:
-      encrypted_swap: false
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ntx'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 static.ntx.sunet.eu.seamlessaccess.org:
    thiss::dockerhost:

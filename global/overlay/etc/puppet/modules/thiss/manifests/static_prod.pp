@@ -25,7 +25,7 @@ class thiss::static_prod($base_url=undef,
       service_name => 'thiss_js',
       description  => 'SA identity selector software',
       compose_dir  => '/opt/static/compose',
-      content => template('thiss/static/thiss-js.yml.erb'),
+      content => template('thiss/static/thiss-js_prod.yml.erb'),
     }
   }
   else {
