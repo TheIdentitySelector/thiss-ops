@@ -37,7 +37,7 @@
 
 md-lb.thiss.io:
    sunet::dockerhost2:
-   thiss::haproxy:
+   thiss::haproxy_md:
       image_tag: beta
       location: thiss
 
@@ -245,10 +245,8 @@ meta.aws2.geant.eu.seamlessaccess.org:
       fleetlock_server: https://fl-prod.knubbis.sunet.se
 
 md.ntx.sunet.eu.seamlessaccess.org:
-   thiss::dockerhost:
-      version: '5:24.0.7-1~ubuntu.22.04~jammy'
-      storage_driver: 'overlay2'
-   thiss::haproxy:
+   sunet::dockerhost2:
+   thiss::haproxy_md:
       location: ntx
       image_tag: 20230614-prod
 
