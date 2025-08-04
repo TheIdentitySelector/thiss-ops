@@ -1,5 +1,4 @@
 ---
----
 fleetlock_config:
   seamless-static-ha:
     server: "https://fl-prod.knubbis.sunet.se"
