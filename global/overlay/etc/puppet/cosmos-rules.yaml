@@ -193,20 +193,17 @@ meta.ntx.sunet.eu.seamlessaccess.org:
    sunet::fleetlock_client:
 
 meta.se-east.sunet.eu.seamlessaccess.org:
-   thiss::dockerhost:
-      version: '5:27.2.0-1~ubuntu.20.04~focal'
-      storage_driver: 'overlay2'
-   thiss::pyff:
+   sunet::dockerhost2:
+   thiss::pyff_prod:
       pyff_version: 2.1.3
       output: /var/www/html/metadata.json
       output_trust: /var/www/html/metadata_sp.json
-   thiss::md_publisher:
+   thiss::md_publisher_prod:
       watch: /var/www/html/metadata.json
       watch_sp: /var/www/html/metadata_sp.json
+      imagetag: v2024-04-08-01
    md_aggregator:
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-meta'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
 
 meta.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
