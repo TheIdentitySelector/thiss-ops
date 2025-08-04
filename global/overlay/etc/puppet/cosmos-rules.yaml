@@ -284,17 +284,12 @@ md.aws2.geant.eu.seamlessaccess.org:
    thiss::fleetlock_healthcheck:
 
 static.ntx.sunet.eu.seamlessaccess.org:
-   thiss::dockerhost:
-      version: '5:24.0.7-1~ubuntu.22.04~jammy'
-      storage_driver: 'overlay2'
+   sunet::dockerhost2:
    thiss::haproxy_static:
       image_tag: 20230614-prod
       location: ntx
-   sunet::server:
-      encrypted_swap: false
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ha'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 static-1.se-east.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
