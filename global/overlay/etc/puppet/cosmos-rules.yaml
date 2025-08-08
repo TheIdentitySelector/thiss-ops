@@ -303,9 +303,8 @@ static.se-east.sunet.eu.seamlessaccess.org:
    thiss::haproxy_static:
       image_tag: 20230614-prod
       location: se-east
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ha'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 '^static-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
    thiss::dockerhost:
