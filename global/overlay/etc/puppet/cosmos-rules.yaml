@@ -286,30 +286,15 @@ static.ntx.sunet.eu.seamlessaccess.org:
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
-static-1.se-east.sunet.eu.seamlessaccess.org:
+'^static-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    sunet::dockerhost2:
-   sunet::server:
-      encrypted_swap: false
    thiss::static_prod:
       base_url: https://service.seamlessaccess.org/
       mdq_search_url: https://md.seamlessaccess.org/entities/
       domain: service.seamlessaccess.org
       context: seamlessaccess.org
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-east'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
-
-'^static-[2-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
-   thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
-   thiss::static_prod:
-      base_url: https://service.seamlessaccess.org/
-      mdq_search_url: https://md.seamlessaccess.org/entities/
-      domain: service.seamlessaccess.org
-      context: seamlessaccess.org
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-east'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 static.se-east.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
