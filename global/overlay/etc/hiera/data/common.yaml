@@ -38,7 +38,7 @@ md_se-east:
        'md-2.se-east.sunet.eu.seamlessaccess.org':
           ip: '89.47.185.128'
 haproxy_md_se-east:
-   - 89.47.184.218
+   - 89.47.184.17
 
 md_aws1:
    md_servers:
