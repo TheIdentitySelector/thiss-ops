@@ -84,7 +84,7 @@ static_se-east:
        'static-1.se-east.sunet.eu.seamlessaccess.org':
           ip: '89.47.184.205'
        'static-2.se-east.sunet.eu.seamlessaccess.org':
-          ip: '89.47.185.138'
+          ip: '89.47.185.58'
 haproxy_static_se-east:
    -  89.47.185.198
 
