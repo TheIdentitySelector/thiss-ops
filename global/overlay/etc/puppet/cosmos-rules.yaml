@@ -247,11 +247,12 @@ md.ntx.sunet.eu.seamlessaccess.org:
    thiss::fleetlock_healthcheck:
 
 md.se-east.sunet.eu.seamlessaccess.org:
-   thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
-   thiss::haproxy:
+   sunet::dockerhost2:
+   thiss::haproxy_md:
       location: se-east
       image_tag: 20230614-prod
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 md.aws1.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
