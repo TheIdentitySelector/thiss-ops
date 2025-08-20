@@ -213,7 +213,7 @@ meta.aws1.geant.eu.seamlessaccess.org:
       watch_sp: /var/www/html/metadata_sp.json
       imagetag: v2024-04-08-01
    md_aggregator:
-   #sunet::fleetlock_client:
+   sunet::fleetlock_client:
 
 meta.aws2.geant.eu.seamlessaccess.org:
    thiss::dockerhost:
