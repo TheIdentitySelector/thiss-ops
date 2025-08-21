@@ -248,7 +248,6 @@ md.se-east.sunet.eu.seamlessaccess.org:
 
 md.aws1.geant.eu.seamlessaccess.org:
    sunet::dockerhost2:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
    thiss::haproxy_md:
       location: aws1
       image_tag: 20230614-prod
