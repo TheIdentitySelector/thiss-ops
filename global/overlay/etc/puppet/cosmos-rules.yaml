@@ -221,6 +221,7 @@ meta.aws2.geant.eu.seamlessaccess.org:
    thiss::md_publisher_prod:
       watch: /var/www/html/metadata.json
       watch_sp: /var/www/html/metadata_sp.json
+      imagetag: v2024-04-08-01
    md_aggregator:
    #sunet::fleetlock_client:
 
