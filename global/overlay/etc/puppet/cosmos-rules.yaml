@@ -222,7 +222,7 @@ meta.aws2.geant.eu.seamlessaccess.org:
       watch: /var/www/html/metadata.json
       watch_sp: /var/www/html/metadata_sp.json
    md_aggregator:
-   #sunet::fleetlock_client:
+   sunet::fleetlock_client:
 
 md.ntx.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
