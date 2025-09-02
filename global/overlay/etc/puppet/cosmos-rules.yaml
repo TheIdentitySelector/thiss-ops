@@ -321,14 +321,12 @@ static.aws1.geant.eu.seamlessaccess.org:
    thiss::fleetlock_healthcheck:
 
 static.aws2.geant.eu.seamlessaccess.org:
-   thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
+   sunet::dockerhost2:
    thiss::haproxy_static:
       image_tag: 20230614-prod
       location: aws2
-   thiss::fleetlock_reboot:
-      fleetlock_group: 'seamless-static-ha'
-      fleetlock_server: https://fl-prod.knubbis.sunet.se
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
