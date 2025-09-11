@@ -510,7 +510,7 @@ class nagios_monitor {
   nagioscfg::host {$public_hosts: sort_alphabetically => true }
   $md_haproxy_hosts = ['md-lb.thiss.io', 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
   $meta_hosts = ['meta.aws1.geant.eu.seamlessaccess.org', 'meta.aws2.geant.eu.seamlessaccess.org', 'meta.se-east.sunet.eu.seamlessaccess.org', 'meta.ntx.sunet.eu.seamlessaccess.org', 'a-1.thiss.io', 'a-staging-2.thiss.io']
-  $static_haproxy_hosts = ['static.thiss.io', 'static.ntx.sunet.eu.seamlessaccess.org', 'static.se-east.sunet.eu.seamlessaccess.org', 'static.aws1.geant.eu.seamlessaccess.org', 'static.aws2.geant.eu.seamlessaccess.org']
+  $static_haproxy_hosts = ['static.aws2.thiss.io', 'static.thiss.io', 'static.ntx.sunet.eu.seamlessaccess.org', 'static.se-east.sunet.eu.seamlessaccess.org', 'static.aws1.geant.eu.seamlessaccess.org', 'static.aws2.geant.eu.seamlessaccess.org']
   $urls = concat ($public_hosts, $md_haproxy_hosts, $static_haproxy_hosts)
   $urls.each |$url|{
     nagioscfg::service {"check_${url}":
@@ -622,7 +622,7 @@ class nagios_monitor {
       contact_groups => ['alerts'],
     }
   }
-  $static_hosts = ['static-1.thiss.io', 'static-1.ntx.sunet.eu.seamlessaccess.org', 'static-1.se-east.sunet.eu.seamlessaccess.org', 'static-1.aws1.geant.eu.seamlessaccess.org', 'static-1.aws2.geant.eu.seamlessaccess.org', 'static-2.thiss.io', 'static-2.ntx.sunet.eu.seamlessaccess.org', 'static-2.se-east.sunet.eu.seamlessaccess.org', 'static-2.aws1.geant.eu.seamlessaccess.org', 'static-2.aws2.geant.eu.seamlessaccess.org']
+  $static_hosts = ['static-1.aws2.thiss.io', 'static-2.aws2.thiss.io', 'static-1.thiss.io', 'static-1.ntx.sunet.eu.seamlessaccess.org', 'static-1.se-east.sunet.eu.seamlessaccess.org', 'static-1.aws1.geant.eu.seamlessaccess.org', 'static-1.aws2.geant.eu.seamlessaccess.org', 'static-2.thiss.io', 'static-2.ntx.sunet.eu.seamlessaccess.org', 'static-2.se-east.sunet.eu.seamlessaccess.org', 'static-2.aws1.geant.eu.seamlessaccess.org', 'static-2.aws2.geant.eu.seamlessaccess.org']
   $static_hosts.each |$host|{
     nagioscfg::service {"check_${host}":
       host_name      => ["${host}"],
