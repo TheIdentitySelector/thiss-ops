@@ -74,6 +74,7 @@ a-1.thiss.io:
       mdq_search_url: https://md.thiss.io/entities/
       domain: use.thiss.io
       context: thiss.io
+   http:
 
 static.thiss.io:
    sunet_iaas_cloud:
@@ -81,6 +82,13 @@ static.thiss.io:
    thiss::haproxy_static:
       image_tag: beta
       location: thiss
+   https:
+
+static.aws2.thiss.io:
+   sunet::dockerhost2:
+   thiss::haproxy_static:
+      image_tag: beta
+      location: thiss_aws2
    https:
 
 a-staging-2.thiss.io:
