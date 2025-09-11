@@ -83,6 +83,8 @@ static.thiss.io:
       image_tag: beta
       location: thiss
    https:
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 static.aws2.thiss.io:
    sunet::dockerhost2:
@@ -90,6 +92,8 @@ static.aws2.thiss.io:
       image_tag: beta
       location: thiss_aws2
    https:
+   sunet::fleetlock_client:
+   thiss::fleetlock_healthcheck:
 
 a-staging-2.thiss.io:
    sunet_iaas_cloud:
