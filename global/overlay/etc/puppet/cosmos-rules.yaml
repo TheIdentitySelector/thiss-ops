@@ -67,6 +67,14 @@ a-1.thiss.io:
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
+'^static-[0-9]+\.aws2\.thiss\.io$':
+   sunet::dockerhost2:
+   thiss::static_beta:
+      base_url: https://use.thiss.io/
+      mdq_search_url: https://md.thiss.io/entities/
+      domain: use.thiss.io
+      context: thiss.io
+
 static.thiss.io:
    sunet_iaas_cloud:
    sunet::dockerhost2:
