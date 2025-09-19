@@ -441,13 +441,6 @@ class nagios_monitor {
     description    => 'Scriptherder Status',
     contact_groups => ['alerts']
   }
-  nagioscfg::service {'check_apt':
-    hostgroup_name => ['nrpe'],
-    use            => 'monitor-service',
-    check_command  => 'check_nrpe_1arg!check_apt',
-    description    => 'Packages available for upgrade',
-    contact_groups => ['alerts']
-  }
   nagioscfg::service {'metadata_aggregate_age':
     hostgroup_name => ['md_aggregator'],
     use            => 'monitor-service',
