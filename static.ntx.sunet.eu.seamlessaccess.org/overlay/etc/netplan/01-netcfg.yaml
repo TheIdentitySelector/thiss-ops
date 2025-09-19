@@ -1,0 +1,22 @@
+network:
+  version: 2
+  ethernets:
+    ens3:
+      addresses:
+        - 192.36.171.88/26
+        - 2001:6b0:8:7::88/64
+      nameservers:
+        addresses:
+          - 89.32.32.32
+          - 2001:6b0:89::32:32:32
+        search:
+          - sunet.se
+      dhcp4: false
+      dhcp6: false
+      routes:
+        - to: default
+          via: 192.36.171.65
+          on-link: true
+        - to: default
+          via: 2001:6b0:8:7::1
+          on-link: true
