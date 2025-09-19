@@ -24,7 +24,7 @@ class thiss::mdq_prod($version='',
       mode     => '0644'
    } ->
    file { '/usr/local/bin/get_metadata.sh':
-      content      => template('thiss/mdq/get_metadata.erb'),
+      content      => template('thiss/mdq/get_metadata_prod.erb'),
       owner        => root,
       group        => root,
       mode         => '0755'

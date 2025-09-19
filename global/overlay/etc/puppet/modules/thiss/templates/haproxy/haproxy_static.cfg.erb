@@ -37,13 +37,13 @@ defaults
     balance roundrobin
 
 frontend stats
-    bind *:8404
+    bind [::]:8404
     stats enable
     stats uri /stats
     stats refresh 10s
 
 frontend haproxy_seamlessaccess
-    bind *:443 ssl crt <%= @tls_certificates [@networking['fqdn']][ 'haproxy' ] %>
+    bind [::]:443 v4v6 crt <%= @tls_certificates [@networking['fqdn']][ 'haproxy' ] %>
     default_backend static_servers
 
 backend static_servers

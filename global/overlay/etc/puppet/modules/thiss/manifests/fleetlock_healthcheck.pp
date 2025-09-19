@@ -10,13 +10,13 @@ class thiss::fleetlock_healthcheck{
   if $facts['networking']['fqdn'] =~ /^static\./ or $facts['networking']['fqdn'] =~ /^md\./ {
     file { '/etc/sunet-machine-healthy/health-checks.d/check_haproxy.check':
       ensure  => file,
-      content => template("thiss/fleetlock_reboot/check_haproxy.check.erb"),
+      content => template("thiss/fleetlock_healthcheck/check_haproxy.check.erb"),
       mode    => '0744',
     }
   } elsif $facts['networking']['fqdn'] !~ /^meta\./ {
     file { '/etc/sunet-machine-healthy/health-checks.d/check_web.check':
       ensure  => file,
-      content => template("thiss/fleetlock_reboot/check_web.check.erb"),
+      content => template("thiss/fleetlock_healthcheck/check_web.check.erb"),
       mode    => '0744',
     }
   }

@@ -19,7 +19,7 @@ class thiss::pyff_staging($pyff_version="thiss",$output="/etc/thiss/metadata.jso
 
   file {["/etc/thiss","/opt/pyff","/opt/pyff/metadata"]: ensure => directory } ->
   file {"/usr/local/sbin/run-pyff":
-     content => template("thiss/pyff/run-pyff-staging.erb"),
+     content => template("thiss/pyff/run-pyff_staging.erb"),
      mode    => '0755'
   } ->
   file {"/opt/pyff/mdx.fd":
