@@ -1,0 +1,14 @@
+#!/bin/bash
+
+while true
+do
+  exec=$(/usr/lib/nagios/plugins/check_http -H localhost -S -u https://localhost)
+  exec_result=$?
+  if [[ $exec_result -ne 0 ]]; then
+        echo "Service is not working!"
+  else
+     echo "$exec: Service is working!"
+     exit 0
+  fi
+  sleep 1
+done
