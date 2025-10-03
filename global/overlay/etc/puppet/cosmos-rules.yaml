@@ -117,7 +117,7 @@ md-staging-2.thiss.io:
       src: https://a-staging-2.thiss.io/metadata.json
       src_trust: https://a-staging-2.thiss.io/metadata_sp.json
       base_url: https://md-staging.thiss.io
-      post: /usr/sbin/service docker-thiss_mdq restart
+      post: /usr/sbin/service sunet-thiss-mdq restart
    sunet::lb::register_sites:
       sites:
          'md-staging.thiss.io':
@@ -153,7 +153,7 @@ md-staging-2.thiss.io:
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
-      post: /usr/sbin/service docker-thiss_mdq restart
+      post: /usr/sbin/service sunet-thiss-mdq restart
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
@@ -164,7 +164,7 @@ md-staging-2.thiss.io:
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
-      post: /usr/sbin/service docker-thiss_mdq restart
+      post: /usr/sbin/service sunet-thiss-mdq restart
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
@@ -175,7 +175,7 @@ md-staging-2.thiss.io:
       src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.aws1.geant.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
-      post: /usr/sbin/service docker-thiss_mdq restart
+      post: /usr/sbin/service sunet-thiss-mdq restart
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
@@ -186,7 +186,7 @@ md-staging-2.thiss.io:
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.aws2.geant.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
-      post: /usr/sbin/service docker-thiss_mdq restart
+      post: /usr/sbin/service sunet-thiss-mdq restart
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
