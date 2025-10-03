@@ -14,9 +14,15 @@ wget -qO$tmpf <%= @src %> && jq -e '.[].title' $tmpf >/dev/null 2>&1
 
 if [ $? -eq 0 ]; then
    cmp -s $tmpf <%= @dst %>
-   test $? -ne 0 && mv $tmpf <%= @dst %> && sleep $sleep && <%= @post %>
-   touch /etc/thiss/metadata.json
-   rm -f $tmpf
+   test $? -ne 0 && mv $tmpf <%= @dst %> && sleep $sleep
+   <%= @post %>
+   if [ $? -eq 0 ]; then
+     touch /etc/thiss/metadata.json
+     rm -f $tmpf
+   else
+     echo "restarting thiss-mdq probably did not work"
+     exit 1
+   fi
 
 else
    rm -f $tmpf
@@ -30,9 +36,15 @@ wget -qO$tmpf_trust <%= @src_trust %> && jq -e '.[].entityID' $tmpf_trust >/dev/
 
 if [ $? -eq 0 ]; then
    cmp -s $tmpf_trust <%= @dst_trust %>
-   test $? -ne 0 && mv $tmpf_trust <%= @dst_trust %> && sleep $sleep && <%= @post %>
-   touch /etc/thiss/metadata_sp.json
-   rm -f $tmpf_trust
+   test $? -ne 0 && mv $tmpf_trust <%= @dst_trust %> && sleep $sleep
+   <%= @post %>
+   if [ $? -eq 0 ]; then
+     touch /etc/thiss/metadata_sp.json
+     rm -f $tmpf_trust
+   else
+     echo "restarting thiss-mdq probably did not work"
+     exit 1
+   fi
 
 else
    rm -f $tmpf_trust

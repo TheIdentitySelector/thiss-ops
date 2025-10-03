@@ -29,7 +29,7 @@
       src: https://a-1.thiss.io/metadata.json
       src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.thiss.io
-      post: /usr/sbin/service docker-thiss_mdq restart
+      post: /usr/sbin/service sunet-thiss-mdq restart
    https:
    http:
    sunet::fleetlock_client:
