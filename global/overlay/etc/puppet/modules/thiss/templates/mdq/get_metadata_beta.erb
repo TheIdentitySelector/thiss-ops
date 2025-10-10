@@ -8,34 +8,43 @@ else
    sleep=15
 fi
 
+metadata_host="a-1.thiss.io"
+
+function exit_script_fail {
+    local msg=$1
+    local filetoremove=$2
+    echo $msg
+    echo "Removing: $filetoremove"
+    rm -f $filetoremove
+    echo "exiting script!"
+    exit 1
+    }
+
+function fetch_metadata {
+    local metadata_file=$1
+
+    wget -qO$tmpf https://$metadata_host/$metadata_file && jq -e '.[].title' $tmpf >/dev/null 2>&1
+
+    if [ $? -eq 0 ]; then
+       cmp -s $tmpf /etc/thiss/$metadata_file
+       test $? -ne 0 && restart=true || restart=false
+
+       if [ $restart == true ]; then
+           mv $tmpf /etc/thiss/$metadata_file
+           sleep $sleep
+           /usr/sbin/service sunet-thiss-mdq restart || exit_script_fail "Restarting thiss-mdq probably did not work" $tmpf
+           fi
+
+        touch /etc/thiss/$metadata_file
+        rm -f $tmpf
+
+    else
+       exit_script_fail "$metadata_file is empty" $tmpf
+    fi
+    }
+
 #fetch metadata.json
-tmpf=`mktemp`
-wget -qO$tmpf <%= @src %> && jq -e '.[].title' $tmpf >/dev/null 2>&1
-
-if [ $? -eq 0 ]; then
-   cmp -s $tmpf <%= @dst %>
-   test $? -ne 0 && mv $tmpf <%= @dst %> && sleep $sleep && <%= @post %>
-   touch /etc/thiss/metadata.json
-   rm -f $tmpf
-
-else
-   rm -f $tmpf
-   echo "/etc/thiss/metadata.json is empty"
-   exit 1
-fi
+fetch_metadata metadata.json
 
 #fetch metadata_sp.json
-tmpf_trust=`mktemp`
-wget -qO$tmpf_trust <%= @src_trust %> && jq -e '.[].entityID' $tmpf_trust >/dev/null 2>&1
-
-if [ $? -eq 0 ]; then
-   cmp -s $tmpf_trust <%= @dst_trust %>
-   test $? -ne 0 && mv $tmpf_trust <%= @dst_trust %> && sleep $sleep && <%= @post %>
-   touch /etc/thiss/metadata_sp.json
-   rm -f $tmpf_trust
-
-else
-   rm -f $tmpf_trust
-   echo "/etc/thiss/metadata_sp.json is empty"
-   exit 1
-fi
+fetch_metadata metadata_sp.json
