@@ -5,6 +5,7 @@ docker_repo: 'stable'
 
 syslog_servers:
    - syslog.sunet.se
+   - syslog2.sunet.se
 nagios_ip_v4:
    - 192.36.171.83
 sunet_vpn:
