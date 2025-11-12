@@ -258,6 +258,12 @@ ssh_authorized_keys:
     type:   'ssh-rsa'
     user:   'root'
 
+  'petersa+588BEC5547B52C':
+    name  : 'petersa+588BEC5547B52C'
+    key   : 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDRMby4BAn2OtGsW4wHtwticv+pimlgG7GmT5F/Tvb8aHU/EIik8Da46xyRmXT9j1SsOPPyV0fgCxr3sbPE0M1XuMcqSzWw5JpA0Hfq5KzST70x7LN5fzjEd/ScjG1p5BWYJmXBAXL2T+32zW3mGCCGO4W04DJt1mfHbJUpNEXJ0wFeg0JQXRSNLcNW81zBjViVSwtneZjDuZvm/iensyrjVOnSPiD1a90+0lAOFPAAK1Gp7A+TMMJ0db+MQ5VRH7LoyJvN2dgYquicPoiSNKobmAiZ8C2tZvubZ68d/z36eMMWGJtN3IMW3jzqY2LCvXNXbyMq+owiuJ5uQKwrse+JffpL4O+YmayWjL3TDChU3PeXhwM0xrt86tO2c78ELhwpfKTQtuohCU8Pw1HLThpMPl/o6LqFXQJjgK8Bqp1uVHKSf/iUVog5QzutbUHwwdezCHEtpacpZ1cOd4d46ktokcM0g9XHlnQTy0BngRtISjE104y/dD+H5ML6BM9qTilB39szLHUp566yqbtwcFgHPZcz0HRI1MC10XJhcJRDIRtNLhc+n+ZAEfds7QJxY+Ey73OAy7nls++AicjoJBMtQgX3hRtRdEmS72/6bHRAp62dhZP9bsIDHSbVZOtcAiHkf/wVQJ9onjNsM5eZ2NPb+or2UERYfx289disKtVzqQ=='
+    type:   'ssh-rsa'
+    user:   'root'
+
 pyff_pipeline_beta:
     - load:
         - /opt/pyff/metadata/openathens.xml 69:F8:25:18:AF:97:D0:CB:8E:31:E8:10:F1:F0:A1:3E:2F:DF:E1:D8
