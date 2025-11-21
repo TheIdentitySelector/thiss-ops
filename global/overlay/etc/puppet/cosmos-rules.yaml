@@ -361,3 +361,8 @@ sp-test.seamlessaccess.org:
    thiss::demo_sp:
    https:
    http:
+
+log.seamlessaccess.org:
+   autoupdate:
+   sunet::rsyslog:
+      udp_port: 514
