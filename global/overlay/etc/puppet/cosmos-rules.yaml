@@ -363,6 +363,5 @@ sp-test.seamlessaccess.org:
    http:
 
 log.seamlessaccess.org:
-   autoupdate:
    sunet::rsyslog:
       udp_port: 514
