@@ -4,8 +4,9 @@ docker_compose_version: '1.15.0'
 docker_repo: 'stable'
 
 syslog_servers:
-   - syslog.sunet.se
-   - syslog2.sunet.se
+   - syslog.sunet.se:514
+   - syslog2.sunet.se:514
+
 nagios_ip_v4:
    - 192.36.171.83
 sunet_vpn:
