@@ -364,4 +364,4 @@ sp-test.seamlessaccess.org:
 
 log.seamlessaccess.org:
    sunet::rsyslog:
-      udp_port: 514
+      tcp_port: 514
