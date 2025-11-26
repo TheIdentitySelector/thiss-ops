@@ -228,7 +228,6 @@ class nagios_monitor {
     service         => 'nagios4',
     host_template   => 'monitor-host',
     sort_alphabetically => true,
-    single_ip       => true,
   }
 
   ensure_resource('package','nagios4', { ensure => present })
