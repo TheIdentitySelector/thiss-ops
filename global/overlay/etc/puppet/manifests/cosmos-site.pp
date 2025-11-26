@@ -227,6 +227,7 @@ class nagios_monitor {
     cfgdir          => '/etc/nagios4/conf.d',
     service         => 'nagios4',
     host_template   => 'monitor-host',
+    single_ip       => true,
   }
 
   ensure_resource('package','nagios4', { ensure => present })
