@@ -365,3 +365,4 @@ sp-test.seamlessaccess.org:
 log.seamlessaccess.org:
    sunet::rsyslog:
       tcp_port: 514
+   thiss::log:
