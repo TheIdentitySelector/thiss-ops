@@ -1,5 +1,7 @@
 class thiss::log{
 
+  $enrique_ssh_key = lookup ('enrique_ssh_key')
+
   sunet::rrsync { '/var/log/':
     ssh_key_type       => 'ssh-ed25519',
     ssh_key            => $enrique_ssh_key,
