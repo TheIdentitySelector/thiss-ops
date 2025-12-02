@@ -9,6 +9,6 @@ class thiss::log{
   }
 
   sunet::nftables::rule { 'allow_rsync':
-    rule => "add rule inet filter input ip saddr {${enrique_ip}} tcp dport 22 counter accept comment \"allow-rsync-from-ni-host\""
+    rule => "add rule inet filter input ip saddr {${enrique_ip}} tcp dport 22 counter accept comment \"allow-rsync-for-enrique\""
   }
 }
