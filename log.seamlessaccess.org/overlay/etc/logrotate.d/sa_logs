@@ -1,6 +1,6 @@
 /var/log/sa.log
 {
-  rotate 30
+  rotate 1
   daily
   missingok
   notifempty
