@@ -4,7 +4,7 @@ class thiss::log{
   $enrique_ip = lookup ('enrique_ip')
 
   sunet::rrsync { '/var/log/':
-    ssh_key_type       => 'ssh-ed25519',
+    ssh_key_type       => 'ssh-rsa',
     ssh_key            => $enrique_ssh_key,
   }
 
