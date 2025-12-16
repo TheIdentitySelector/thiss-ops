@@ -7,4 +7,9 @@
   delaycompress
   compress
   su root syslog
+  create 0640 root syslog
+  sharedscripts
+  postrotate
+    /bin/systemctl kill -s HUP rsyslog.service >/dev/null 2>&1 || true
+  endscript
 }
