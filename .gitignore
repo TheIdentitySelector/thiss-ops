@@ -1,3 +1,4 @@
 *.pyc
 fabfile/*.pyc
 *.DS_Store
+/global/overlay/etc/puppet/cosmos-modules
