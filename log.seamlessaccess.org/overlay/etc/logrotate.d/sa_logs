@@ -1,0 +1,10 @@
+/var/log/sa.log
+{
+  rotate 30
+  daily
+  missingok
+  notifempty
+  delaycompress
+  compress
+  su root syslog
+}
