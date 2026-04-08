@@ -12,7 +12,7 @@ class thiss::demo_sp($version='stable')
     imagetag            => $version,
     #env                 => ['SP_METADATAFEED=http://mds.swamid.se/md/swamid-idp-transitive.xml'],
     volumes             => ['/var/www:/var/www:ro',
-                            "/etc/dehydrated/certs/${::fqdn}:/etc/dehydrated:ro",
+                            "/etc/dehydrated/certs/$facts['networking']['fqdn']:/etc/dehydrated:ro",
                             '/etc/shibboleth/certs:/etc/shibboleth/certs',
                             '/etc/shibboleth/shibboleth2.xml:/etc/shibboleth/shibboleth2.xml:ro',
                             '/etc/apache2/start.sh:/start.sh',
