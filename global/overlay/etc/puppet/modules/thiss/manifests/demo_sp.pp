@@ -14,11 +14,15 @@ class thiss::demo_sp($version='stable')
     provider => git,
     source   => 'https://github.com/TheIdentitySelector/thiss-demo'
   }
+
   vcsrepo { '/var/www/demoBeta':
     ensure   => latest,
     provider => git,
     source   => 'https://github.com/TheIdentitySelector/thiss-demoBeta'
   }
+
+  ensure_resource('file','/var/www/demo/profiles/', { ensure => directory } )
+
   sunet::scriptherder::cronjob { "updateProfiles":
     cmd               => "/opt/scripts/updateProfiles.py",
     ok_criteria       => ['exit_status=0'],
