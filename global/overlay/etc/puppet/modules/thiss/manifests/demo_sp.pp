@@ -36,7 +36,7 @@ class thiss::demo_sp($version='stable')
     minute            => '5'
   }
 
-  sunet::scriptherder::cronjob { "updateProfiles":
+  sunet::scriptherder::cronjob { "updateDB":
     cmd               => "/opt/scripts/updateDB.py",
     ok_criteria       => ['exit_status=0'],
     warn_criteria     => ['max_age=48h'],
