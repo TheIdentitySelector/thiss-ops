@@ -23,6 +23,11 @@ class thiss::demo_sp($version='stable')
 
   ensure_resource('file','/var/www/demo/profiles/', { ensure => directory } )
 
+  file { '/var/www/demoBeta/profiles/':
+    ensure => link,
+    target => '/var/www/demo/profiles/',
+  }
+
   sunet::scriptherder::cronjob { "updateProfiles":
     cmd               => "/opt/scripts/updateProfiles.py",
     ok_criteria       => ['exit_status=0'],
