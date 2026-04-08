@@ -362,6 +362,15 @@ sp-test.seamlessaccess.org:
    https:
    http:
 
+sp-test-1.seamlessaccess.org:
+   sunet::dockerhost2:
+#   sunet::dehydrated::client:
+#      domain: sp-test.seamlessaccess.org
+#      ssl_links: true
+   thiss::demo_sp:
+   https:
+   http:
+
 log.seamlessaccess.org:
    sunet::rsyslog:
       tcp_port: 514
