@@ -364,9 +364,9 @@ sp-test.seamlessaccess.org:
 
 sp-test-1.seamlessaccess.org:
    sunet::dockerhost2:
-#   sunet::dehydrated::client:
-#      domain: sp-test.seamlessaccess.org
-#      ssl_links: true
+   sunet::dehydrated::client:
+      domain: sp-test.seamlessaccess.org
+      ssl_links: true
    thiss::demo_sp:
    https:
    http:
