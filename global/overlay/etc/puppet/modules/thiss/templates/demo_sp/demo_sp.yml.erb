@@ -19,9 +19,9 @@ services:
 
   always-https:
     image: docker.sunet.se/always-https:latest
-      restart: always
-      network_mode: host
-      ports:
-        - 80:80
-      environment:
-        - ACME_URL=http://acme-c.sunet.se/
+    restart: always
+    network_mode: host
+    ports:
+      - 80:80
+    environment:
+      - ACME_URL=http://acme-c.sunet.se/
