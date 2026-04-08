@@ -22,6 +22,7 @@ class thiss::demo_sp($version='stable')
   }
 
   ensure_resource('file','/var/www/demo/profiles/', { ensure => directory } )
+  ensure_resource('file','/var/www/demoBeta/db/', { ensure => directory } )
 
   file { '/var/www/demoBeta/profiles/':
     ensure => link,
@@ -33,5 +34,12 @@ class thiss::demo_sp($version='stable')
     ok_criteria       => ['exit_status=0'],
     warn_criteria     => ['max_age=90m'],
     minute            => '5'
+  }
+
+  sunet::scriptherder::cronjob { "updateProfiles":
+    cmd               => "/opt/scripts/updateDB.py",
+    ok_criteria       => ['exit_status=0'],
+    warn_criteria     => ['max_age=48h'],
+    hour              => '3'
   }
 }
