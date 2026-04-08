@@ -14,4 +14,9 @@ class thiss::demo_sp($version='stable')
     provider => git,
     source   => 'https://github.com/TheIdentitySelector/thiss-demo'
   }
+  vcsrepo { '/var/www/demoBeta':
+    ensure   => latest,
+    provider => git,
+    source   => 'https://github.com/btmattsson/SA-demoSP'
+  }
 }
