@@ -17,10 +17,12 @@ class thiss::demo_sp($version='stable')
   vcsrepo { '/var/www/demoBeta':
     ensure   => latest,
     provider => git,
-    source   => 'https://github.com/btmattsson/SA-demoSP'
+    source   => 'https://github.com/TheIdentitySelector/thiss-demoBeta'
   }
   sunet::scriptherder::cronjob { "updateProfiles":
-  cmd               => "/opt/scripts/updateProfiles.py",
-  ensure            => absent
+    cmd               => "/opt/scripts/updateProfiles.py",
+    ok_criteria       => ['exit_status=0'],
+    warn_criteria     => ['max_age=90m'],
+    minute            => '5'
   }
 }
