@@ -1,5 +1,7 @@
 class thiss::demo_sp($version='stable')
 {
+  ensure_resource('file','/var/www/html/', { ensure => directory } )
+
   sunet::docker_compose {'demo-sp':
     service_name => 'demo-sp',
     description  => 'SA demo sp',
