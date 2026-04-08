@@ -1,0 +1,27 @@
+---
+services:
+  demo-sp:
+    image: docker.sunet.se/swamid/metadata-sp:<%= @version %>
+    volumes:
+      - '/etc/thiss:/etc/thiss',
+      - '/var/www:/var/www:ro',
+      - "/etc/dehydrated/certs/$facts['networking']['fqdn']:/etc/dehydrated:ro",
+      - '/etc/shibboleth/certs:/etc/shibboleth/certs',
+      - '/etc/shibboleth/shibboleth2.xml:/etc/shibboleth/shibboleth2.xml:ro',
+      - '/etc/apache2/start.sh:/start.sh',
+      - '/etc/apache2/sites-available/default-ssl.conf:/etc/apache2/sites-available/default-ssl.conf:ro'
+    ports:
+      - "443:443"
+    network_mode: host
+    restart: always
+    logging:
+      driver: syslog
+
+  always-https:
+    image: docker.sunet.se/always-https:latest
+      restart: always
+      network_mode: host
+      ports:
+        - 80:80
+      environment:
+        - ACME_URL=http://acme-c.sunet.se/
