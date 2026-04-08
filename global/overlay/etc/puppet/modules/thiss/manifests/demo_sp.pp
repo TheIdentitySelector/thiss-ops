@@ -7,7 +7,7 @@ class thiss::demo_sp($version='stable')
   }
 
   sunet::docker_run { 'demo-sp':
-    hostname            => "${::fqdn}",
+    hostname            => "$facts['networking']['fqdn']",
     image               => 'docker.sunet.se/swamid/metadata-sp',
     imagetag            => $version,
     #env                 => ['SP_METADATAFEED=http://mds.swamid.se/md/swamid-idp-transitive.xml'],
