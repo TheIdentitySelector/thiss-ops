@@ -193,7 +193,7 @@ with urllib.request.urlopen("https://a-1.thiss.io/metadata_sp.json") as url:
     print(f'''      </table>
     </div>''', file=f)
     print(f'''    <div class="row">
-      <div class="col">Numer of entities with profile(s) = {counter}</div>
+      <div class="col">Number of entities with profile(s) = {counter}</div>
     </div>''', file=f)
     printFooter(f)
 
