@@ -19,4 +19,8 @@ class thiss::demo_sp($version='stable')
     provider => git,
     source   => 'https://github.com/btmattsson/SA-demoSP'
   }
+  sunet::scriptherder::cronjob { "updateProfiles":
+  cmd               => "/opt/scripts/updateProfiles.py",
+  ensure            => absent
+  }
 }
