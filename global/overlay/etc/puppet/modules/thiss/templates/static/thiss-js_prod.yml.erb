@@ -8,8 +8,6 @@ services:
      - 80:80
     volumes:
      - /etc/ssl:/etc/ssl
-     - /etc/passwd:/etc/passwd:ro
-     - /etc/group:/etc/group:ro
     environment:
       - BASE_URL=<%= @base_url %>
       - MDQ_URL=<%= @final_mdq_search_url %>
