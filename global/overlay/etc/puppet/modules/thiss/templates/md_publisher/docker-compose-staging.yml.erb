@@ -1,0 +1,12 @@
+---
+services:
+  md_publisher:
+    image: docker.sunet.se/swamid/mdq-publisher:<%= @imagetag %>
+    volumes:
+      - '/etc/letsencrypt:/etc/letsencrypt'
+      - '/var/www/html:/var/www/html'
+    environment:
+      - "PUBLISHER_CERT=<%= @publisher_cert %>"
+      - "PUBLISHER_KEY=<%= @publisher_key %>"
+    ports:
+      - "443:443"
