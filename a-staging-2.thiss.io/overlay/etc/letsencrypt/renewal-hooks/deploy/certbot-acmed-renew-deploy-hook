@@ -1,0 +1,3 @@
+#!/bin/bash
+
+systemctl restart sunet-md_publisher.service
