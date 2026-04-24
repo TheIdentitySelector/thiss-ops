@@ -42,7 +42,17 @@ class common {
 
   include apt
   package { 'needrestart': ensure => installed}
+
+  sunet::sudoer {'nagios_run_needrestart_command':
+    user_name    => 'nagios',
+    collection   => 'nagios',
+    command_line => "/usr/sbin/needrestart -p -l"
   }
+  sunet::nagios::nrpe_command {'check_needrestart':
+    command_line => "sudo /usr/sbin/needrestart -p -l"
+  }
+}
+
 
 # remove unencrypted git protocol
   exec { 'run_secure_git':
@@ -203,14 +213,6 @@ class nrpe {
   }
   sunet::nagios::nrpe_command {'check_apt':
     command_line => '/usr/lib/nagios/plugins/check_apt'
-  }
-  sunet::sudoer {'nagios_run_needrestart_command':
-    user_name    => 'nagios',
-    collection   => 'nagios',
-    command_line => "/usr/sbin/needrestart -p -l"
-  }
-  sunet::nagios::nrpe_command {'check_needrestart':
-    command_line => "sudo /usr/sbin/needrestart -p -l"
   }
 }
 

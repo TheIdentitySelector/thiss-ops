@@ -1,21 +1,21 @@
 '.+':
    common:
    ops:
-   nrpe:
-#   sunet::nagios::nrpe:
-#    checks:
-#    - nrpe_check_apt
-#    - nrpe_check_dynamic_disk
-#    - nrpe_check_entropy
-#    - nrpe_check_load
-#    - nrpe_check_memory
-#    - nrpe_check_ntp_time
-#    - nrpe_check_reboot
-#    - nrpe_check_scriptherder
-#    - nrpe_check_total_procs_lax
-#    - nrpe_check_uptime
-#    - nrpe_check_users
-#    - nrpe_check_zombie_procs
+#   nrpe:
+   sunet::nagios::nrpe:
+    checks:
+    - nrpe_check_apt
+    - nrpe_check_dynamic_disk
+    - nrpe_check_entropy
+    - nrpe_check_load
+    - nrpe_check_memory
+    - nrpe_check_ntp_time
+    - nrpe_check_reboot
+    - nrpe_check_scriptherder
+    - nrpe_check_total_procs_lax
+    - nrpe_check_uptime
+    - nrpe_check_users
+    - nrpe_check_zombie_procs
    sunet::updater:
       cron: true
       cosmos_automatic_reboot: true
@@ -379,6 +379,9 @@ monitor.se-east.sunet.eu.seamlessaccess.org:
     naemon_extra_volumes:
       - /etc/ssl/certs/infra.crt:/etc/ssl/certs/infra.crt:ro
       - /etc/ssl/certs/infra-2-prod.crt:/etc/ssl/certs/infra-2-prod.crt:ro
+      - /usr/lib/nagios/plugins/check_md_sp_sa.sh:/usr/lib/nagios/plugins/check_md_sp_sa.sh:ro
+      - /usr/lib/nagios/plugins/check_haproxy.rb:/usr/lib/nagios/plugins/check_haproxy.rb:ro
+      - /usr/lib/nagios/plugins/check_md_sa.sh:/usr/lib/nagios/plugins/check_md_sa.sh:ro
     receive_otel: true
     otel_retention: '8760h'
     thruk_admins:

@@ -9,11 +9,14 @@ syslog_servers:
 
 nagios_ip_v4:
    - 192.36.171.83
+   - 89.47.184.142 # md-2.se-east.sunet.eu.seamlessaccess.org
+   - 2001:6b0:5a:4020::46d # md-2.se-east.sunet.eu.seamlessaccess.org
 sunet_vpn:
    - 130.242.121.23
 nrpe_clients:
    - 127.0.0.1
    - 127.0.1.1
+   - 172.16.0.0/12
    - 192.36.171.83
    - 2001:6b0:8:7:250:56ff:fe87:3bc
    - 89.47.184.142 # md-2.se-east.sunet.eu.seamlessaccess.org
