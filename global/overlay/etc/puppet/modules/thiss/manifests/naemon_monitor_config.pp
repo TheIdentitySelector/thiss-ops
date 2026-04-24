@@ -2,7 +2,6 @@
 class thiss::naemon_monitor_config {
   class {'nagioscfg::slack': domain => 'seamlessaccess.slack.com', token => safe_hiera('slack_token','') }
   nagioscfg::slack::channel {'nagios': } ->
-  nagioscfg::contactgroup {'alerts': } ->
   nagioscfg::contact {'slack-alerts':
     host_notification_options     => 'd,u,r,f',
     service_notification_options  => 'w,u,c,r,f',
