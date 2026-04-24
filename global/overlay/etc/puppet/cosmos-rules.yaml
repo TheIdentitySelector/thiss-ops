@@ -376,6 +376,9 @@ monitor.se-east.sunet.eu.seamlessaccess.org:
     thruk_tag: v2025-11-03-02
     histou_tag: latest
     nagflux_tag: latest
+    naemon_extra_volumes:
+      - /etc/ssl/certs/infra.crt:/etc/ssl/certs/infra.crt:ro
+      - /etc/ssl/certs/infra-2-prod.crt:/etc/ssl/certs/infra-2-prod.crt:ro
     receive_otel: true
     otel_retention: '8760h'
     thruk_admins:
