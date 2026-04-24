@@ -28,10 +28,15 @@ class thiss::haproxy_md($location=undef,$image_tag=undef){
     port          => '443',
     iif           => "${interface_default}",
   }
-  sunet::nftables::docker_expose { 'haproxy-stats' :
-    allow_clients => ['130.242.121.23/32', '192.36.171.83/32'],
-    port          => '8404',
-    iif           => "${interface_default}",
+
+  if $facts['networking']['fqdn'] = 'md-lb.thiss.io' {
+    $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
+    $sunet_vpn = hiera_array('sunet_vpn',[])
+    sunet::nftables::docker_expose { 'haproxy-stats' :
+      allow_clients => $$nagios_ip_v4 + $sunet_vpn,
+      port          => '8404',
+      iif           => "${interface_default}",
+    }
   }
 
   sunet::docker_compose {'haproxy_docker_compose':
