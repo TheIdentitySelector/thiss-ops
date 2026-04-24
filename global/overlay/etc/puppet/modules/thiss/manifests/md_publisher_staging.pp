@@ -1,6 +1,6 @@
 class thiss::md_publisher_staging(
-   String $publisher_cert="/etc/ssl/certs/${facts['networking']['fqdn']}_infra.crt",
-   String $publisher_key="/etc/ssl/private/${facts['networking']['fqdn']}_infra.key",
+   String $publisher_cert="/etc/letsencrypt/live/${facts['networking']['fqdn']}/cert.pem",
+   String $publisher_key="/etc/letsencrypt/live/${facts['networking']['fqdn']}/privkey.pem",
    String $dir="/var/www/html",
    String $watch="/var/www/html/entities/index.html",
    String $watch_sp="/var/www/html/entities/index.html",
@@ -13,7 +13,7 @@ class thiss::md_publisher_staging(
    if $imagetag {
 
       sunet::docker_compose { 'md_publisher':
-        content          => template('thiss/md_publisher/docker-compose.yml.erb'),
+        content          => template('thiss/md_publisher/docker-compose-staging.yml.erb'),
         service_name     => 'md_publisher',
         compose_dir      => '/opt/',
         compose_filename => 'docker-compose.yml',
