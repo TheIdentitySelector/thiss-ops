@@ -189,4 +189,3 @@ class thiss::naemon_monitor_config {
     contact_groups => ['alerts'],
   }
 }
-}
