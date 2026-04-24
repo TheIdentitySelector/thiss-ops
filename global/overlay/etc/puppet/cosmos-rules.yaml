@@ -2,6 +2,20 @@
    common:
    ops:
    nrpe:
+   sunet::nagios::nrpe:
+    checks:
+    - nrpe_check_apt
+    - nrpe_check_dynamic_disk
+    - nrpe_check_entropy
+    - nrpe_check_load
+    - nrpe_check_memory
+    - nrpe_check_ntp_time
+    - nrpe_check_reboot
+    - nrpe_check_scriptherder
+    - nrpe_check_total_procs_lax
+    - nrpe_check_uptime
+    - nrpe_check_users
+    - nrpe_check_zombie_procs
    sunet::updater:
       cron: true
       cosmos_automatic_reboot: true
@@ -352,6 +366,31 @@ static.aws2.geant.eu.seamlessaccess.org:
 
 monitor.ntx.sunet.eu.seamlessaccess.org:
    nagios_monitor:
+
+monitor.se-east.sunet.eu.seamlessaccess.org:
+  autoupdate:
+  sunet::dockerhost2:
+  thiss::naemon_monitor_config:
+  sunet::naemon_monitor:
+    domain: monitor.seamlessaccess.org
+    naemon_tag: v2025-11-03-01
+    thruk_tag: v2025-11-03-02
+    histou_tag: latest
+    nagflux_tag: latest
+    receive_otel: true
+    otel_retention: '8760h'
+    thruk_admins:
+    - mariah@sunet.se
+    - jonas@sunet.se
+    - thorslund@sunet.se
+    - santesson@sunet.se
+    thruk_users:
+    - '*@sunet.se'
+    default_host_group: sunet::nagios::nrpe
+    nrpe_group: sunet::nagios::nrpe
+  sunet::otel::alloy:
+    enabled: false
+    otel_receiver: "just-some-string-to-make-class-happy"
 
 sp-test.seamlessaccess.org:
    sunet_iaas_cloud:
