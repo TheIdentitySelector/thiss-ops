@@ -1,6 +1,6 @@
 class thiss::md_publisher_beta(
-   String $publisher_cert="/etc/ssl/certs/${facts['networking']['fqdn']}_infra.crt",
-   String $publisher_key="/etc/ssl/private/${facts['networking']['fqdn']}_infra.key",
+   String $publisher_cert="/etc/letsencrypt/live/${facts['networking']['fqdn']}/cert.pem",
+   String $publisher_key="/etc/letsencrypt/live/${facts['networking']['fqdn']}/privkey.pem",
    String $dir="/var/www/html",
    String $watch="/var/www/html/entities/index.html",
    String $watch_sp="/var/www/html/entities/index.html",
