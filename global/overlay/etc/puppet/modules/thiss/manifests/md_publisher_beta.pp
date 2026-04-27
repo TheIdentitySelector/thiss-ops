@@ -13,7 +13,7 @@ class thiss::md_publisher_beta(
    if $imagetag {
 
       sunet::docker_compose { 'md_publisher':
-        content          => template('thiss/md_publisher/docker-compose.yml.erb'),
+        content          => template('thiss/md_publisher/docker-compose-staging.yml.erb''),
         service_name     => 'md_publisher',
         compose_dir      => '/opt/',
         compose_filename => 'docker-compose.yml',

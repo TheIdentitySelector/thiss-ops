@@ -68,6 +68,8 @@ a-1.thiss.io:
       imagetag: v2024-04-08-01
    md_aggregator:
    https:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
 
 '^static-[0-9]+\.thiss\.io$':
    sunet_iaas_cloud:
