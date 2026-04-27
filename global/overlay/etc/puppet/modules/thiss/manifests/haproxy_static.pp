@@ -29,7 +29,7 @@ class thiss::haproxy_static($location=undef,$image_tag=undef){
     iif           => "${interface_default}",
   }
 
-  if $facts['networking']['fqdn'] =~ /^static\.\S+\.thiss\.io$/ {
+  if $facts['networking']['fqdn'] =~ /^static(\.\S+\.|\.)thiss\.io$/ {
     $nagios_ip_v4 = hiera_array('nagios_ip_v4',[])
     $sunet_vpn = hiera_array('sunet_vpn',[])
     sunet::nftables::docker_expose { 'haproxy-stats' :
