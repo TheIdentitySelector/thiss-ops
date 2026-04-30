@@ -372,7 +372,7 @@ monitor.se-east.sunet.eu.seamlessaccess.org:
   thiss::naemon_monitor_config:
   sunet::naemon_monitor:
     domain: monitor.seamlessaccess.org
-    naemon_tag: v2025-11-03-01
+    naemon_tag: v2026-30-14-01
     thruk_tag: v2025-11-03-02
     histou_tag: latest
     nagflux_tag: latest
