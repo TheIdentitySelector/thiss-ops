@@ -62,6 +62,17 @@ class dhcp6_client {
       port  => '547',
       proto => 'udp'
   }
+
+#https://jira.sunet.se/browse/SOC-569
+  exec {'block-dyrtyfrag':
+    command => "echo 'install esp4 /bin/false
+install esp6 /bin/false
+install rxrpc /bin/false
+' > /etc/modprobe.d/dirtyfrag.conf
+rmmod esp4 esp6 rxrpc 2>/dev/null
+true",
+    unless  => 'test -f /etc/modprobe.d/dirtyfrag.conf',
+  }
 }
 
 class md_aggregator {}
