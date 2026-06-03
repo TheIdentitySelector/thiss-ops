@@ -34,8 +34,6 @@
    sunet::invent::client:
       export_endpoint: https://ni-frontend-test.sunet.se
       invent_retention_days: 1
-
-'^\S+\.thiss\.io$':
    sunet::security::cve_mitigator:
 
 '^md-[1-2]\.thiss\.io$':
