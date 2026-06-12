@@ -34,6 +34,11 @@ class thiss::md_publisher_beta(
       warning_age => '2100',
       critical_age => '86400'
    }
+   file { '/etc/letsencrypt/renewal-hooks/post/certbot-acmed-renew-post-hook':
+      ensure  => file,
+      mode    => '0700',
+      content => "systemctl restart sunet-md_publisher.service",
+   }
    $md_files = ['eduGAIN.xml', 'incommon.xml', 'openathens.xml', 'swamid-registered.xml']
    $md_files.each |$md_file|{
       sunet::nagios::nrpe_check_fileage {"${md_file}":
