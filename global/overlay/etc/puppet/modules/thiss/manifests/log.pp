@@ -53,7 +53,7 @@ class thiss::log (
 
   file { '/opt/analyze/web/auth':
     ensure => directory,
-    mode   => '0750',
+    mode   => '0755',
   }
 
   file { '/opt/analyze/web/auth/.htpasswd':
