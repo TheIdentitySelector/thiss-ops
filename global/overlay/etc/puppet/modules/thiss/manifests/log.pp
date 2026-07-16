@@ -31,6 +31,10 @@ class thiss::log (
     description      => 'Log analyzer components',
   }
 
+  file { '/opt/analyze':
+    ensure => directory,
+  }
+
   file { '/opt/analyze/secrets':
     ensure => directory,
     mode   => '0700',
@@ -40,6 +44,11 @@ class thiss::log (
     ensure  => file,
     content => $hmac_salt.unwrap,
     mode    => '0600',
+  }
+
+  file { '/opt/analyze/web':
+    ensure  => directory,
+    require => File['/opt/analyze'],
   }
 
   file { '/opt/analyze/web/auth':
