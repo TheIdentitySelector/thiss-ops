@@ -31,10 +31,20 @@ class thiss::log (
     description      => 'Log analyzer components',
   }
 
+  file { '/opt/analyze/secrets':
+    ensure => directory,
+    mode   => '0700',
+  }
+
   file { '/opt/analyze/secrets/hmac_salt':
     ensure  => file,
     content => $hmac_salt.unwrap,
     mode    => '0600',
+  }
+
+  file { '/opt/analyze/web/auth':
+    ensure => directory,
+    mode   => '0750',
   }
 
   file { '/opt/analyze/web/auth/.htpasswd':
