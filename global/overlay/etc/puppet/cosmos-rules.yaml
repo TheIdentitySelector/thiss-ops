@@ -418,6 +418,8 @@ sp-test-1.seamlessaccess.org:
    http:
 
 log.seamlessaccess.org:
+   sunet::certbot::acmed:
+   sunet::dockerhost2:
    sunet::rsyslog:
       tcp_port: 514
       syslog_enable_remote: false

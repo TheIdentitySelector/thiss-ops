@@ -1,0 +1,40 @@
+services:
+  analyzer:
+    image: docker.sunet.se/seamlessaccess-log-analyzer:<%= @analyzer_tag %>
+    restart: unless-stopped
+    volumes:
+      - /var/log/sa.log:/var/log/sa.log
+      - db:/data
+      - report:/report
+    environment:
+      BUCKET_SECONDS: <%= @bucket_seconds %>
+      SESSION_TTL: <%= @session_ttl %>
+      BATCH_INTERVAL: <%= @batch_interval %>
+      MAX_BATCH_BYTES: <%= @max_batch_bytes %>
+      REPORT_MAX_BUCKETS: <%= @report_max_buckets %>
+      TRUNCATE_MODE: <%= @truncate_mode %>
+      HMAC_SALT_FILE: /run/secrets/hmac_salt
+    secrets:
+      - hmac_salt
+
+  web:
+    image: docker.sunet.se/seamlessaccess-log-service:<%= @web_tag %>
+    restart: unless-stopped
+    depends_on: [analyzer]
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      REPORT_HOST: <%= @report_host %>
+    volumes:
+      - report:/usr/share/nginx/report:ro
+      - /opt/analyze/web/auth:/etc/nginx/auth:ro
+      - /etc/letsencrypt/live/<%= @report_host %>:/etc/letsencrypt/live/<%= @report_host %>
+
+secrets:
+  hmac_salt:
+    file: /opt/analyze/secrets/hmac_salt
+
+volumes:
+  db:
+  report:
