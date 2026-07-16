@@ -59,8 +59,7 @@ class thiss::log (
   file { '/opt/analyze/web/auth/.htpasswd':
     ensure  => file,
     content => $htpasswd.unwrap,
-    owner   => 101,
-    mode    => '0640',
+    mode    => '0644',
   }
 
 }
