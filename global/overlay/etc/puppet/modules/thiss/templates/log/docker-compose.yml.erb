@@ -29,7 +29,7 @@ services:
     volumes:
       - report:/usr/share/nginx/report:ro
       - /opt/analyze/web/auth:/etc/nginx/auth:ro
-      - /etc/letsencrypt/live/<%= @report_host %>:/etc/letsencrypt/live/<%= @report_host %>
+      - /etc/letsencrypt/:/etc/letsencrypt:ro
 
 secrets:
   hmac_salt:
