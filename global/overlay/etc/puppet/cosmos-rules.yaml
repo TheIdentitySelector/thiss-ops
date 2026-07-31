@@ -221,6 +221,8 @@ meta.ntx.sunet.eu.seamlessaccess.org:
       imagetag: v2024-04-08-01
    md_aggregator:
    sunet::fleetlock_client:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
 
 meta.se-east.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
@@ -234,6 +236,8 @@ meta.se-east.sunet.eu.seamlessaccess.org:
       imagetag: v2024-04-08-01
    md_aggregator:
    sunet::fleetlock_client:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
 
 meta.aws1.geant.eu.seamlessaccess.org:
    sunet::dockerhost2:
@@ -247,6 +251,8 @@ meta.aws1.geant.eu.seamlessaccess.org:
       imagetag: v2024-04-08-01
    md_aggregator:
    sunet::fleetlock_client:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
 
 meta.aws2.geant.eu.seamlessaccess.org:
    sunet::dockerhost2:
@@ -260,6 +266,8 @@ meta.aws2.geant.eu.seamlessaccess.org:
       imagetag: v2024-04-08-01
    md_aggregator:
    sunet::fleetlock_client:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
 
 md.ntx.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
