@@ -1,6 +1,6 @@
 class thiss::md_publisher_prod(
-   String $publisher_cert="/etc/ssl/certs/${facts['networking']['fqdn']}_infra.crt",
-   String $publisher_key="/etc/ssl/private/${facts['networking']['fqdn']}_infra.key",
+   String $publisher_cert="/etc/letsencrypt/live/${facts['networking']['fqdn']}/cert.pem",
+   String $publisher_key="/etc/letsencrypt/live/${facts['networking']['fqdn']}/privkey.pem",
    String $dir="/var/www/html",
    String $watch="/var/www/html/entities/index.html",
    String $watch_sp="/var/www/html/entities/index.html",
@@ -33,6 +33,11 @@ class thiss::md_publisher_prod(
       filename => $watch_sp,
       warning_age => '2100',
       critical_age => '86400'
+   }
+   file { '/etc/letsencrypt/renewal-hooks/post/certbot-acmed-renew-post-hook':
+      ensure  => file,
+      mode    => '0700',
+      content => "systemctl restart sunet-md_publisher.service",
    }
    $md_files = ['eduGAIN.xml', 'incommon.xml', 'openathens.xml', 'swamid-registered.xml']
    $md_files.each |$md_file|{
