@@ -3,7 +3,7 @@ services:
   md_publisher:
     image: docker.sunet.se/swamid/mdq-publisher:<%= @imagetag %>
     volumes:
-      - '/etc/ssl:/etc/ssl'
+      - '/etc/letsencrypt:/etc/letsencrypt'
       - '/var/www/html:/var/www/html'
     environment:
       - "PUBLISHER_CERT=<%= @publisher_cert %>"
