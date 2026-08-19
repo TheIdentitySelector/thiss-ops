@@ -104,6 +104,8 @@ static.thiss.io:
    https:
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
 
 static.aws2.thiss.io:
    sunet::dockerhost2:
