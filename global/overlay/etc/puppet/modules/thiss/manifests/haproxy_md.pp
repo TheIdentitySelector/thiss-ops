@@ -1,4 +1,4 @@
-class thiss::haproxy_md($location=undef,$image_tag=undef){
+class thiss::haproxy_md($location=undef,$image_tag=undef, $image_name='docker.sunet.se/seamlessaccess/haproxy'){
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
 

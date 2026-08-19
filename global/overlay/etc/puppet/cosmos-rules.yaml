@@ -53,7 +53,8 @@
 md-lb.thiss.io:
    sunet::dockerhost2:
    thiss::haproxy_md:
-      image_tag: beta
+      image_tag: 20260812-test
+      image_name: docker.sunet.se/library/haproxy
       location: thiss
 
 a-1.thiss.io:
