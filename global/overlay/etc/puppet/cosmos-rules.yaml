@@ -98,7 +98,8 @@ static.thiss.io:
    sunet_iaas_cloud:
    sunet::dockerhost2:
    thiss::haproxy_static:
-      image_tag: beta
+      image_tag: 20260812-test
+      image_name: docker.sunet.se/library/haproxy
       location: thiss
    https:
    sunet::fleetlock_client:
@@ -107,7 +108,8 @@ static.thiss.io:
 static.aws2.thiss.io:
    sunet::dockerhost2:
    thiss::haproxy_static:
-      image_tag: beta
+      image_tag: 20260812-test
+      image_name: docker.sunet.se/library/haproxy
       location: thiss_aws2
    https:
    sunet::fleetlock_client:
