@@ -97,7 +97,7 @@ a-1.thiss.io:
 static.thiss.io:
    sunet_iaas_cloud:
    sunet::dockerhost2:
-   thiss::haproxy_static:
+   thiss::haproxy_static_beta:
       image_tag: 20260812-test
       image_name: docker.sunet.se/library/haproxy
       location: thiss
