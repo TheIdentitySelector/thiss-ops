@@ -43,12 +43,7 @@ class thiss::haproxy_static_beta($location=undef,$image_tag=undef,$image_name='d
     service_name => 'haproxy_seamlessaccess',
     description  => 'HAProxy Load Blanacer for thiss-js',
     compose_dir  => '/opt/haproxy/compose',
-    content => template('thiss/haproxy/haproxy_seamlessaccess_static.yml.erb'),
+    content      => template('thiss/haproxy/haproxy_seamlessaccess_static.yml.erb'),
+    subscribe    => [Sunet::Misc::Certbundle["${facts['networking']['fqdn']}_haproxy"],],
   }
-
-   file { '/etc/letsencrypt/renewal-hooks/post/certbot-acmed-renew-post-hook':
-      ensure  => file,
-      mode    => '0700',
-      content => "systemctl restart sunet-haproxy_seamlessaccess.service",
-   }
 }
