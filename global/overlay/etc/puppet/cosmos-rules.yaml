@@ -280,7 +280,8 @@ md.ntx.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
    thiss::haproxy_md:
       location: ntx
-      image_tag: 20230614-prod
+      image_tag: 20260812-test
+      image_name: docker.sunet.se/library/haproxy
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
