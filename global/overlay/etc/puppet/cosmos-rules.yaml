@@ -289,7 +289,8 @@ md.se-east.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
    thiss::haproxy_md:
       location: se-east
-      image_tag: 20230614-prod
+      image_tag: 20260812-stable
+      image_name: docker.sunet.se/library/haproxy
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
@@ -297,7 +298,8 @@ md.aws1.geant.eu.seamlessaccess.org:
    sunet::dockerhost2:
    thiss::haproxy_md:
       location: aws1
-      image_tag: 20230614-prod
+      image_tag: 20260812-stable
+      image_name: docker.sunet.se/library/haproxy
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
@@ -305,7 +307,8 @@ md.aws2.geant.eu.seamlessaccess.org:
    sunet::dockerhost2:
    thiss::haproxy_md:
       location: aws2
-      image_tag: 20230614-prod
+      image_tag: 20260812-stable
+      image_name: docker.sunet.se/library/haproxy
    sunet::fleetlock_client:
    thiss::fleetlock_healthcheck:
 
