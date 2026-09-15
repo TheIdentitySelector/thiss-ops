@@ -40,7 +40,7 @@
    sunet_iaas_cloud:
    sunet::dockerhost2:
    thiss::mdq_beta:
-      version: 1.5.8
+      version: 1.5.9
       src: https://a-1.thiss.io/metadata.json
       src_trust: https://a-1.thiss.io/metadata_sp.json
       base_url: https://md.thiss.io
