@@ -509,7 +509,7 @@ class nagios_monitor {
   nagioscfg::command {'check_service_cluster':
     command_line   => "/usr/lib/nagios/plugins/check_cluster --service -l '\$ARG1\$' -w '\$ARG2\$' -c '\$ARG3\$' -d '\$ARG4\$'"
   }
-  $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org','md-staging.thiss.io']
+  $public_hosts = ['use.thiss.io','md.thiss.io','md.seamlessaccess.org','service.seamlessaccess.org','seamlessaccess.org']
   nagioscfg::host {$public_hosts: sort_alphabetically => true }
   $md_haproxy_hosts = ['md-lb.thiss.io', 'md.ntx.sunet.eu.seamlessaccess.org', 'md.se-east.sunet.eu.seamlessaccess.org', 'md.aws1.geant.eu.seamlessaccess.org', 'md.aws2.geant.eu.seamlessaccess.org']
   $meta_hosts = ['meta.aws1.geant.eu.seamlessaccess.org', 'meta.aws2.geant.eu.seamlessaccess.org', 'meta.se-east.sunet.eu.seamlessaccess.org', 'meta.ntx.sunet.eu.seamlessaccess.org', 'a-1.thiss.io', 'a-staging-2.thiss.io']
@@ -584,7 +584,7 @@ class nagios_monitor {
     description    => 'check metadata - md clustercheck',
     contact_groups => ['alerts']
   }
-  $md_urls = concat ([ 'md.thiss.io', 'md.seamlessaccess.org', 'md-staging.thiss.io'] , $md_haproxy_hosts)
+  $md_urls = concat ([ 'md.thiss.io', 'md.seamlessaccess.org' ] , $md_haproxy_hosts)
   $md_urls.each |$url|{
     nagioscfg::service {"check_metadata_age_${url}":
       host_name      => ["${url}"],
