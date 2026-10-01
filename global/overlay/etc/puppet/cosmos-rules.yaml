@@ -175,7 +175,7 @@ md-staging-2.thiss.io:
 '^md-[0-9]\.ntx\.sunet\.eu\.seamlessaccess\.org$':
    sunet::dockerhost2:
    thiss::mdq_prod:
-      version: 1.5.8
+      version: 1.5.9
       src: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.ntx.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
@@ -186,7 +186,7 @@ md-staging-2.thiss.io:
 '^md-[0-9]\.se-east\.sunet\.eu\.seamlessaccess\.org$':
    sunet::dockerhost2:
    thiss::mdq_prod:
-      version: 1.5.8
+      version: 1.5.9
       src: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.se-east.sunet.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
@@ -197,7 +197,7 @@ md-staging-2.thiss.io:
 '^md-[0-9]\.aws1\.geant\.eu\.seamlessaccess.org$':
    sunet::dockerhost2:
    thiss::mdq_prod:
-      version: 1.5.8
+      version: 1.5.9
       src: https://meta.aws1.geant.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.aws1.geant.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
@@ -208,7 +208,7 @@ md-staging-2.thiss.io:
 '^md-[0-9]\.aws2\.geant\.eu\.seamlessaccess.org$':
    sunet::dockerhost2:
    thiss::mdq_prod:
-      version: 1.5.8
+      version: 1.5.9
       src: https://meta.aws2.geant.eu.seamlessaccess.org/metadata.json
       src_trust: https://meta.aws2.geant.eu.seamlessaccess.org/metadata_sp.json
       base_url: https://md.seamlessaccess.org
