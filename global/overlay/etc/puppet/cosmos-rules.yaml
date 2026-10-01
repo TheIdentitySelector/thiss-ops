@@ -420,17 +420,6 @@ monitor.se-east.sunet.eu.seamlessaccess.org:
     enabled: false
     otel_receiver: "just-some-string-to-make-class-happy"
 
-sp-test.seamlessaccess.org:
-   sunet_iaas_cloud:
-   thiss::dockerhost:
-      version: '5:23.0.6-1~ubuntu.20.04~focal'
-   sunet::dehydrated::client:
-      domain: sp-test.seamlessaccess.org
-      ssl_links: true
-   thiss::demo_sp:
-   https:
-   http:
-
 sp-test-1.seamlessaccess.org:
    sunet::dockerhost2:
    sunet::dehydrated::client:
