@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+usage() { echo "usage: $0 <prod|beta> <static|mdq> <version>" >&2; exit 1; }
+
+[[ $# -eq 3 ]] || usage
+env=$1 service=$2 version=$3
+
+case "$service" in
+  mdq)    url=http://localhost               unit=sunet-thiss-mdq ;;
+  static) url=http://localhost/manifest.json unit=sunet-thiss_js ;;
+  *)      usage ;;
+esac
+
+case "$env/$service" in
+  prod/static) servers=(static-*.org) ;;
+  beta/static) servers=(static-*.io) ;;
+  prod/mdq)    servers=(md-*.org) ;;
+  beta/mdq)    servers=(md-*.io) ;;
+  *)           usage ;;
+esac
+
+remote_version() {
+  ssh -o ConnectTimeout=10 -T "$1" "curl -s $url | jq -r .version"
+}
+
+deploy() {
+  local host=$1 current
+  current=$(remote_version "$host")
+
+  if [[ $current == "$version" ]]; then
+    echo "$host: already on $version, skipping"
+    return 0
+  fi
+
+  echo "$host: $current -> $version"
+  read -rp "Press enter to continue on $host "
+  ssh -o ConnectTimeout=10 -T "$host" "run-cosmos && service $unit restart"
+
+  for _ in {1..30}; do
+    if [[ $(remote_version "$host") == "$version" ]]; then
+      echo "$host: now on $version"
+      return 0
+    fi
+    sleep 2
+  done
+
+  echo "$host: still not on $version after 60s" >&2
+  return 1
+}
+
+
+for host in "${servers[@]}"; do
+  deploy "$host"
+done
+
