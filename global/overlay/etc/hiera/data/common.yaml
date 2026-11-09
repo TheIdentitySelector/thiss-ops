@@ -319,3 +319,6 @@ pyff_pipeline_prod:
         - discojson_sp:
         - print:
             output: "/opt/pyff/metadata_sp.json"
+
+sunet::nagios::uptimew: 90
+sunet::nagios::uptimec: 120
