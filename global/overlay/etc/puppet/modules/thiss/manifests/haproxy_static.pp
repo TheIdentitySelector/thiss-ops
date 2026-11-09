@@ -43,7 +43,7 @@ class thiss::haproxy_static($location=undef,$image_tag=undef,$image_name='docker
     service_name => 'haproxy_seamlessaccess',
     description  => 'HAProxy Load Blanacer for thiss-js',
     compose_dir  => '/opt/haproxy/compose',
-    content => template('thiss/haproxy/haproxy_seamlessaccess_static.yml.erb'),
+    content      => template('thiss/haproxy/haproxy_seamlessaccess_static.yml.erb'),
     subscribe    => [Sunet::Misc::Certbundle["${facts['networking']['fqdn']}_haproxy"],],
   }
 }
