@@ -324,6 +324,8 @@ md.aws2.geant.eu.seamlessaccess.org:
 
 static.ntx.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
    thiss::haproxy_static:
       location: ntx
       image_tag: 20260812-stable
@@ -343,6 +345,8 @@ static.ntx.sunet.eu.seamlessaccess.org:
 
 static.se-east.sunet.eu.seamlessaccess.org:
    sunet::dockerhost2:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
    sunet::server:
       encrypted_swap: false
    thiss::haproxy_static:
@@ -364,6 +368,8 @@ static.se-east.sunet.eu.seamlessaccess.org:
 
 static.aws1.geant.eu.seamlessaccess.org:
    sunet::dockerhost2:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
    thiss::haproxy_static:
       image_tag: 20260812-stable
       image_name: docker.sunet.se/library/haproxy
@@ -383,6 +389,8 @@ static.aws1.geant.eu.seamlessaccess.org:
 
 static.aws2.geant.eu.seamlessaccess.org:
    sunet::dockerhost2:
+   sunet::certbot::acmed:
+      ca_url: https://ca-prod.platform.sunet.se/django_ca/acme/directory/
    thiss::haproxy_static:
       image_tag: 20260812-stable
       image_name: docker.sunet.se/library/haproxy
