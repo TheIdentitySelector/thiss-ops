@@ -2,8 +2,8 @@ class thiss::haproxy_static($location=undef,$image_tag=undef,$image_name='docker
 
   ensure_resource(sunet::misc::system_user, 'haproxy', {group => 'haproxy' })
 
-  $infra_cert = $::tls_certificates[$facts['networking']['fqdn']]['infra_bundle']
-  $infra_key = $::tls_certificates[$facts['networking']['fqdn']]['infra_key']
+  $infra_cert = $::tls_certificates[$facts['networking']['fqdn']]['certbot_fullchain']
+  $infra_key = $::tls_certificates[$facts['networking']['fqdn']]['certbot_key']
   ensure_resource(sunet::misc::certbundle, "${facts['networking']['fqdn']}_haproxy", {
     group  => 'haproxy',
     bundle => ["cert=${infra_cert}",
