@@ -32,7 +32,9 @@
    sunet::rsyslog:
    update_ca_certificates:
    sunet::invent::client:
-      export_endpoint: https://ni-frontend-test.sunet.se
+     export_endpoint:
+      - 'https://ni-frontend-test.sunet.se'
+      - 'https://hittade-data.sunet.se'
       invent_retention_days: 1
    sunet::security::cve_mitigator:
 
